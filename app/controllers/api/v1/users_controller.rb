@@ -14,6 +14,10 @@ module Api
         render json: UserSerializer.format_user_list(User.all)
       end
 
+      def show
+        render json: UserSerializer.new(User.find(params[:id]))
+      end
+
       private
 
       def user_params

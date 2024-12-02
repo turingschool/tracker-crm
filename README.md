@@ -108,13 +108,38 @@ Body: {
 }
 ```
 
-### Sessions
+#### Get a User 
+Request:
+```
+GET /api/v1/users/:id
+```
+
+Successful Response:
+```
+Status: 200 OK
+Body: {
+    "data": {
+        "id": "3",
+        "type": "user",
+        "attributes": {
+            "name": "Lionel Messi",
+            "email": "futbol_geek"
+        }
+    }
+}
+```
 
 #### Create a Session (Login)
 
 Request:
 ```
 POST /api/v1/sessions
+
+Body:
+{
+  "email": "john.doe@example.com",
+  "password": "password"
+}
 ``` 
 
 Successful Response:
