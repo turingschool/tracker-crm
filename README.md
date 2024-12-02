@@ -1,24 +1,144 @@
-# README
+# Tracker CRM by Turing School of Software and Design
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Overview
+This app is a Rails backend API for a job tracking CRM tool. 
 
-Things you may want to cover:
+## Setup
+Rails 7.1.5
+Ruby 3.2.2
 
-* Ruby version
+```
+bundle install
 
-* System dependencies
+rails db:create
+rails db:migrate
+rails db:seed
+```
 
-* Configuration
+This app will run on port 3001 locally.
 
-* Database creation
+## Testing
+This app uses RSpec for testing. 
 
-* Database initialization
+```
+bundle exec rspec
+```
 
-* How to run the test suite
+## API Documentation
 
-* Services (job queues, cache servers, search engines, etc.)
+### Users
 
-* Deployment instructions
+#### Create a User
+New users require a unique email address and a matching password and password confirmation.
 
-* ...
+Request:
+```
+POST /api/v1/users
+
+Body:
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "password": "password",
+  "password_confirmation": "password"
+}
+```
+
+Successful Response:
+```
+Status: 201 Created
+Body: {
+    "data": {
+        "id": "4",
+        "type": "user",
+        "attributes": {
+            "name": "John Doe",
+            "email": "john.doe@example.com"
+        }
+    }
+}
+```
+
+Error Responses:
+```
+Status: 400 Bad Request
+Body: {
+    "message": "Email has already been taken",
+    "status": 400
+}
+```
+
+```
+Status: 400 Bad Request
+Body: {
+    "message": "Password confirmation doesn't match Password",
+    "status": 400
+}
+```
+
+#### Get All Users
+Request:
+```
+GET /api/v1/users
+```
+
+Successful Response:
+```
+Status: 200 OK
+Body: {
+    "data": [
+        {
+            "id": "1",
+            "type": "user",
+            "attributes": {
+                "name": "Danny DeVito",
+                "email": "danny_de_v"
+            }
+        },
+        ...
+        {
+            "id": "4",
+            "type": "user",
+            "attributes": {
+                "name": "John Doe",
+                "email": "john.doe@example.com"
+            }
+        }
+    ]
+}
+```
+
+### Sessions
+
+#### Create a Session (Login)
+
+Request:
+```
+POST /api/v1/sessions
+``` 
+
+Successful Response:
+```
+Status: 200 OK
+
+Body: {
+    "data": {
+        "id": "4",
+        "type": "user",
+        "attributes": {
+            "name": "John Doe",
+            "email": "john.doe@example.com"
+        }
+    }
+}
+```
+
+Error Response:
+```
+Status: 401 Unauthorized
+
+Body: {
+    "message": "Invalid login credentials",
+    "status": 401
+}
+```
