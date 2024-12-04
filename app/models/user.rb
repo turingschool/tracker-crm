@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  rolify
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
   validates :password, presence: { require: true }
