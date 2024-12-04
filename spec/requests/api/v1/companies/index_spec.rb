@@ -61,7 +61,5 @@ RSpec.describe "Companies Index", type: :request do
 
       expect(json[:error]).to eq("Not authenticated")
     end
-
-
   end
 end
