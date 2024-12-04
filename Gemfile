@@ -47,3 +47,5 @@ end
 group :test do
   gem "simplecov"
 end
+
+gem "pundit", "~> 2.4"
