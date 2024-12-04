@@ -9,7 +9,8 @@ module Api
           return
         end
         
-        companies = Company.all
+        companies = @current_user.companies
+        
         if companies.empty?
           render json: { data: [], message: "No companies found" }
         else
@@ -34,10 +35,12 @@ module Api
 
       def authenticate_user
         header = request.headers["Authorization"]
+
         token = header.split(' ').last if header
         begin
           decoded_token = decoded_token(token)
           @current_user = User.find_by(decoded_token["user_id"])
+
         rescue 
           render json: { error: "Not authenticated" }, status: :unauthorized
         end

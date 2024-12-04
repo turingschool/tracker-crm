@@ -33,7 +33,7 @@ describe "Companies API", type: :request do
         notes: "This is a new company."
       }
 
-      post "/api/v1/companies", params: company_params, headers: { "Authorization" => "Bearer #{token}" }, as: :json
+      post "/api/v1/users/#{user.id}/companies", params: company_params, headers: { "Authorization" => "Bearer #{token}" }, as: :json
       
       expect(response).to have_http_status(:created)
       
