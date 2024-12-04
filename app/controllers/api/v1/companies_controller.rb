@@ -3,6 +3,20 @@ module Api
     class CompaniesController < ApplicationController
       before_action :authenticate_user
 
+      def index
+        if @current_user.nil?
+          render json: { error: "Not authenticated" }, status: :unauthorized
+          return
+        end
+        
+        companies = Company.all
+        if companies.empty?
+          render json: { data: [], message: "No companies found" }
+        else
+          render json: CompanySerializer.new(companies)
+        end
+      end
+
       def create
         company = @current_user.companies.build(company_params)
         if company.save
