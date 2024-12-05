@@ -34,16 +34,16 @@ module Api
       end
 
       def authenticate_user
-        header = request.headers["Authorization"]
-
-        token = header.split(' ').last if header
-        begin
-          decoded_token = decoded_token(token)
-          @current_user = User.find_by(decoded_token["user_id"])
-
-        rescue 
-          render json: { error: "Not authenticated" }, status: :unauthorized
+        token = request.headers['Authorization']&.split(' ')&.last
+        if token
+          begin
+            payload = decoded_token(token)
+            @current_user = User.find_by(id: payload[:user_id])
+          rescue JWT::DecodeError
+            @current_user = nil
+          end
         end
+        render json: { error: 'Not authenticated' }, status: :unauthorized unless @current_user
       end
 
       def decoded_token(token)
