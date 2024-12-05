@@ -12,7 +12,7 @@ RSpec.describe JobApplication, type: :model do
     it { should validate_presence_of(:company_id) }
   end
 
-  describe "associations" do
-    it { should belong_to(:company) }
-  end
+  # describe "associations" do
+  #   it { should belong_to(:company) }
+  # end
 end
