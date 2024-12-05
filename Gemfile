@@ -44,6 +44,7 @@ group :development, :test do
   gem "pry"
   gem "rspec-rails"
   gem "shoulda-matchers"
+  gem 'pundit-matchers', '~> 3.1'
 end
 
 group :test do
