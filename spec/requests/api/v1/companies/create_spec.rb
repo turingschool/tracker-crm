@@ -80,8 +80,8 @@ describe "Companies API", type: :request do
         expect(response).to have_http_status(422)
   
         error = JSON.parse(response.body, symbolize_names: true)
-        
-        expect(error[:message]).to include("Street address can't be blank, Zip code can't be blank, and Notes can't be blank")
+   
+        expect(error[:message]).to include("Street address can't be blank and Zip code can't be blank")
         expect(error[:status]).to eq(422)
     end
 

@@ -17,10 +17,19 @@ RSpec.describe "Companies Index", type: :request do
       get "/api/v1/companies", headers: { "Authorization" => "Bearer #{@token}" }, as: :json
 
       expect(response).to be_successful
-      json = JSON.parse(response.body, symbolize_names: true)
+      json = JSON.parse(response.body, symbolize_names: true)[:data]
 
-      expect(json[:data].count).to eq(3)
-      expect(json[:data][0][:attributes]).to include(:name, :website, :street_address, :city, :state, :zip_code, :notes)
+      expect(json.count).to eq(3)
+      json.each do |company|
+        expect(company[:attributes].keys).to eq([:name, :website, :street_address, :city, :state, :zip_code, :notes])
+        expect(company[:attributes][:name]).to be_a(String)
+        expect(company[:attributes][:website]).to be_a(String)
+        expect(company[:attributes][:street_address]).to be_a(String)
+        expect(company[:attributes][:city]).to be_a(String)
+        expect(company[:attributes][:state]).to be_a(String)
+        expect(company[:attributes][:zip_code]).to be_a(String)
+        expect(company[:attributes][:notes]).to be_a(String)
+      end
     end
 
     it "returns an empty array if no companies are found" do
