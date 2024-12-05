@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       resources :users, only: [:create, :index, :show]
       resources :companies, only: [:create, :index]
       resources :sessions, only: :create
+      resources :contacts, only: [:create, :index]
     end
   end
 end
