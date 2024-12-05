@@ -10,7 +10,7 @@ describe "Companies API", type: :request do
       expect(response).to have_http_status(:ok)
 
       token = JSON.parse(response.body)["token"]
-     
+
       expect(token).to_not be_nil
       expect(token).to be_a(String)
       expect(token.split('.').length).to eq(3)

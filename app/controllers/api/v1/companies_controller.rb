@@ -3,6 +3,21 @@ module Api
     class CompaniesController < ApplicationController
       before_action :authenticate_user
 
+      def index
+        if @current_user.nil?
+          render json: { error: "Not authenticated" }, status: :unauthorized
+          return
+        end
+        
+        companies = @current_user.companies
+        
+        if companies.empty?
+          render json: { data: [], message: "No companies found" }
+        else
+          render json: CompanySerializer.new(companies)
+        end
+      end
+
       def create
         company = @current_user.companies.build(company_params)
         if company.save
@@ -19,32 +34,20 @@ module Api
       end
 
       def authenticate_user
-        header = request.headers["Authorization"]
-        if header.blank?
-        render json: { error: "Authorization header missing" }, status: :unauthorized
+        token = request.headers['Authorization']&.split(' ')&.last
+        if token
+          begin
+            payload = decoded_token(token)
+            @current_user = User.find_by(id: payload[:user_id])
+          rescue JWT::DecodeError
+            @current_user = nil
+          end
         end
-        token = header.split(' ').last
-        render json: { error: "Token not provided" }, status: :unauthorized if token.blank?
-        begin
-          decoded_token = decoded_token(token)
-          @current_user = User.find_by!(id: decoded_token["user_id"])
-        rescue ActiveRecord::RecordNotFound
-          render json: { error: "User not found" }, status: :unauthorized
-        rescue JWT::DecodeError => e
-          render json: { error: "Invalid token: #{e.message}" }, status: :unauthorized
-        end
+        render json: { error: 'Not authenticated' }, status: :unauthorized unless @current_user
       end
 
       def decoded_token(token)
-        secret_key = Rails.application.secret_key_base
-        
-        begin
-          decoded = JWT.decode(token, secret_key, true, { algorithm: 'HS256' })[0]
-          raise JWT::DecodeError, "Invalid token payload" if decoded["user_id"].nil?
-          HashWithIndifferentAccess.new(decoded)
-        rescue JWT::VerificationError
-          raise JWT::DecodeError, "Token signature verification failed"
-        end
+        JWT.decode(token, Rails.application.secret_key_base, true, { algorithm: 'HS256' })[0].symbolize_keys
       end
     end
   end
