@@ -2,11 +2,6 @@ class UserPolicy < ApplicationPolicy
 # Feel free to use this as a template for your own policies
 # that will be used by their corresponding controller
 
-  def create?
-    admin?
-  end
-  # only an admin can create a user
-
   def index?
     admin?
   end

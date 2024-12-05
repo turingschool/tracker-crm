@@ -11,6 +11,7 @@ module Api
       end
 
       def index
+        # authorize User
         render json: UserSerializer.format_user_list(User.all)
       end
 
