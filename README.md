@@ -129,6 +129,51 @@ Body: {
 }
 ```
 
+#### Update a user
+Request:
+```
+PUT /api/v1/users/:id
+
+Body:
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "password": "password",
+  "password_confirmation": "password"
+}
+```
+
+Successful Response:
+```
+Status: 200 OK
+Body: {
+    "data": {
+        "id": "4",
+        "type": "user",
+        "attributes": {
+            "name": "Nathan Fillon",
+            "email": "firefly_captian"
+        }
+    }
+}
+```
+Error Responses:
+```
+Status: 400 Bad Request
+Body: {
+    "message": "Email has already been taken",
+    "status": 400
+}
+```
+
+```
+Status: 400 Bad Request
+Body: {
+    "message": "Password confirmation doesn't match Password",
+    "status": 400
+}
+```
+
 #### Create a Session (Login)
 
 Request:
