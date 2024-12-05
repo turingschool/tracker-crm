@@ -18,20 +18,19 @@ RSpec.describe "Job Application #create", type: :request do
     context "happy path" do
       it "Returns expected fields" do
         post "/api/v1/job_applications", 
-        params: { job_application: job_application_params }, 
-        as: :json
+        params: { job_application: job_application_params }
 
-        puts "Response Status: #{response.status}" # Logs HTTP status
-        puts "Response Body: #{response.body}" # Logs HTTP response body
-        require 'pry'; binding.pry
-
+        puts "Response Status: #{response.status}" # logs HTTP status
+        puts "Response Body: #{response.body}" # logs HTTP response body
+        
         expect(response).to be_successful
         expect(response.status).to eq(200)
+        # require 'pry'; binding.pry
 
-        response = JSON.parse(response.body, symbolize_names: true)
-        expect(response[:data][:type]).to eq("job_application")
-        expect(response[:data][:id]).to eq(JobApplication.last.id.to_s)
-        expect(response[:data][:attributes][:position_title]).to eq(job_application_params[:position_title])
+        jobApp = JSON.parse(response.body, symbolize_names: true)
+        expect(jobApp[:data][:type]).to eq("job_application")
+        expect(jobApp[:data][:id]).to eq(JobApplication.last.id.to_s)
+        expect(jobApp[:data][:attributes][:position_title]).to eq(job_application_params[:position_title])
       end
     end
   end
