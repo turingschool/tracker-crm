@@ -170,9 +170,9 @@ Body: {
 
 ### Companies
 
-#### Create a company
-Request:
+Get login credentials
 
+Request:
 ```
 POST /api/v1/sessions
 
@@ -187,8 +187,10 @@ Successful Response:
 
 ```
 Status: 200 OK
+
 This response will have a token like this:
 eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3MzM0MzUzMDJ9.O6FtfoVjcobUiBHfKmZNovtt57061ktlPx-UgIZFGaQ
+
 Body: {
     "data": {
         "id": "4",
@@ -201,7 +203,7 @@ Body: {
 }
 ```
 
-Error Response:
+Error Response if no token provided:
 
 ```
 Status: 401 Unauthorized
@@ -210,8 +212,15 @@ Body: {
     "message": "Invalid login credentials",
     "status": 401
 }
+```
+#### Create a company
 
-post "/api/v1/users/user.id/companies", add the bearer token to the auth tab in postman and will be able to create a company now.
+Request:
+```
+post "/api/v1/companies" 
+
+Add the bearer token to the auth tab in postman and will be able to create a company now for that specific user. Make sure to have the token for that user.
+
 raw json body: 
 {
   "name": "New Company",
@@ -222,8 +231,49 @@ raw json body:
   "zip_code": "10001",
   "notes": "This is a new company."
 }
+```
+Successful Response:
+```
+Status: 201 created
+
+"data": {
+        "id": "1",
+        "type": "company",
+        "attributes": {
+            "name": "New Company",
+            "website": "www.company.com",
+            "street_address": "123 Main St",
+            "city": "New York",
+            "state": "NY",
+            "zip_code": "10001",
+            "notes": "This is a new company."
+    }
+}
 
 ```
+
+Error response - missing params
+
+Request:
+```
+{
+    "name": "", 
+    "website": "amazon.com", 
+    "street_address": "410 Terry Ave N", 
+    "city": "Seattle", 
+    "state": "WA", 
+    "zip_code": "98109", 
+    "notes": "E-commerce"
+}
+```
+Response:
+```
+{
+    "message": "Name can't be blank",
+    "status": 422
+}
+```
+
 
 
 
@@ -231,9 +281,12 @@ raw json body:
 #### Get all companies
 Request:
 
-GET /api/v1/users/:id/companies
+```
+GET /api/v1/companies
 
-Successful Response
+Authorization: Bearer Token - put in token for user
+```
+Successful Response:
 
 ```
 Body:{
@@ -270,14 +323,16 @@ Body:{
 }
 ```
 
-User with no companies
-
+User with no companies:
 ```
-
+{
+    "data": [],
+    "message": "No companies found"
+}
 ```
-
-No token response
-
+No token or bad token response
+```
 {
     "error": "Not authenticated"
 }
+```
