@@ -178,4 +178,9 @@ Body: {
     - add_role :user
     - remove_role -->
 
-<!-- Pundit is focused around the notion of policy classes.  -->
+<!-- Pundit is focused around the notion of policy classes.
+Pundit policies are created in the app/policies directory and correspond to the resources (models) for which access control needs to be managed. These policies will be utilized in the respective controllers to enforce role-based permissions. 
+
+To connect the policies to your controllers, you’ll typically use the #authorize method provided by Pundit in actions where you want to enforce access control.  
+
+All policies inherit from ApplicationPolicy, which defaults all controller actions to false.  It is up to you, as you develop to keep in mind what actions users are authorized to take.  Admin role users should be authorized to do anything.-->

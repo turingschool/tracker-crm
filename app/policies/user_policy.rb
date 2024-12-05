@@ -1,14 +1,32 @@
 class UserPolicy < ApplicationPolicy
-  # NOTE: Up to Pundit v2.3.1, the inheritance was declared as
-  # `Scope < Scope` rather than `Scope < ApplicationPolicy::Scope`.
-  # In most cases the behavior will be identical, but if updating existing
-  # code, beware of possible changes to the ancestors:
-  # https://gist.github.com/Burgestrand/4b4bc22f31c8a95c425fc0e30d7ef1f5
+# Feel free to use this as a template for your own policies
+# that will be used by their corresponding controller
+
+  def create?
+    admin?
+  end
+  # only an admin can create a user
+
+  def index?
+    admin?
+  end
+  # only an admin can view all the users
+
+  def show?
+    admin? || user == record
+  end
+  # admin can see any user, a user can only see their own record/themselves
 
   class Scope < ApplicationPolicy::Scope
     # NOTE: Be explicit about which records you allow access to!
-    # def resolve
-    #   scope.all
-    # end
+    def resolve
+      if admin?
+        scope.all
+      elsif user?
+        scope.where(id: user.id)
+      else
+        scope.none
+      end
+    end
   end
 end
