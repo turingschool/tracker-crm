@@ -168,7 +168,7 @@ Body: {
 }
 ```
 
-<!-- add 'resourcify' to models if you want to apply roles (like if we want someone to moderate companies) -->
+<!-- Rolify add 'resourcify' to models if you want to apply roles (like if we want someone to moderate companies) -->
 
 <!-- a newly created users role is :user by default -->
 <!-- dynamic shortcuts are methods to query or modify roles
@@ -177,3 +177,5 @@ Body: {
     - add_role :admin
     - add_role :user
     - remove_role -->
+
+<!-- Pundit is focused around the notion of policy classes.  -->

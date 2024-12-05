@@ -8,6 +8,14 @@ class ApplicationPolicy
     @record = record
   end
 
+  def admin?
+    user.has_role?(:admin)
+  end
+
+  def user?
+    user.has_role?(:user)
+  end
+  
   def index?
     false
   end
