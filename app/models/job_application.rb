@@ -1,5 +1,5 @@
 class JobApplication < ApplicationRecord
-  # belongs_to :company
+  belongs_to :company
 
   validates :position_title, presence: true
   validates :date_applied, presence: true
