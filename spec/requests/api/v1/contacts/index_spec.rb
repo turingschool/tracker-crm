@@ -9,6 +9,7 @@ describe "Contacts Controller", type: :request do
         
         user_params = { email: "its_me", password: "reallyGoodPass" }
         post api_v1_sessions_path, params: user_params, as: :json
+        # require 'pry'; binding.pry
         @token = JSON.parse(response.body)["token"]
         
         @user2 = User.create(name: "Jane", email: "email", password: "Password")
@@ -19,21 +20,27 @@ describe "Contacts Controller", type: :request do
 
       it "should return 200 and provide the appropriate contacts" do
         get api_v1_contacts_path, headers: { "Authorization" => "Bearer #{@token}" }, as: :json
-
+        # require 'pry'; binding.pry
         expect(response).to be_successful
         json = JSON.parse(response.body, symbolize_names: true)[:data]
    
-        expect(json.first[:attributes]).to include(:first_name, :last_name, :company, :email, :phone_number, :notes, :user_id)
+        json[:data].each do |company| 
+          expect(company[:attributes]).to include(:name, :website, :street_address, :city, :state, :zip_code, :notes)
+        end
+        # expect(json.first[:attributes]).to include(:first_name, :last_name, :company, :email, :phone_number, :notes, :user_id)
       end
 
       it "should return 200 and an empty array if no contacts are found" do
         
-        get api_v1_contacts_path, headers: { "Authorization" => "Bearer #{@token}" }, as: :json
+        get api_v1_contacts_path, headers: { "Authorization" => "Bearer #{@token2}" }, as: :json
 
         expect(response).to be_successful
         json = JSON.parse(response.body, symbolize_names: true)[:data]
    
-        expect(json.first[:attributes]).to include(:first_name, :last_name, :company, :email, :phone_number, :notes, :user_id)
+        json[:data].each do |company| 
+          expect(company[:attributes]).to include(:name, :website, :street_address, :city, :state, :zip_code, :notes)
+        end
+        # expect(json.first[:attributes]).to include(:first_name, :last_name, :company, :email, :phone_number, :notes, :user_id)
       end
     end
 

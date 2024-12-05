@@ -5,7 +5,11 @@ module Api
 
       def index
         contacts = @current_user.contacts
-        render json: ContactsSerializer.new(contacts)
+        if contacts.nil?
+          render json: { data: [], message: "No contacts found" }
+        else
+          render json: ContactsSerializer.new(contacts), status: :ok
+        end
       end
 
       private

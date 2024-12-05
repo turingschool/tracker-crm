@@ -14,8 +14,8 @@ module Api
       def create
         user = User.find_by(email: params[:email])
         if user&.authenticate(params[:password])
+
           token = generate_token(user_id: user.id)
-          # require 'pry'; binding.pry
           # render json: { token: token, user: UserSerializer.new(user) }, status: :ok
           render json: UserSerializer.new(user)
         else
@@ -27,10 +27,8 @@ module Api
 
       def generate_token(payload)
         payload[:exp] = 24.hours.from_now.to_i
-        # require 'pry'; binding.pry
         JWT.encode(payload, Rails.application.secret_key_base, 'HS256')
       end
-
     end
   end
 end
