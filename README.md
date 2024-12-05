@@ -167,3 +167,13 @@ Body: {
     "status": 401
 }
 ```
+
+<!-- add 'resourcify' to models if you want to apply roles (like if we want someone to moderate companies) -->
+
+<!-- a newly created users role is :user by default -->
+<!-- dynamic shortcuts are methods to query or modify roles
+    - is_admin?
+    - is_user?
+    - add_role :admin
+    - add_role :user
+    - remove_role -->

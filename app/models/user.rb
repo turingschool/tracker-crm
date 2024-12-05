@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  rolify
+  rolify strict: true
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
@@ -11,7 +11,7 @@ class User < ApplicationRecord
   after_create :assign_default_role
 
   def assign_default_role
-    self.add_role(:user) if self.roles.blank?
+    set_role(:user) if roles.blank?
   end
 
   def is_admin?
@@ -22,11 +22,8 @@ class User < ApplicationRecord
     has_role?(:user)
   end
 
-  def assign_role(role_name, current_user)
-    if current_user.has_role?(:admin)
-      self.add_role(role_name)
-    else
-      raise StandardError, "Only admins can assign roles."
-    end
+  def set_role(role_name)
+    self.roles.destroy_all
+    self.add_role(role_name)
   end
 end
