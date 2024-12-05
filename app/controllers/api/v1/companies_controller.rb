@@ -20,17 +20,31 @@ module Api
 
       def authenticate_user
         header = request.headers["Authorization"]
-        token = header.split(' ').last if header
+        if header.blank?
+        render json: { error: "Authorization header missing" }, status: :unauthorized
+        end
+        token = header.split(' ').last
+        render json: { error: "Token not provided" }, status: :unauthorized if token.blank?
         begin
           decoded_token = decoded_token(token)
-          @current_user = User.find_by(decoded_token["user_id"])
-        rescue 
-          render json: { error: "Not authenticated" }, status: :unauthorized
+          @current_user = User.find_by!(id: decoded_token["user_id"])
+        rescue ActiveRecord::RecordNotFound
+          render json: { error: "User not found" }, status: :unauthorized
+        rescue JWT::DecodeError => e
+          render json: { error: "Invalid token: #{e.message}" }, status: :unauthorized
         end
       end
 
       def decoded_token(token)
-        JWT.decode(token, Rails.application.secret_key_base, true, { algorithm: 'HS256' })[0].symbolize_keys
+        secret_key = Rails.application.secret_key_base
+        
+        begin
+          decoded = JWT.decode(token, secret_key, true, { algorithm: 'HS256' })[0]
+          raise JWT::DecodeError, "Invalid token payload" if decoded["user_id"].nil?
+          HashWithIndifferentAccess.new(decoded)
+        rescue JWT::VerificationError
+          raise JWT::DecodeError, "Token signature verification failed"
+        end
       end
     end
   end

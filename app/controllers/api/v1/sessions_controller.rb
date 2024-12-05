@@ -4,8 +4,8 @@ module Api
       def create
         user = User.find_by(email: params[:email])
         if user&.authenticate(params[:password])
-          token = generate_token(user_id: user.id)
-          render json: { token: token, user: UserSerializer.new(user) }, status: :ok
+          token = encode_token(user)
+          render json: { token: token, user: UserSerializer.new(user)}, status: :ok
         else
           render json: ErrorSerializer.format_error(ErrorMessage.new("Invalid login credentials", 401)), status: :unauthorized
         end
@@ -13,9 +13,13 @@ module Api
 
       private
 
-      def generate_token(payload)
-        payload[:exp] = 24.hours.from_now.to_i
-        JWT.encode(payload, Rails.application.secret_key_base, 'HS256')
+      def encode_token(user)
+        payload = {
+          user_id: user.id,
+          exp: 24.hours.from_now.to_i
+        }
+        secret_key = Rails.application.secret_key_base
+        JWT.encode(payload, secret_key, 'HS256')
       end
     end
   end
