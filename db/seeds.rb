@@ -10,8 +10,3 @@
 User.create!(name: "Danny DeVito", email: "danny_de@email.com", password: "jerseyMikesRox7")
 User.create!(name: "Dolly Parton", email: "dollyP@email.com", password: "Jolene123")
 User.create!(name: "Lionel Messi", email: "futbol_geek@email.com", password: "test123")
-
-
-
-# rails generate migration CreateJobApplication position_title:string company:string date_applied:date status:integer notes:text job_description:text application_url:string contact_information:text
-# rails generate migration CreateJobApplication position_title:string date_applied:date status:integer notes:text job_description:text application_url:string contact_information:text company_id: null
