@@ -2,6 +2,15 @@ require "rails_helper"
 
 RSpec.describe "Job Application #create", type: :request do
   describe "Create Job Application" do
+    before(:each) do
+      @user = User.create!(name: "Dolly Parton", email: "dollyP123@email.com", password: "Jolene123")
+
+      @google = Company.create!(user_id: @user.id, name: "Google", website: "google.com", street_address: "1600 Amphitheatre Parkway", city: "Mountain View", state: "CA", zip_code: "94043", notes: "Search engine")
+
+      @facebook = Company.create!(user_id: @user.id, name: "Facebook", website: "facebook.com", street_address: "1 Hacker Way", city: "Menlo Park", state: "CA", zip_code: "94025", notes: "Social media")
+
+      @amazon = Company.create!(user_id: @user.id, name: "Amazon", website: "amazon.com", street_address: "410 Terry Ave N", city: "Seattle", state: "WA", zip_code: "98109", notes: "E-commerce")
+    end
     let(:job_application_params) do
       {
         position_title: "Jr. CTO",
@@ -11,7 +20,7 @@ RSpec.describe "Job Application #create", type: :request do
         job_description: "Looking for Turing grad/jr dev to be CTO",
         application_url: "www.example.com",
         contact_information: "boss@example.com",
-        company_id: 1
+        company_id: @google.id
       }
     end
 
@@ -56,7 +65,7 @@ RSpec.describe "Job Application #create", type: :request do
 
         json = JSON.parse(response.body, symbolize_names: true)
 
-        expect(json[:message]).to eq("Position title can't be blank")
+        expect(json[:message]).to eq("Company must exist and Position title can't be blank")
         expect(json[:status]).to eq(400)
       end
 
@@ -80,7 +89,7 @@ RSpec.describe "Job Application #create", type: :request do
 
         json = JSON.parse(response.body, symbolize_names: true)
 
-        expect(json[:message]).to eq("Position title can't be blank")
+        expect(json[:message]).to eq("Company must exist and Position title can't be blank")
         expect(json[:status]).to eq(400)
       end
     end

@@ -21,3 +21,4 @@ JobApplication.create!(
   contact_information: "boss@example.com",
   company_id: 1
 )
+
