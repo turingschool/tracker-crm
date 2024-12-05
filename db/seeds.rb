@@ -10,3 +10,14 @@
 User.create!(name: "Danny DeVito", email: "danny_de@email.com", password: "jerseyMikesRox7")
 User.create!(name: "Dolly Parton", email: "dollyP@email.com", password: "Jolene123")
 User.create!(name: "Lionel Messi", email: "futbol_geek@email.com", password: "test123")
+
+JobApplication.create!(
+  position_title: "Jr. CTO",
+  date_applied: "2024-10-31",
+  status: 1,
+  notes: "Fingers crossed!",
+  job_description: "Looking for Turing grad/jr dev to be CTO",
+  application_url: "www.example.com",
+  contact_information: "boss@example.com",
+  company_id: 1
+)
