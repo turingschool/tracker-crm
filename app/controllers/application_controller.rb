@@ -15,5 +15,7 @@ class ApplicationController < ActionController::API
     render json: { error: 'Not authenticated' }, status: :unauthorized unless @current_user
   end
 
-
+  def decoded_token(token)
+    JWT.decode(token, Rails.application.secret_key_base, true, { algorithm: 'HS256' })[0].symbolize_keys
+  end
 end
