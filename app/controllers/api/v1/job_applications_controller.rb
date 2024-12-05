@@ -5,7 +5,9 @@ class Api::V1::JobApplicationsController < ApplicationController
     if job_application.save
       render json: JobApplicationSerializer.new(job_application), status: :ok
     else
-      render json: ErrorSerializer.new(job_application.errors), status: :unprocessable_entity
+      # render json: ErrorSerializer.new(job_application.errors), status: :unprocessable_entity
+      render json: ErrorSerializer.format_error(ErrorMessage.new(job_application.errors.full_messages.to_sentence, 400)), status: :bad_request
+
     end
   end
 
