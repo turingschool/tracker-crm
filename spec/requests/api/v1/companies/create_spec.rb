@@ -50,5 +50,40 @@ describe "Companies API", type: :request do
       expect(new_user_company[:attributes][:zip_code]).to be_a(String)
       expect(new_user_company[:attributes][:notes]).to be_a(String)
     end
+
+    it 'a logged in user is not to able create a company if invalid params are sent' do
+      user = User.create!(name: "Melchor", email: "melchor@example.com", password: "password123")
+  
+        post api_v1_sessions_path, params: { email: user.email, password: "password123" }, as: :json
+        
+        expect(response).to have_http_status(:ok)
+  
+        token = JSON.parse(response.body)["token"]
+      
+        expect(token).to_not be_nil
+        expect(token).to be_a(String)
+        expect(token.split('.').length).to eq(3)
+  
+        
+        company_params = {
+          name: "New Company",
+          website: "http://newcompany.com",
+          street_address: "",
+          city: "New City",
+          state: "NY",
+          zip_code: "",
+          notes: ""
+        }
+  
+        post "/api/v1/companies", params: company_params, headers: { "Authorization" => "Bearer #{token}" }, as: :json
+        
+        expect(response).to have_http_status(422)
+  
+        error = JSON.parse(response.body, symbolize_names: true)
+        
+        expect(error[:message]).to include("Street address can't be blank, Zip code can't be blank, and Notes can't be blank")
+        expect(error[:status]).to eq(422)
+    end
+
   end
 end
