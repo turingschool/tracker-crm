@@ -32,6 +32,7 @@ RSpec.describe "Job Application #create", type: :request do
         expect(response.status).to eq(200)
 
         jobApp = JSON.parse(response.body, symbolize_names: true)
+        
         expect(jobApp[:data][:type]).to eq("job_application")
         expect(jobApp[:data][:id]).to eq(JobApplication.last.id.to_s)
         expect(jobApp[:data][:attributes][:position_title]).to eq(job_application_params[:position_title])
@@ -64,6 +65,7 @@ RSpec.describe "Job Application #create", type: :request do
         expect(response.status).to eq(400)
 
         json = JSON.parse(response.body, symbolize_names: true)
+        require 'pry'; binding.pry
 
         expect(json[:message]).to eq("Company must exist and Position title can't be blank")
         expect(json[:status]).to eq(400)
