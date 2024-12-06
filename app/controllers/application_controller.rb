@@ -15,6 +15,7 @@ class ApplicationController < ActionController::API
       begin
         payload = decoded_token(token)
         @current_user = User.find_by(id: payload[:user_id])
+        @current_user_roles = payload[:roles]
       rescue JWT::DecodeError
         @current_user = nil
       end
