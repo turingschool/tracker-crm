@@ -52,7 +52,6 @@ RSpec.describe "Job Application #create", type: :request do
         params: {
           date_applied: "2024-10-31",
           status: 1,
-          notes: "Fingers crossed!",
           job_description: "Looking for Turing grad/jr dev to be CTO",
           application_url: "www.example.com",
           contact_information: "boss@example.com",
