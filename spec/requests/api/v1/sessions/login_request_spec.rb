@@ -12,9 +12,10 @@ describe "Sessions API", type: :request do
 
         post api_v1_sessions_path, params: user_params, as: :json
         json = JSON.parse(response.body, symbolize_names: true)
-
         expect(response).to have_http_status(:ok)
-        expect(json[:data][:attributes]).to_not have_key(:password)
+        expect(json).to have_key(:token)
+        expect(json[:user][:data][:attributes]).to include(name: "Me", email: "its_me")
+        expect(json[:user][:data][:attributes]).to_not have_key(:password)
       end
     end
 
