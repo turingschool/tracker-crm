@@ -10,3 +10,21 @@
 User.create!(name: "Danny DeVito", email: "danny_de@email.com", password: "jerseyMikesRox7")
 User.create!(name: "Dolly Parton", email: "dollyP@email.com", password: "Jolene123")
 User.create!(name: "Lionel Messi", email: "futbol_geek@email.com", password: "test123")
+
+user = User.create!(name: "Jane Doe", email: "123@email.com", password: "Abc123")
+Contact.create!(
+  first_name: "John",
+  last_name: "Smith",
+  company: "Turing",
+  email: "123@example.com",
+  phone_number: "(123) 555-6789",
+  notes: "Type notes here...",
+  user_id: user.id)
+Contact.create!(
+  first_name: "Jane",
+  last_name: "Smith",
+  company: "Turing",
+  email: "123@example.com",
+  phone_number: "(123) 555-6789",
+  notes: "Type notes here...",
+  user_id: user.id)
