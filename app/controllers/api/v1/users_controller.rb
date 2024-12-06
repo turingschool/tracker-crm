@@ -25,6 +25,7 @@ module Api
       def update
         user = User.find(params[:id])
         user.assign_attributes(user_params)
+        authorize user
         if user.save
           render json: UserSerializer.new(user), status: :ok
         else

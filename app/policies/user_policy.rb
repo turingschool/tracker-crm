@@ -17,6 +17,11 @@ class UserPolicy < ApplicationPolicy
   end
   # admin can see any user, a user can only see their own record/themselves
 
+  def update?
+    admin? || user == record
+  end
+  # admin can update any user, a user can only update their own record/themselves
+
   class Scope < ApplicationPolicy::Scope
     # NOTE: Be explicit about which records you allow access to!
     def resolve
