@@ -4,11 +4,6 @@ module Api
       before_action :authenticate_user
 
       def index
-        if @current_user.nil?
-          render json: { error: "Not authenticated" }, status: :unauthorized
-          return
-        end
-        
         companies = @current_user.companies
         
         if companies.empty?
@@ -31,10 +26,6 @@ module Api
 
       def company_params
         params.permit(:name, :website, :street_address, :city, :state, :zip_code, :notes)
-      end
-
-      def decoded_token(token)
-        JWT.decode(token, Rails.application.secret_key_base, true, { algorithm: 'HS256' })[0].symbolize_keys
       end
     end
   end

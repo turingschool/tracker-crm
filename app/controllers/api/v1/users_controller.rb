@@ -18,6 +18,16 @@ module Api
         render json: UserSerializer.new(User.find(params[:id]))
       end
 
+      def update
+        user = User.find(params[:id])
+        user.assign_attributes(user_params)
+        if user.save
+          render json: UserSerializer.new(user), status: :ok
+        else
+          render json: ErrorSerializer.format_error(ErrorMessage.new(user.errors.full_messages.to_sentence, 400)), status: :bad_request
+        end
+      end
+
       private
 
       def user_params
