@@ -26,7 +26,7 @@ RSpec.describe "Job Application #create", type: :request do
 
     context "happy path" do
       it "Returns expected fields" do
-        post "/api/v1/job_applications", 
+        post "/api/v1/users/#{@user.id}/job_applications", 
         params: { job_application: job_application_params }
         expect(response).to be_successful
         expect(response.status).to eq(200)
@@ -48,7 +48,7 @@ RSpec.describe "Job Application #create", type: :request do
 
     context "sad path" do
       it "Returns error serializer if params are missing attribute" do
-        post "/api/v1/job_applications",
+        post "/api/v1/users/#{@user.id}/job_applications", 
         params: {
           date_applied: "2024-10-31",
           status: 1,
@@ -65,14 +65,14 @@ RSpec.describe "Job Application #create", type: :request do
         expect(response.status).to eq(400)
 
         json = JSON.parse(response.body, symbolize_names: true)
-        require 'pry'; binding.pry
+        # require 'pry'; binding.pry
 
         expect(json[:message]).to eq("Company must exist and Position title can't be blank")
         expect(json[:status]).to eq(400)
       end
 
       it "Returns error serializer if param keys are missing value" do
-        post "/api/v1/job_applications",
+        post "/api/v1/users/#{@user.id}/job_applications", 
         params: {
           position_title: "",
           date_applied: "2024-10-31",
