@@ -213,6 +213,53 @@ Body: {
 }
 ```
 
+### Job Applications
+
+#### Create a Job Application
+
+Request:
+```
+POST /api/v1/users/:user_id/job_applications
+
+Body: {
+    {
+        position_title: "Jr. CTO",
+        date_applied: "2024-10-31",
+        status: 1,
+        notes: "Fingers crossed!",
+        job_description: "Looking for Turing grad/jr dev to be CTO",
+        application_url: "www.example.com",
+        contact_information: "boss@example.com",
+        company_id: id_1
+      }
+}
+```
+
+Successful Response:
+```
+
+Status: 200
+
+{:data=>
+  {:id=>"4",
+   :type=>"job_application",
+   :attributes=>
+    {:position_title=>"Jr. CTO",
+     :date_applied=>"2024-10-31",
+     :status=>1,
+     :notes=>"Fingers crossed!",
+     :job_description=>"Looking for Turing grad/jr dev to be CTO",
+     :application_url=>"www.example.com",
+     :contact_information=>"boss@example.com",
+     :company_id=>35}}
+     }
+```
+
+Unsuccessful Response:
+```
+{:message=>"Company must exist and Position title can't be blank", :status=>400}
+```
+
 ### Companies
 
 Get login credentials
