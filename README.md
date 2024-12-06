@@ -174,7 +174,7 @@ Body: {
 
 Request:
 ```
-POST /api/v1/job_applications
+POST /api/v1/users/:user_id/job_applications
 
 Body: {
     {
