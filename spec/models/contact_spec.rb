@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe Contact, type: :model do
   describe "associations" do
     it { should belong_to(:user) }
+    it { should belong_to(:company).optional }
+
   end
 
   describe "validations" do  
@@ -35,6 +37,24 @@ RSpec.describe Contact, type: :model do
         same_contact = Contact.new(first_name: "John", last_name: "Smith", user: @user2)
 
         expect(same_contact).to be_valid
+      end
+
+      it "is valid without a company" do
+        contact = Contact.new(first_name: "John", last_name: "Smith", user: @user1)
+        expect(contact).to be_valid
+      end
+
+      it "is valid with a company" do
+        company = Company.create!(
+          name: "Turing", 
+          website: "www.turing.com", 
+          street_address: "123 Main St",
+          city: "Denver",
+          state: "CO",
+          zip_code: "80218",
+          user: @user1)
+        contact = Contact.new(first_name: "John", last_name: "Smith", user: @user1, company: company)
+        expect(contact).to be_valid
       end
     end
   end
