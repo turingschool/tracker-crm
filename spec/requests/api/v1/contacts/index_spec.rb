@@ -5,7 +5,7 @@ describe "Contacts Controller", type: :request do
     context "returns a list of all contacts for a specific user" do
       before(:each) do
         @user = User.create!(name: "Me", email: "its_me", password: "reallyGoodPass")
-        Contact.create!(first_name: "John", last_name: "Smith", company: "Turing", email: "123@example.com", phone_number: "(123) 555-6789", notes: "Notes here...", user_id: @user.id)
+        Contact.create!(first_name: "John", last_name: "Smith", company_id: "", email: "123@example.com", phone_number: "123-555-6789", notes: "Notes here...", user_id: @user.id)
         user_params = { email: "its_me", password: "reallyGoodPass" }
         post api_v1_sessions_path, params: user_params, as: :json
         @token = JSON.parse(response.body)["token"]
@@ -23,7 +23,7 @@ describe "Contacts Controller", type: :request do
         json = JSON.parse(response.body, symbolize_names: true)[:data]
    
         json.each do |contact| 
-          expect(contact[:attributes]).to include(:first_name, :last_name, :company, :email, :phone_number, :notes, :user_id)
+          expect(contact[:attributes]).to include(:first_name, :last_name, :company_id, :email, :phone_number, :notes, :user_id)
         end
       end
 
