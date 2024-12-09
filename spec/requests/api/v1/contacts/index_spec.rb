@@ -2,10 +2,11 @@ require "rails_helper"
 
 describe "Contacts Controller", type: :request do
   describe "#index action" do
-    context "returns a list of all contacts for a specific user" do
+    context "Happy Paths" do
       before(:each) do
         @user = User.create!(name: "Me", email: "its_me", password: "reallyGoodPass")
-        Contact.create!(first_name: "John", last_name: "Smith", company_id: "", email: "123@example.com", phone_number: "123-555-6789", notes: "Notes here...", user_id: @user.id)
+        @company = Company.create!(name: "Turing", website: "www.turing.com", street_address: "123 Main St", city: "Denver", state: "CO", zip_code: "80218", user_id: @user.id)
+        Contact.create!(first_name: "John", last_name: "Smith", company_id: @company.id, email: "123@example.com", phone_number: "123-555-6789", notes: "Notes here...", user_id: @user.id)
         user_params = { email: "its_me", password: "reallyGoodPass" }
         post api_v1_sessions_path, params: user_params, as: :json
         @token = JSON.parse(response.body)["token"]
@@ -20,14 +21,17 @@ describe "Contacts Controller", type: :request do
         get api_v1_contacts_path, headers: { "Authorization" => "Bearer #{@token}" }, as: :json
 
         expect(response).to be_successful
-        json = JSON.parse(response.body, symbolize_names: true)[:data]
-   
-        json.each do |contact| 
-          expect(contact[:attributes]).to include(:first_name, :last_name, :company_id, :email, :phone_number, :notes, :user_id)
-        end
+        json = JSON.parse(response.body, symbolize_names: true)[:data].first
+
+        expect(json[:attributes][:first_name]).to eq("John")
+        expect(json[:attributes][:last_name]).to eq("Smith")
+        expect(json[:attributes][:email]).to eq("123@example.com")
+        expect(json[:attributes][:phone_number]).to eq("123-555-6789")
+        expect(json[:attributes][:notes]).to eq("Notes here...")
+        expect(json[:attributes][:company_id]).to eq(@company.id)
       end
 
-      it "should return 200 and an empty array if no contacts are found" do
+      it "should return 200 and an empty array if user has no contacts" do
         get api_v1_contacts_path, headers: { "Authorization" => "Bearer #{@token2}" }, as: :json
 
         expect(response).to be_successful
@@ -38,7 +42,7 @@ describe "Contacts Controller", type: :request do
       end
     end
 
-    context "request is invalid" do 
+    context "Sad Paths" do 
       it "returns a 403 and an error message if no token is provided" do
         get api_v1_contacts_path, as: :json
   
@@ -68,7 +72,6 @@ describe "Contacts Controller", type: :request do
   
         expect(json[:error]).to eq("Not authenticated")
       end
-
     end
   end
 end

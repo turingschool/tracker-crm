@@ -47,42 +47,122 @@ describe "Contacts Create", type: :request do
 			expect(json[:attributes][:company_id]).to eq(@company.id)
 		end
 
-		it "creates a contact with only required fields" do
-      minimal_params =  {first_name: "John", last_name: "Smith" }
+		it "creates a contact with only required fields, first and last name, and returns a 201" do
+      minimal_params =  { contact: {first_name: "John", last_name: "Smith" } }
 
-      post api_v1_contacts_path, params: { contact: minimal_params }, headers: { "Authorization" => "Bearer #{@token}" }, as: :json
+      post api_v1_contacts_path, params: minimal_params , headers: { "Authorization" => "Bearer #{@token}" }, as: :json
 
       expect(response).to have_http_status(:created)
-      json = JSON.parse(response.body, symbolize_names: true)
-      expect(json[:data][:attributes][:first_name]).to eq("John")
-      expect(json[:data][:attributes][:last_name]).to eq("Smith")
+      json = JSON.parse(response.body, symbolize_names: true)[:data]
+      expect(json[:attributes][:first_name]).to eq("John")
+      expect(json[:attributes][:last_name]).to eq("Smith")
     end
 
-		it "should return an 422 error with missing required fields" do
-			missing_contact_params = { first_name: "", last_name: "Smith" } 
+		it 'creates a contact with a correct email, and returns a 201' do
+			partial_params =  { contact: {first_name: "John", last_name: "Smith", email: "john@example.com"} }
 
-			post api_v1_contacts_path, params: {contact: missing_contact_params}, headers: { "Authorization" => "Bearer #{@token}" }, as: :json
+      post api_v1_contacts_path, params: partial_params , headers: { "Authorization" => "Bearer #{@token}" }, as: :json
 
-			expect(response).to have_http_status(:unprocessable_entity)
-			json = JSON.parse(response.body, symbolize_names: true)
-			
-			expect(json[:error]).to eq("First name can't be blank")
+      expect(response).to have_http_status(:created)
+      json = JSON.parse(response.body, symbolize_names: true)[:data]
+      expect(json[:attributes][:first_name]).to eq("John")
+      expect(json[:attributes][:last_name]).to eq("Smith")
+			expect(json[:attributes][:email]).to eq("john@example.com")
 		end
 
-		it "creates a contact with only required fields" do
-			minimal_params = { contact: { first_name: "John", last_name: "Smith" } }
+		it 'creates a contact with a valid phone number, returns a 201' do
+			partial_params =  { contact: {first_name: "John", last_name: "Smith", phone_number: "123-555-6789"} }
 
-			post api_v1_contacts_path, params: minimal_params, headers: { "Authorization" => "Bearer #{@token}" }, as: :json
+      post api_v1_contacts_path, params: partial_params , headers: { "Authorization" => "Bearer #{@token}" }, as: :json
 
-			expect(response).to have_http_status(:created)
-			json = JSON.parse(response.body, symbolize_names: true)
-			expect(json[:data][:attributes][:first_name]).to eq("John")
-			expect(json[:data][:attributes][:last_name]).to eq("Smith")
+      expect(response).to have_http_status(:created)
+      json = JSON.parse(response.body, symbolize_names: true)[:data]
+      expect(json[:attributes][:first_name]).to eq("John")
+      expect(json[:attributes][:last_name]).to eq("Smith")
+			expect(json[:attributes][:phone_number]).to eq("123-555-6789")
 		end
 	end
 	
+	context "when the request is invalid" do
+		before(:each) do
+			@user1 = User.create!(name: "Me", email: "happy@gmail.com", password: "reallyGoodPass")
+			user_params = { email: "happy@gmail.com", password: "reallyGoodPass" }
+			post api_v1_sessions_path, params: user_params, as: :json
+			@token = JSON.parse(response.body)["token"]
+			
+			@user2 = User.create!(name: "Jane", email: "dancing@gmail.com", password: "Password")
+			user_params2 = { email: "dancing", password: "Password" }
+			post api_v1_sessions_path, params: user_params2, as: :json
+			@token2 = JSON.parse(response.body)["token"]
+
+			@company = Company.create!(
+				name: "Turing", 
+				website: "www.turing.com", 
+				street_address: "123 Main St",
+				city: "Denver",
+				state: "CO",
+				zip_code: "80218",
+				user_id: @user1.id)
+		end
+
+		it "returns a 422 error when creating a duplicate contact" do
+      minimal_params =  { contact: {first_name: "John", last_name: "Smith" } }
+      post api_v1_contacts_path, params: minimal_params , headers: { "Authorization" => "Bearer #{@token}" }, as: :json
+
+      expect(response).to have_http_status(:created)
+			expect(response).to be_successful
+
+      post api_v1_contacts_path, params: minimal_params , headers: { "Authorization" => "Bearer #{@token}" }, as: :json
+			expect(response).to_not be_successful
+			expect(response).to have_http_status(:unprocessable_entity)
+
+      json = JSON.parse(response.body, symbolize_names: true)
+      expect(json[:error]).to eq("First name and Last name already exist for this user")
+    end
+
+		it "returns a 422 error for missing first_name" do
+			missing_contact_params = { contact: { first_name: "", last_name: "Smith" } }
+
+			post api_v1_contacts_path, params: missing_contact_params, headers: { "Authorization" => "Bearer #{@token}" }, as: :json
+
+			expect(response).to have_http_status(:unprocessable_entity)
+			json = JSON.parse(response.body, symbolize_names: true)
+			expect(json[:error]).to eq("First name can't be blank")
+		end
+
+		it "returns a 422 error for missing last_name" do
+			missing_contact_params = { contact: { first_name: "John", last_name: "" } }
+
+			post api_v1_contacts_path, params: missing_contact_params, headers: { "Authorization" => "Bearer #{@token}" }, as: :json
+
+			expect(response).to have_http_status(:unprocessable_entity)
+			json = JSON.parse(response.body, symbolize_names: true)
+			expect(json[:error]).to eq("Last name can't be blank")
+		end
+
+		it "returns a 422 error for invalid email format" do
+			invalid_email_params = { contact: { first_name: "John", last_name: "Smith", email: "invalid-email" } }
+
+			post api_v1_contacts_path, params: invalid_email_params, headers: { "Authorization" => "Bearer #{@token}" }, as: :json
+
+			expect(response).to have_http_status(:unprocessable_entity)
+			json = JSON.parse(response.body, symbolize_names: true)
+			expect(json[:error]).to eq("Email must be a valid email address")
+		end
+
+		it "returns a 422 error for an invalid phone number format" do
+			invalid_phone_params = { contact: { first_name: "John", last_name: "Smith", phone_number: "555555555" } }
+
+			post api_v1_contacts_path, params: invalid_phone_params, headers: { "Authorization" => "Bearer #{@token}" }, as: :json
+
+			expect(response).to have_http_status(:unprocessable_entity)
+			json = JSON.parse(response.body, symbolize_names: true)
+			expect(json[:error]).to eq("Phone number must be in the format '555-555-5555'")
+		end
+	end
+
 	context "edge cases" do
-		it "returns an error if no token is provided" do
+		it "returns a 401 error if no token is provided" do
 			contact_params = { contact: { first_name: "John", last_name: "Smith" } }
 
 			post api_v1_contacts_path, params: contact_params, as: :json
@@ -92,7 +172,7 @@ describe "Contacts Create", type: :request do
 			expect(json[:error]).to eq("Not authenticated")
 		end
 
-		it "returns an error for invalid token" do
+		it "returns a 401 error for invalid token" do
 			contact_params = { contact: { first_name: "John", last_name: "Smith" } }
 
 			post api_v1_contacts_path, params: contact_params, headers: { "Authorization" => "Bearer invalid.token" }, as: :json
@@ -103,51 +183,3 @@ describe "Contacts Create", type: :request do
 		end
 	end
 end
-
-   
-	
-    #   it "should return a created contact if first and last name are present" do
-    #     get api_v1_contacts_path, headers: { "Authorization" => "Bearer #{@token2}" }, as: :json
-
-    #     expect(response).to be_successful
-    #     json = JSON.parse(response.body, symbolize_names: true)
- 
-    #     expect(json[:data]).to eq([])
-    #     expect(json[:message]).to eq("No contacts found")
-    #   end
-    # end
-
-    # context "request is invalid" do 
-    #   it "returns a 403 and an error message if no token is provided" do
-    #     get api_v1_contacts_path, as: :json
-  
-    #     expect(response).to have_http_status(:unauthorized)
-    #     json = JSON.parse(response.body, symbolize_names: true)
-  
-    #     expect(json[:error]).to eq("Not authenticated")
-    #   end
-  
-    #   it "returns a 403 and an error message if an invalid token is provided" do
-    #     get api_v1_contacts_path, headers: { "Authorization" => "Bearer invalid.token.here" }, as: :json
-  
-    #     expect(response).to have_http_status(:unauthorized)
-    #     json = JSON.parse(response.body, symbolize_names: true)
-  
-    #     expect(json[:error]).to eq("Not authenticated")
-    #   end
-  
-    #   it "returns a 403 and an error message if the token is expired" do
-    #     user = User.create!(name: "Me", email: "its_me", password: "reallyGoodPass")
-    #     expired_token = JWT.encode({ user_id: user.id, exp: 1.hour.ago.to_i }, Rails.application.secret_key_base, "HS256")
-  
-    #     get api_v1_contacts_path, headers: { "Authorization" => "Bearer #{expired_token}" }, as: :json
-  
-    #     expect(response).to have_http_status(:unauthorized)
-    #     json = JSON.parse(response.body, symbolize_names: true)
-  
-    #     expect(json[:error]).to eq("Not authenticated")
-    #   end
-
-#     end
-#   end
-# end
