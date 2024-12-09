@@ -260,6 +260,11 @@ Unsuccessful Response:
 {:message=>"Company must exist and Position title can't be blank", :status=>400}
 ```
 
+Unsuccessful Response(pre-existing application for user):
+```
+{:message=>"Application url You already have an application with this URL", :status=>400}
+```
+
 ### Companies
 
 Get login credentials

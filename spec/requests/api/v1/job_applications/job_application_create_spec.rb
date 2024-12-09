@@ -32,7 +32,7 @@ RSpec.describe "Job Application #create", type: :request do
         expect(response.status).to eq(200)
 
         jobApp = JSON.parse(response.body, symbolize_names: true)
-        
+
         expect(jobApp[:data][:type]).to eq("job_application")
         expect(jobApp[:data][:id]).to eq(JobApplication.last.id.to_s)
         expect(jobApp[:data][:attributes][:position_title]).to eq(job_application_params[:position_title])
@@ -43,6 +43,20 @@ RSpec.describe "Job Application #create", type: :request do
         expect(jobApp[:data][:attributes][:application_url]).to eq(job_application_params[:application_url])
         expect(jobApp[:data][:attributes][:contact_information]).to eq(job_application_params[:contact_information])
         expect(jobApp[:data][:attributes][:company_id]).to eq(job_application_params[:company_id])      
+      end
+      it "Allows 2 unique users to create job applications with the same URL" do
+
+        post "/api/v1/users/#{@user.id}/job_applications", 
+        params: { job_application: job_application_params }
+        expect(response).to be_successful
+        expect(response.status).to eq(200)
+
+        user_2 = User.create!(name: "Daniel Averdaniel", email: "daderdaniel@gmail.com", password: "nuggetonnabiscut")
+
+        post "/api/v1/users/#{user_2.id}/job_applications", 
+        params: { job_application: job_application_params }
+        expect(response).to be_successful
+        expect(response.status).to eq(200)
       end
     end
 
@@ -90,6 +104,23 @@ RSpec.describe "Job Application #create", type: :request do
         json = JSON.parse(response.body, symbolize_names: true)
 
         expect(json[:message]).to eq("Company must exist and Position title can't be blank")
+        expect(json[:status]).to eq(400)
+      end
+
+      it "returns a error message if a user tries to create multiple job applications with the same URL" do
+        post "/api/v1/users/#{@user.id}/job_applications", 
+        params: { job_application: job_application_params }
+        expect(response).to be_successful
+        expect(response.status).to eq(200)
+
+        post "/api/v1/users/#{@user.id}/job_applications", 
+        params: { job_application: job_application_params }
+        expect(response).to_not be_successful
+        expect(response.status).to eq(400)
+
+        json = JSON.parse(response.body, symbolize_names: true)
+
+        expect(json[:message]).to eq("Application url already exists for the user, try making a new application with a new URL.")
         expect(json[:status]).to eq(400)
       end
     end
