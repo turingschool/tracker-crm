@@ -71,7 +71,44 @@ RSpec.describe "Job Application #create", type: :request do
     end
 
     context "sad path" do
+      it "returns error serializer if job application id does not exist" do
+        get "/api/v1/users/#{@user.id}/job_applications/0"
 
+        expect(response).to_not be_successful
+        expect(response.status).to eq(400)
+
+        json = JSON.parse(response.body, symbolize_names: true)
+
+        expect(json[:message]).to eq("Company must exist and Position title can't be blank")
+        expect(json[:status]).to eq(400)
+      end
+
+      it "returns error serializer if job application id belongs to another user" do
+
+        user_2 = User.create!(name: "Daniel Averdaniel", email: "daderdaniel@gmail.com", password: "nuggetonnabiscut")
+  
+        user_2_application = JobApplication.create!(
+          position_title: "Crank Operator",
+          date_applied: "2024-10-31",
+          status: 1,
+          notes: "Not sure im familiar with the tech-stack",
+          job_description: "You turn the big crank that powers google",
+          application_url: "www.example.com",
+          contact_information: "owneroperator@gmail.com",
+          company_id: @google.id,
+          user_id: user_2.id
+        )
+
+        get "/api/v1/users/#{@user.id}/job_applications/#{user_2_application.id}"
+
+        expect(response).to_not be_successful
+        expect(response.status).to eq(400)
+
+        json = JSON.parse(response.body, symbolize_names: true)
+
+        expect(json[:message]).to eq("Company must exist and Position title can't be blank")
+        expect(json[:status]).to eq(400)
+      end
     end
   end
 end
