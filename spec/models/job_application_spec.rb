@@ -42,7 +42,7 @@ RSpec.describe JobApplication, type: :model do
     }
 
     it "validates uniqueness of job application for a given user" do
-      expect(subject).to validate_uniqueness_of(:application_url).scoped_to(:user_id).with_message("You already have an application with this URL")
+      expect(subject).to validate_uniqueness_of(:application_url).scoped_to(:user_id).with_message("already exists for the user, try making a new application with a new URL.")
     end
   end
 

@@ -106,7 +106,7 @@ RSpec.describe "Job Application #create", type: :request do
         expect(json[:message]).to eq("Company must exist and Position title can't be blank")
         expect(json[:status]).to eq(400)
       end
-      
+
       it "returns a error message if a user tries to create multiple job applications with the same URL" do
         post "/api/v1/users/#{@user.id}/job_applications", 
         params: { job_application: job_application_params }
@@ -120,7 +120,7 @@ RSpec.describe "Job Application #create", type: :request do
 
         json = JSON.parse(response.body, symbolize_names: true)
 
-        expect(json[:message]).to eq("Application url You already have an application with this URL")
+        expect(json[:message]).to eq("Application url already exists for the user, try making a new application with a new URL.")
         expect(json[:status]).to eq(400)
       end
     end
