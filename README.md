@@ -429,4 +429,115 @@ No token or bad token response
 }
 ```
 
+### Contacts
 
+Get lognin credentials: <br>
+`Refer to Companies "Get login credentials" above`
+
+#### Get all contacts for a user
+Request:
+
+```
+GET /api/v1/contacts
+
+Authorization: Bearer Token - put in token for user
+```
+Successful Response:
+
+```
+{
+  "data": [
+    {
+      "id": "1",
+      "type": "contacts",
+      "attributes": {
+        "first_name": "John",
+        "last_name": "Smith",
+        "company": "Turing",
+        "email": "123@example.com",
+        "phone_number": "(123) 555-6789",
+        "notes": "Type notes here...",
+        "user_id": 4
+      }
+  },
+  {
+    "id": "2",
+    "type": "contacts",
+    "attributes": {
+      "first_name": "Jane",
+      "last_name": "Smith",
+      "company": "Turing",
+      "email": "123@example.com",
+      "phone_number": "(123) 555-6789",
+      "notes": "Type notes here...",
+      "user_id": 4
+      }
+    }
+  ]
+}
+```
+Successful response for users without saved contacts:
+
+```
+{
+  "data": [],
+  "message": "No contacts found"
+}
+```
+
+#### Create a contact
+
+Request:
+```
+post "/api/v1/contact" 
+
+Add the bearer token to the auth tab in postman and will be able to create a company now for that specific user. Make sure to have the token for that user.
+
+raw json body: 
+{
+  "first_name": "Jane",
+  "last_name": "Smith",
+  "company_id": 1,
+  "email": "example@email.com",
+  "phone_number": "555-555-5555",
+  "notes": "Additional notes here...",
+  "user_id": 4
+}
+```
+Successful Response:
+```
+Status: 201 created
+
+{
+  "data": {
+    "id": "1",
+    "type": "contacts",
+    "attributes": {
+      "first_name": "Jane",
+      "last_name": "Smith",
+      "company_id": 1,
+      "email": "example@email.com",
+      "phone_number": "555-555-5555",
+      "notes": "Additional notes here...",
+      "user_id": 4
+    }
+  }
+}
+
+```
+
+Error response - missing params
+
+Request:
+```
+{
+  "first_name": "First",
+  "last_name": ""
+}
+```
+Response:
+```
+{
+  "error": "Last name can't be blank"
+}
+```

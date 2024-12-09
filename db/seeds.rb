@@ -15,7 +15,7 @@ user = User.create!(name: "Jane Doe", email: "123@email.com", password: "Abc123"
 Contact.create!(
   first_name: "John",
   last_name: "Smith",
-  company: "Turing",
+  company_id: 1,
   email: "123@example.com",
   phone_number: "(123) 555-6789",
   notes: "Type notes here...",
@@ -24,7 +24,7 @@ Contact.create!(
 Contact.create!(
   first_name: "Jane",
   last_name: "Smith",
-  company: "Turing",
+  company_id: 1,
   email: "123@example.com",
   phone_number: "(123) 555-6789",
   notes: "Type notes here...",
