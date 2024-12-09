@@ -9,11 +9,11 @@ class ApplicationPolicy
   end
 
   def admin?
-    user.has_role?(:admin)
+    user&.has_role?(:admin)
   end
 
   def user?
-    user.has_role?(:user)
+    user&.has_role?(:user)
   end
   
   def index?
@@ -45,9 +45,19 @@ class ApplicationPolicy
   end
 
   class Scope
+    attr_reader :user, :scope
+
     def initialize(user, scope)
       @user = user
       @scope = scope
+    end
+
+    def admin?
+      user&.has_role?(:admin)
+    end
+  
+    def user?
+      user&.has_role?(:user)
     end
 
     def resolve
