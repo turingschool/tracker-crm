@@ -12,6 +12,10 @@ class Api::V1::JobApplicationsController < ApplicationController
   end
 
   def show
+    if params[:id].blank?
+      render json: ErrorSerializer.format_error(ErrorMessage.new("Job application ID is missing", 400)), status: :bad_request
+      return
+    end
     user = User.find(params[:user_id])
     job_application = JobApplication.find_by(id: params[:id])
 

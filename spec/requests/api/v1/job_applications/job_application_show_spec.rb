@@ -109,6 +109,18 @@ RSpec.describe "Job Application #create", type: :request do
         expect(json[:message]).to eq("Job application not found")
         expect(json[:status]).to eq(404)
       end
+
+      it "returns error serializer if no params are passed in URL for job application id" do
+        get "/api/v1/users/#{@user.id}/job_applications/"
+
+        expect(response).to_not be_successful
+        expect(response.status).to eq(400)
+
+        json = JSON.parse(response.body, symbolize_names: true)
+
+        expect(json[:message]).to eq("Job application ID is missing")
+        expect(json[:status]).to eq(400)
+      end
     end
   end
 end
