@@ -7,9 +7,9 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-User.create!(name: "Danny DeVito", email: "danny_de@email.com", password: "jerseyMikesRox7")
-User.create!(name: "Dolly Parton", email: "dollyP@email.com", password: "Jolene123")
-User.create!(name: "Lionel Messi", email: "futbol_geek@email.com", password: "test123")
+user_1 = User.create!(name: "Danny DeVito", email: "danny_de@email.com", password: "jerseyMikesRox7")
+user_2 = User.create!(name: "Dolly Parton", email: "dollyP@email.com", password: "Jolene123")
+user_3 = User.create!(name: "Lionel Messi", email: "futbol_geek@email.com", password: "test123")
 
 JobApplication.create!(
   position_title: "Jr. CTO",
@@ -19,6 +19,8 @@ JobApplication.create!(
   job_description: "Looking for Turing grad/jr dev to be CTO",
   application_url: "www.example.com",
   contact_information: "boss@example.com",
-  company_id: 1
+  company_id: 1,
+  user_id: user_1.id
 )
+
 

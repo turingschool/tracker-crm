@@ -11,6 +11,17 @@ class Api::V1::JobApplicationsController < ApplicationController
     end
   end
 
+  def show
+    user = User.find(params[:user_id])
+    job_application = JobApplication.find_by(id: params[:id])
+
+    if job_application.nil? || job_application.user_id != user.id
+      render json: ErrorSerializer.format_error(ErrorMessage.new("Job application not found", 404)), status: :not_found
+    else
+      render json: JobApplicationSerializer.new(job_application), status: :ok
+    end
+  end
+
   private
 
   def job_application_params

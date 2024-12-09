@@ -48,14 +48,14 @@ Successful Response:
 ```
 Status: 201 Created
 Body: {
-    "data": {
-        "id": "4",
-        "type": "user",
-        "attributes": {
-            "name": "John Doe",
-            "email": "john.doe@example.com"
-        }
+  "data": {
+    "id": "4",
+    "type": "user",
+    "attributes": {
+      "name": "John Doe",
+      "email": "john.doe@example.com"
     }
+  }
 }
 ```
 
@@ -63,16 +63,16 @@ Error Responses:
 ```
 Status: 400 Bad Request
 Body: {
-    "message": "Email has already been taken",
-    "status": 400
+  "message": "Email has already been taken",
+  "status": 400
 }
 ```
 
 ```
 Status: 400 Bad Request
 Body: {
-    "message": "Password confirmation doesn't match Password",
-    "status": 400
+  "message": "Password confirmation doesn't match Password",
+  "status": 400
 }
 ```
 
@@ -86,25 +86,25 @@ Successful Response:
 ```
 Status: 200 OK
 Body: {
-    "data": [
-        {
-            "id": "1",
-            "type": "user",
-            "attributes": {
-                "name": "Danny DeVito",
-                "email": "danny_de_v"
-            }
-        },
-        ...
-        {
-            "id": "4",
-            "type": "user",
-            "attributes": {
-                "name": "John Doe",
-                "email": "john.doe@example.com"
-            }
-        }
-    ]
+  "data": [
+    {
+      "id": "1",
+      "type": "user",
+      "attributes": {
+        "name": "Danny DeVito",
+        "email": "danny_de_v"
+      }
+    },
+    ...
+    {
+      "id": "4",
+      "type": "user",
+      "attributes": {
+        "name": "John Doe",
+        "email": "john.doe@example.com"
+      }
+    }
+  ]
 }
 ```
 
@@ -118,14 +118,14 @@ Successful Response:
 ```
 Status: 200 OK
 Body: {
-    "data": {
-        "id": "3",
-        "type": "user",
-        "attributes": {
-            "name": "Lionel Messi",
-            "email": "futbol_geek"
-        }
+  "data": {
+    "id": "3",
+    "type": "user",
+    "attributes": {
+      "name": "Lionel Messi",
+      "email": "futbol_geek"
     }
+  }
 }
 ```
 
@@ -147,30 +147,30 @@ Successful Response:
 ```
 Status: 200 OK
 Body: {
-    "data": {
-        "id": "4",
-        "type": "user",
-        "attributes": {
-            "name": "Nathan Fillon",
-            "email": "firefly_captian"
-        }
+  "data": {
+    "id": "4",
+    "type": "user",
+    "attributes": {
+      "name": "Nathan Fillon",
+      "email": "firefly_captian"
     }
+  }
 }
 ```
 Error Responses:
 ```
 Status: 400 Bad Request
 Body: {
-    "message": "Email has already been taken",
-    "status": 400
+  "message": "Email has already been taken",
+  "status": 400
 }
 ```
 
 ```
 Status: 400 Bad Request
 Body: {
-    "message": "Password confirmation doesn't match Password",
-    "status": 400
+  "message": "Password confirmation doesn't match Password",
+  "status": 400
 }
 ```
 
@@ -245,19 +245,48 @@ Status: 200
    :type=>"job_application",
    :attributes=>
     {:position_title=>"Jr. CTO",
-     :date_applied=>"2024-10-31",
-     :status=>1,
-     :notes=>"Fingers crossed!",
-     :job_description=>"Looking for Turing grad/jr dev to be CTO",
-     :application_url=>"www.example.com",
-     :contact_information=>"boss@example.com",
-     :company_id=>35}}
-     }
+      :date_applied=>"2024-10-31",
+      :status=>1,
+      :notes=>"Fingers crossed!",
+      :job_description=>"Looking for Turing grad/jr dev to be CTO",
+      :application_url=>"www.example.com",
+      :contact_information=>"boss@example.com",
+      :company_id=>35}}
+}
 ```
 
 Unsuccessful Response:
 ```
 {:message=>"Company must exist and Position title can't be blank", :status=>400}
+```
+
+#### Get a Job Application 
+Request:
+```
+GET /api/v1/users/:user_id/job_applications/:job_application_id
+```
+
+Successful Response:
+```
+Status: 200 OK
+{:data=>
+  {:id=>"4",
+   :type=>"job_application",
+   :attributes=>
+    {:position_title=>"Jr. CTO",
+      :date_applied=>"2024-10-31",
+      :status=>1,
+      :notes=>"Fingers crossed!",
+      :job_description=>"Looking for Turing grad/jr dev to be CTO",
+      :application_url=>"www.example.com",
+      :contact_information=>"boss@example.com",
+      :company_id=>35}}
+}
+```
+
+Unsuccessful Response(job application does not exist OR belongs to another user):
+```
+{:message=>"Job application not found", :status=>404}
 ```
 
 ### Companies
