@@ -58,9 +58,9 @@ RSpec.describe "Job Application #create", type: :request do
         jobApp = JSON.parse(response.body, symbolize_names: true)
         
         expect(jobApp[:data][:type]).to eq("job_application")
-        expect(jobApp[:data][:id]).to eq(@facebook_application.id)
+        expect(jobApp[:data][:id]).to eq(@facebook_application.id.to_s)
         expect(jobApp[:data][:attributes][:position_title]).to eq(@facebook_application[:position_title])
-        expect(jobApp[:data][:attributes][:date_applied]).to eq(@facebook_application[:date_applied])
+        expect(jobApp[:data][:attributes][:date_applied]).to eq(@facebook_application[:date_applied].to_s)
         expect(jobApp[:data][:attributes][:status]).to eq(@facebook_application[:status])
         expect(jobApp[:data][:attributes][:notes]).to eq(@facebook_application[:notes])
         expect(jobApp[:data][:attributes][:job_description]).to eq(@facebook_application[:job_description])
@@ -75,16 +75,16 @@ RSpec.describe "Job Application #create", type: :request do
         get "/api/v1/users/#{@user.id}/job_applications/0"
 
         expect(response).to_not be_successful
-        expect(response.status).to eq(400)
+        expect(response.status).to eq(404)
 
         json = JSON.parse(response.body, symbolize_names: true)
 
-        expect(json[:message]).to eq("Company must exist and Position title can't be blank")
-        expect(json[:status]).to eq(400)
+
+        expect(json[:message]).to eq("Job application not found")
+        expect(json[:status]).to eq(404)
       end
 
       it "returns error serializer if job application id belongs to another user" do
-
         user_2 = User.create!(name: "Daniel Averdaniel", email: "daderdaniel@gmail.com", password: "nuggetonnabiscut")
   
         user_2_application = JobApplication.create!(
@@ -102,12 +102,12 @@ RSpec.describe "Job Application #create", type: :request do
         get "/api/v1/users/#{@user.id}/job_applications/#{user_2_application.id}"
 
         expect(response).to_not be_successful
-        expect(response.status).to eq(400)
+        expect(response.status).to eq(404)
 
         json = JSON.parse(response.body, symbolize_names: true)
 
-        expect(json[:message]).to eq("Company must exist and Position title can't be blank")
-        expect(json[:status]).to eq(400)
+        expect(json[:message]).to eq("Job application not found")
+        expect(json[:status]).to eq(404)
       end
     end
   end
