@@ -1,7 +1,7 @@
 require "rails_helper"
 
-describe "Contacts Create", type: :request do
-  describe "#Create Contact Endpoint" do
+describe "Contacts Controller", type: :request do
+  describe "#create action - Happy Paths" do
 		before(:each) do
 			@user1 = User.create!(name: "Me", email: "happy@gmail.com", password: "reallyGoodPass")
 			user_params = { email: "happy@gmail.com", password: "reallyGoodPass" }
@@ -83,7 +83,7 @@ describe "Contacts Create", type: :request do
 		end
 	end
 	
-	context "when the request is invalid" do
+	context "when the request is invalid - Sad Paths" do
 		before(:each) do
 			@user1 = User.create!(name: "Me", email: "happy@gmail.com", password: "reallyGoodPass")
 			user_params = { email: "happy@gmail.com", password: "reallyGoodPass" }
@@ -161,7 +161,7 @@ describe "Contacts Create", type: :request do
 		end
 	end
 
-	context "edge cases" do
+	context "edge cases - Sad Paths" do
 		it "returns a 401 error if no token is provided" do
 			contact_params = { contact: { first_name: "John", last_name: "Smith" } }
 
