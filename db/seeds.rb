@@ -19,7 +19,8 @@ Contact.create!(
   email: "123@example.com",
   phone_number: "(123) 555-6789",
   notes: "Type notes here...",
-  user_id: user.id)
+  user_id: user.id
+  )
 Contact.create!(
   first_name: "Jane",
   last_name: "Smith",
@@ -27,4 +28,16 @@ Contact.create!(
   email: "123@example.com",
   phone_number: "(123) 555-6789",
   notes: "Type notes here...",
-  user_id: user.id)
+  user_id: user.id
+  )
+
+JobApplication.create!(
+  position_title: "Jr. CTO",
+  date_applied: "2024-10-31",
+  status: 1,
+  notes: "Fingers crossed!",
+  job_description: "Looking for Turing grad/jr dev to be CTO",
+  application_url: "www.example.com",
+  contact_information: "boss@example.com",
+  company_id: 1
+)

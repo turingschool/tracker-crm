@@ -43,6 +43,22 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_07_034959) do
     t.index ["user_id"], name: "index_contacts_on_user_id"
   end
 
+  create_table "job_applications", force: :cascade do |t|
+    t.string "position_title"
+    t.date "date_applied"
+    t.integer "status"
+    t.text "notes"
+    t.text "job_description"
+    t.string "application_url"
+    t.text "contact_information"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "company_id", null: false
+    t.bigint "user_id", null: false
+    t.index ["company_id"], name: "index_job_applications_on_company_id"
+    t.index ["user_id"], name: "index_job_applications_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -54,4 +70,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_07_034959) do
   add_foreign_key "companies", "users"
   add_foreign_key "contacts", "companies"
   add_foreign_key "contacts", "users"
+  add_foreign_key "job_applications", "companies"
+  add_foreign_key "job_applications", "users"
 end
