@@ -11,26 +11,6 @@ User.create!(name: "Danny DeVito", email: "danny_de@email.com", password: "jerse
 User.create!(name: "Dolly Parton", email: "dollyP@email.com", password: "Jolene123")
 User.create!(name: "Lionel Messi", email: "futbol_geek@email.com", password: "test123")
 
-user = User.create!(name: "Jane Doe", email: "123@email.com", password: "Abc123")
-Contact.create!(
-  first_name: "John",
-  last_name: "Smith",
-  company_id: 1,
-  email: "123@example.com",
-  phone_number: "(123) 555-6789",
-  notes: "Type notes here...",
-  user_id: user.id
-  )
-Contact.create!(
-  first_name: "Jane",
-  last_name: "Smith",
-  company_id: 1,
-  email: "123@example.com",
-  phone_number: "(123) 555-6789",
-  notes: "Type notes here...",
-  user_id: user.id
-  )
-
 JobApplication.create!(
   position_title: "Jr. CTO",
   date_applied: "2024-10-31",
