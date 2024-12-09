@@ -289,6 +289,11 @@ Unsuccessful Response(job application does not exist OR belongs to another user)
 {:message=>"Job application not found", :status=>404}
 ```
 
+Unsuccessful Response(missing job application ID param):
+```
+{:message=>"Job application ID is missing", :status=>400}
+```
+
 ### Companies
 
 Get login credentials
