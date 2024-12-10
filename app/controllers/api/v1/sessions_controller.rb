@@ -1,10 +1,12 @@
 module Api
   module V1
     class SessionsController < ApplicationController
+      before_action :skip_authorization
+
       def create
         user = User.find_by(email: params[:email])
         if user&.authenticate(params[:password])
-          token = generate_token(user_id: user.id)
+          token = generate_token(user_id: user.id, roles: user.roles.pluck(:name))
           render json: { token: token, user: UserSerializer.new(user) }, status: :ok
         else
           render json: ErrorSerializer.format_error(ErrorMessage.new("Invalid login credentials", 401)), status: :unauthorized

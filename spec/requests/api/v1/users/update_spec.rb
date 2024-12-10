@@ -14,6 +14,10 @@ RSpec.describe "Users Update", type: :request do
         password_confirmation: "QWERTY123"
       }
     end
+    
+    before(:each) do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+    end
 
     context "request is valid" do
       it "returns 200 Okay and provides expected fields" do

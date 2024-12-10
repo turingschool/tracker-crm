@@ -12,10 +12,14 @@ describe "Sessions API", type: :request do
 
         post api_v1_sessions_path, params: user_params, as: :json
         json = JSON.parse(response.body, symbolize_names: true)
+        token = json[:token]
+        decoded_token = JWT.decode(token, Rails.application.secret_key_base, true, { algorithm: 'HS256' }).first
+
         expect(response).to have_http_status(:ok)
         expect(json).to have_key(:token)
         expect(json[:user][:data][:attributes]).to include(name: "Me", email: "its_me")
         expect(json[:user][:data][:attributes]).to_not have_key(:password)
+        expect(decoded_token["roles"]).to include("user")
       end
     end
 

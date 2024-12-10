@@ -1,4 +1,11 @@
 class ApplicationController < ActionController::API
+  include Pundit::Authorization
+  after_action :verify_authorized
+
+  # temporary current_user testing stub until we add in authentication
+  def current_user
+    @current_user ||= User.find_by(email: "test@test.com")
+  end
 
   private
 
@@ -8,6 +15,7 @@ class ApplicationController < ActionController::API
       begin
         payload = decoded_token(token)
         @current_user = User.find_by(id: payload[:user_id])
+        @current_user_roles = payload[:roles]
       rescue JWT::DecodeError
         @current_user = nil
       end
