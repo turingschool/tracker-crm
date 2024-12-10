@@ -12,7 +12,8 @@ module Api
       end
 
       def index
-        authorize User
+        users = policy_scope(User)
+        authorize users
         render json: UserSerializer.format_user_list(User.all)
       end
 
