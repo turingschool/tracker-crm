@@ -52,6 +52,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_06_001809) do
     t.datetime "updated_at", null: false
     t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
     t.index ["resource_type", "resource_id"], name: "index_roles_on_resource"
+  end
 
   create_table "job_applications", force: :cascade do |t|
     t.string "position_title"
