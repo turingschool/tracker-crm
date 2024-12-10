@@ -215,12 +215,80 @@ Body: {
 
 ### Job Applications
 
+#### Fetch all Job Applications for a user
+Request:
+```
+GET /api/v1/users/:user_id/job_applications
+```
+Headers:
+```
+{
+  "Authorization": "Bearer <your_token_here>"
+}
+```
+Successful Response:
+```
+
+Status: 200
+
+{
+    "data": [
+        {
+            "id": "1",
+            "type": "job_application",
+            "attributes": {
+                "position_title": "Jr. CTO",
+                "date_applied": "2024-10-31",
+                "status": 1,
+                "notes": "Fingers crossed!",
+                "job_description": "Looking for Turing grad/jr dev to be CTO",
+                "application_url": "www.example.com",
+                "contact_information": "boss@example.com",
+                "company_id": 1
+            }
+        },
+        {
+            "id": "3",
+            "type": "job_application",
+            "attributes": {
+                "position_title": "Backend Developer",
+                "date_applied": "2024-08-20",
+                "status": 2,
+                "notes": "Had a technical interview, awaiting decision.",
+                "job_description": "Developing RESTful APIs and optimizing server performance.",
+                "application_url": "https://creativesolutions.com/careers/backend-developer",
+                "contact_information": "techlead@creativesolutions.com",
+                "company_id": 3
+            }
+        }
+    ]
+}
+```
+Error Response if no token provided:
+
+```
+Status: 401 Unauthorized
+
+Body: {
+    "message": "Invalid login credentials",
+    "status": 401
+}
+```
+
 #### Create a Job Application
 
 Request:
 ```
 POST /api/v1/users/:user_id/job_applications
-
+```
+Headers:
+```
+{
+  "Authorization": "Bearer <your_token_here>"
+}
+```
+Body
+```
 Body: {
     {
         position_title: "Jr. CTO",
@@ -259,7 +327,13 @@ Unsuccessful Response:
 ```
 {:message=>"Company must exist and Position title can't be blank", :status=>400}
 ```
-
+If the user is not authenticated:
+```
+{
+  "message": "Unauthorized request",
+  "status": 401
+}
+```
 ### Companies
 
 Get login credentials
