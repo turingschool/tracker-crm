@@ -366,10 +366,6 @@ Response:
 }
 ```
 
-
-
-
-
 #### Get all companies
 Request:
 
@@ -431,7 +427,7 @@ No token or bad token response
 
 ### Contacts
 
-Get lognin credentials: <br>
+Get login credentials: <br>
 `Refer to Companies "Get login credentials" above`
 
 #### Get all contacts for a user
@@ -485,59 +481,121 @@ Successful response for users without saved contacts:
 }
 ```
 
-#### Create a contact
+#### Create a contact with required and optional fields.
+New contacts require a unique first and last name. All other fields are optional.
 
 Request:
 ```
 post "/api/v1/contact" 
+Authorization: Bearer Token - put in token for user
 
-Add the bearer token to the auth tab in postman and will be able to create a company now for that specific user. Make sure to have the token for that user.
+raw json body with all fields: 
 
-raw json body: 
 {
-  "first_name": "Jane",
-  "last_name": "Smith",
-  "company_id": 1,
-  "email": "example@email.com",
-  "phone_number": "555-555-5555",
-  "notes": "Additional notes here...",
-  "user_id": 4
+  "contact": {
+    "first_name": "Jonny",
+    "last_name": "Smith",
+    "company_id": 1,
+    "email": "jonny@gmail.com",
+    "phone_number": "555-785-5555",
+    "notes": "Good contact for XYZ"
+  }
 }
+
 ```
 Successful Response:
 ```
 Status: 201 created
 
 {
-  "data": {
-    "id": "1",
-    "type": "contacts",
-    "attributes": {
-      "first_name": "Jane",
-      "last_name": "Smith",
-      "company_id": 1,
-      "email": "example@email.com",
-      "phone_number": "555-555-5555",
-      "notes": "Additional notes here...",
-      "user_id": 4
+    "data": {
+        "id": "5",
+        "type": "contacts",
+        "attributes": {
+            "first_name": "Jonny",
+            "last_name": "Smith",
+            "company_id": 1,
+            "email": "jonny@gmail.com",
+            "phone_number": "555-785-5555",
+            "notes": "Good contact for XYZ",
+            "user_id": 7
+        }
     }
-  }
 }
 
 ```
 
-Error response - missing params
+#### Contact Errors
+401 Error Response if no token provided:
+
+```
+Status: 401 Unauthorized
+
+Body: {
+    "message": "Invalid login credentials",
+    "status": 401
+}
+```
+
+422 Error Response Unprocessable Entity: Missing Required Fields
+If required fields like first_name or last_name are missing:
+
+Request:
+```
+post "/api/v1/contact" 
+Authorization: Bearer Token - put in token for user
+
+raw json body:
+
+ {
+  "contact": {
+    "first_name": "Jonny",
+    "last_name": ""
+  }
+}
+```
+Error response - 422 Unprocessable Entity
+```
+{
+    "error": "Last name can't be blank"
+}
+```
+
+Error response - invalid email format
 
 Request:
 ```
 {
-  "first_name": "First",
-  "last_name": ""
+  "contact": {
+    "first_name": "Johnny",
+    "last_name": "Smith",
+    "email": "invalid-email"
+  }
 }
 ```
-Response:
+Response: 422 Unprocessable Entity
+
 ```
 {
-  "error": "Last name can't be blank"
+    "error": "Email must be a valid email address"
+}
+```
+Error response - invalid phone number format
+
+Request:
+```
+{
+  "contact": {
+    "first_name": "Johnny",
+    "last_name": "Smith",
+    "email": "invalid-email"
+  }
+}
+```
+Response: 422 Unprocessable Entity
+
+```
+{
+    "error": "Phone number must be in the format '555-555-5555'"
 }
 ```
