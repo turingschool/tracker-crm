@@ -314,7 +314,7 @@ Body: {
 
 Request:
 ```
-post "/api/v1/companies" 
+post "/api/v1/users/userid/companies" 
 
 Add the bearer token to the auth tab in postman and will be able to create a company now for that specific user. Make sure to have the token for that user.
 
@@ -379,7 +379,7 @@ Response:
 Request:
 
 ```
-GET /api/v1/companies
+GET /api/v1/users/userid/companies
 
 Authorization: Bearer Token - put in token for user
 ```
