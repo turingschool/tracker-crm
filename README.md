@@ -434,7 +434,7 @@ Get login credentials: <br>
 Request:
 
 ```
-GET /api/v1/contacts
+GET /api/v1/users/:user_id/contacts
 
 Authorization: Bearer Token - put in token for user
 ```
@@ -486,7 +486,7 @@ New contacts require a unique first and last name. All other fields are optional
 
 Request:
 ```
-post "/api/v1/contact" 
+POST /api/v1/users/:user_id/contacts
 Authorization: Bearer Token - put in token for user
 
 raw json body with all fields: 
@@ -498,7 +498,8 @@ raw json body with all fields:
     "company_id": 1,
     "email": "jonny@gmail.com",
     "phone_number": "555-785-5555",
-    "notes": "Good contact for XYZ"
+    "notes": "Good contact for XYZ",
+    "user_id": 7
   }
 }
 
@@ -542,7 +543,7 @@ If required fields like first_name or last_name are missing:
 
 Request:
 ```
-post "/api/v1/contact" 
+POST /api/v1/users/:user_id/contacts
 Authorization: Bearer Token - put in token for user
 
 raw json body:
