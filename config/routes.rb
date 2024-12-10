@@ -12,10 +12,10 @@ Rails.application.routes.draw do
       resources :users, only: [:create, :index, :show, :update] do
         resources :companies, only: [:create, :index]
         resources :job_applications, only: :create
+        resources :contacts, only: [:create, :index]
       end
 
       resources :sessions, only: :create
-      resources :contacts, only: [:create, :index]
     end
   end
 end
