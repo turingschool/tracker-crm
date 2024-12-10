@@ -18,7 +18,7 @@ describe "Contacts Controller", type: :request do
       end
 
       it "should return 200 and provide the appropriate contacts" do
-        get api_v1_contacts_path, headers: { "Authorization" => "Bearer #{@token}" }, as: :json
+        get api_v1_user_contacts_path(@user.id), headers: { "Authorization" => "Bearer #{@token}" }, as: :json
 
         expect(response).to be_successful
         json = JSON.parse(response.body, symbolize_names: true)[:data].first
@@ -32,7 +32,7 @@ describe "Contacts Controller", type: :request do
       end
 
       it "should return 200 and an empty array if user has no contacts" do
-        get api_v1_contacts_path, headers: { "Authorization" => "Bearer #{@token2}" }, as: :json
+        get api_v1_user_contacts_path(@user2.id), headers: { "Authorization" => "Bearer #{@token2}" }, as: :json
 
         expect(response).to be_successful
         json = JSON.parse(response.body, symbolize_names: true)
@@ -43,8 +43,12 @@ describe "Contacts Controller", type: :request do
     end
 
     context "Sad Paths" do 
+      before(:each) do
+        @user = User.create!(name: "Me", email: "its_me", password: "reallyGoodPass")
+      end
+
       it "returns a 403 and an error message if no token is provided" do
-        get api_v1_contacts_path, as: :json
+        get api_v1_user_contacts_path(@user.id), as: :json
   
         expect(response).to have_http_status(:unauthorized)
         json = JSON.parse(response.body, symbolize_names: true)
@@ -53,7 +57,7 @@ describe "Contacts Controller", type: :request do
       end
   
       it "returns a 403 and an error message if an invalid token is provided" do
-        get api_v1_contacts_path, headers: { "Authorization" => "Bearer invalid.token.here" }, as: :json
+        get api_v1_user_contacts_path(@user.id), headers: { "Authorization" => "Bearer invalid.token.here" }, as: :json
   
         expect(response).to have_http_status(:unauthorized)
         json = JSON.parse(response.body, symbolize_names: true)
@@ -62,10 +66,10 @@ describe "Contacts Controller", type: :request do
       end
   
       it "returns a 403 and an error message if the token is expired" do
-        user = User.create!(name: "Me", email: "its_me", password: "reallyGoodPass")
+        user = User.create!(name: "Me", email: "email", password: "reallyGoodPass")
         expired_token = JWT.encode({ user_id: user.id, exp: 1.hour.ago.to_i }, Rails.application.secret_key_base, "HS256")
   
-        get api_v1_contacts_path, headers: { "Authorization" => "Bearer #{expired_token}" }, as: :json
+        get api_v1_user_contacts_path(user.id), headers: { "Authorization" => "Bearer #{expired_token}" }, as: :json
   
         expect(response).to have_http_status(:unauthorized)
         json = JSON.parse(response.body, symbolize_names: true)
