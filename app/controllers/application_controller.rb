@@ -4,7 +4,7 @@ class ApplicationController < ActionController::API
 
   # temporary current_user testing stub until we add in authentication
   def current_user
-    @current_user ||= User.find_by(email: "test@test.com")
+    @current_user ||= self.authenticate_user
   end
 
   private
@@ -21,6 +21,7 @@ class ApplicationController < ActionController::API
       end
     end
     render json: { error: 'Not authenticated' }, status: :unauthorized unless @current_user
+    return @current_user
   end
 
   def decoded_token(token)
