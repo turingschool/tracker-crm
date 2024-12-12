@@ -1,4 +1,5 @@
 class Company < ApplicationRecord
+  rolify strict: true
   belongs_to :user 
   validates :name, presence: true
   validates :website, presence: true
