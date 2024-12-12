@@ -4,10 +4,8 @@ class CompanyPolicy < ApplicationPolicy
   end
 
   def index?
-    user.present?
+    admin? || user?
   end
-
-  # record.user == user
 
   class Scope < ApplicationPolicy::Scope
     def resolve
