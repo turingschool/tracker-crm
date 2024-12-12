@@ -10,7 +10,7 @@ class DashboardSerializer
     {
       weekly_summary: {
         job_applications: user.job_applications,
-        new_contacts: user.contacts,
+        contacts: user.contacts,
         companies: user.companies
       }
     }
