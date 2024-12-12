@@ -5,6 +5,7 @@ users = [
   { name: "Lionel Messi", email: "futbol_geek@email.com", password: "test123" }
 ]
 
+
 users.each do |user_data|
   User.find_or_create_by!(email: user_data[:email]) do |user|
     user.name = user_data[:name]
@@ -124,3 +125,4 @@ job_applications.each do |application_data|
     job_application.assign_attributes(application_data)
   end
 end
+
