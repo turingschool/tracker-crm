@@ -1,4 +1,6 @@
 class Api::V1::JobApplicationsController < ApplicationController
+  before_action :authenticate_user
+
   def create
     user = User.find(params[:user_id])
 
@@ -12,11 +14,13 @@ class Api::V1::JobApplicationsController < ApplicationController
   end
 
   def show
+    user = User.find(params[:user_id])
+    authorize user
     if params[:id].blank?
       render json: ErrorSerializer.format_error(ErrorMessage.new("Job application ID is missing", 400)), status: :bad_request
       return
     end
-    user = User.find(params[:user_id])
+    
     job_application = JobApplication.find_by(id: params[:id])
 
     if job_application.nil? || job_application.user_id != user.id
@@ -26,6 +30,11 @@ class Api::V1::JobApplicationsController < ApplicationController
     end
   end
 
+
+  def index
+    job_applications = @current_user.job_applications 
+    render json: JobApplicationSerializer.new(job_applications), status: :ok
+  end
   private
 
   def job_application_params

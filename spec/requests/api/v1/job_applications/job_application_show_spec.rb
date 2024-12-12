@@ -1,7 +1,7 @@
 require "rails_helper"
 
-RSpec.describe "Job Application #create", type: :request do
-  describe "Create Job Application" do
+RSpec.describe "Job Application #show", type: :request do
+  describe "Show Job Application" do
     before(:each) do
       @user = User.create!(name: "Dolly Parton", email: "dollyP123@email.com", password: "Jolene123")
 
@@ -50,7 +50,12 @@ RSpec.describe "Job Application #create", type: :request do
     context "happy path" do
       it "Returns the specified instance of a user's job applications" do
 
-        get "/api/v1/users/#{@user.id}/job_applications/#{@facebook_application.id}"
+        post api_v1_sessions_path, params: { email: @user.email, password: "Jolene123" }, as: :json
+        
+        token = JSON.parse(response.body)["token"]
+        
+        get "/api/v1/users/#{@user.id}/job_applications/#{@facebook_application.id}", 
+        headers: {"Authorization" => "Bearer #{token}" }, as: :json
 
         expect(response).to be_successful
         expect(response.status).to eq(200)
@@ -71,8 +76,15 @@ RSpec.describe "Job Application #create", type: :request do
     end
 
     context "sad path" do
+
       it "returns error serializer if job application id does not exist" do
-        get "/api/v1/users/#{@user.id}/job_applications/0"
+
+        post api_v1_sessions_path, params: { email: @user.email, password: "Jolene123" }, as: :json
+        
+        token = JSON.parse(response.body)["token"]
+        
+        get "/api/v1/users/#{@user.id}/job_applications/0", 
+        headers: {"Authorization" => "Bearer #{token}" }, as: :json
 
         expect(response).to_not be_successful
         expect(response.status).to eq(404)
@@ -99,7 +111,12 @@ RSpec.describe "Job Application #create", type: :request do
           user_id: user_2.id
         )
 
-        get "/api/v1/users/#{@user.id}/job_applications/#{user_2_application.id}"
+        post api_v1_sessions_path, params: { email: @user.email, password: "Jolene123" }, as: :json
+        
+        token = JSON.parse(response.body)["token"]
+
+        get "/api/v1/users/#{@user.id}/job_applications/#{user_2_application.id}",  
+        headers: {"Authorization" => "Bearer #{token}" }, as: :json
 
         expect(response).to_not be_successful
         expect(response.status).to eq(404)
@@ -111,7 +128,16 @@ RSpec.describe "Job Application #create", type: :request do
       end
 
       it "returns error serializer if no params are passed in URL for job application id" do
-        get "/api/v1/users/#{@user.id}/job_applications/"
+
+        post api_v1_sessions_path, params: { email: @user.email, password: "Jolene123" }, as: :json
+        
+        token = JSON.parse(response.body)["token"]
+
+        # params = nil
+
+        get "/api/v1/users/#{@user.id}/job_applications/",
+        # params: {id: 6},
+        headers: {"Authorization" => "Bearer #{token}" }, as: :json
 
         expect(response).to_not be_successful
         expect(response.status).to eq(400)

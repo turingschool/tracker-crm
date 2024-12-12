@@ -215,12 +215,80 @@ Body: {
 
 ### Job Applications
 
+#### Fetch all Job Applications for a user
+Request:
+```
+GET /api/v1/users/:user_id/job_applications
+```
+Headers:
+```
+{
+  "Authorization": "Bearer <your_token_here>"
+}
+```
+Successful Response:
+```
+
+Status: 200
+
+{
+    "data": [
+        {
+            "id": "1",
+            "type": "job_application",
+            "attributes": {
+                "position_title": "Jr. CTO",
+                "date_applied": "2024-10-31",
+                "status": 1,
+                "notes": "Fingers crossed!",
+                "job_description": "Looking for Turing grad/jr dev to be CTO",
+                "application_url": "www.example.com",
+                "contact_information": "boss@example.com",
+                "company_id": 1
+            }
+        },
+        {
+            "id": "3",
+            "type": "job_application",
+            "attributes": {
+                "position_title": "Backend Developer",
+                "date_applied": "2024-08-20",
+                "status": 2,
+                "notes": "Had a technical interview, awaiting decision.",
+                "job_description": "Developing RESTful APIs and optimizing server performance.",
+                "application_url": "https://creativesolutions.com/careers/backend-developer",
+                "contact_information": "techlead@creativesolutions.com",
+                "company_id": 3
+            }
+        }
+    ]
+}
+```
+Error Response if no token provided:
+
+```
+Status: 401 Unauthorized
+
+Body: {
+    "message": "Invalid login credentials",
+    "status": 401
+}
+```
+
 #### Create a Job Application
 
 Request:
 ```
 POST /api/v1/users/:user_id/job_applications
-
+```
+Headers:
+```
+{
+  "Authorization": "Bearer <your_token_here>"
+}
+```
+Body
+```
 Body: {
     {
         position_title: "Jr. CTO",
@@ -294,6 +362,20 @@ Unsuccessful Response(missing job application ID param):
 {:message=>"Job application ID is missing", :status=>400}
 ```
 
+If the user is not authenticated:
+```
+{
+  "message": "Unauthorized request",
+  "status": 401
+}
+```
+
+Unsuccessful Response(pre-existing application for user):
+```
+{:message=>"Application url You already have an application with this URL", :status=>400}
+```
+
+
 ### Companies
 
 Get login credentials
@@ -343,7 +425,7 @@ Body: {
 
 Request:
 ```
-post "/api/v1/companies" 
+post "/api/v1/users/userid/companies" 
 
 Add the bearer token to the auth tab in postman and will be able to create a company now for that specific user. Make sure to have the token for that user.
 
@@ -400,15 +482,11 @@ Response:
 }
 ```
 
-
-
-
-
 #### Get all companies
 Request:
 
 ```
-GET /api/v1/companies
+GET /api/v1/users/userid/companies
 
 Authorization: Bearer Token - put in token for user
 ```
@@ -463,4 +541,271 @@ No token or bad token response
 }
 ```
 
+### Contacts
 
+Get login credentials: <br>
+`Refer to Companies "Get login credentials" above`
+
+#### Get all contacts for a user
+Request:
+
+```
+GET /api/v1/users/:user_id/contacts
+
+Authorization: Bearer Token - put in token for user
+```
+Successful Response:
+
+```
+{
+  "data": [
+    {
+      "id": "1",
+      "type": "contacts",
+      "attributes": {
+        "first_name": "John",
+        "last_name": "Smith",
+        "company": "Turing",
+        "email": "123@example.com",
+        "phone_number": "(123) 555-6789",
+        "notes": "Type notes here...",
+        "user_id": 4
+      }
+  },
+  {
+    "id": "2",
+    "type": "contacts",
+    "attributes": {
+      "first_name": "Jane",
+      "last_name": "Smith",
+      "company": "Turing",
+      "email": "123@example.com",
+      "phone_number": "(123) 555-6789",
+      "notes": "Type notes here...",
+      "user_id": 4
+      }
+    }
+  ]
+}
+```
+Successful response for users without saved contacts:
+
+```
+{
+  "data": [],
+  "message": "No contacts found"
+}
+```
+
+#### Create a contact with required and optional fields.
+New contacts require a unique first and last name. All other fields are optional.
+
+Request:
+```
+POST /api/v1/users/:user_id/contacts
+Authorization: Bearer Token - put in token for user
+
+raw json body with all fields: 
+
+{
+  "contact": {
+    "first_name": "Jonny",
+    "last_name": "Smith",
+    "company_id": 1,
+    "email": "jonny@gmail.com",
+    "phone_number": "555-785-5555",
+    "notes": "Good contact for XYZ",
+    "user_id": 7
+  }
+}
+
+```
+Successful Response:
+```
+Status: 201 created
+
+{
+    "data": {
+        "id": "5",
+        "type": "contacts",
+        "attributes": {
+            "first_name": "Jonny",
+            "last_name": "Smith",
+            "company_id": 1,
+            "email": "jonny@gmail.com",
+            "phone_number": "555-785-5555",
+            "notes": "Good contact for XYZ",
+            "user_id": 7
+        }
+    }
+}
+
+```
+
+#### Contact Errors
+401 Error Response if no token provided:
+
+```
+Status: 401 Unauthorized
+
+Body: {
+    "message": "Invalid login credentials",
+    "status": 401
+}
+```
+
+422 Error Response Unprocessable Entity: Missing Required Fields
+If required fields like first_name or last_name are missing:
+
+Request:
+```
+POST /api/v1/users/:user_id/contacts
+Authorization: Bearer Token - put in token for user
+
+raw json body:
+
+ {
+  "contact": {
+    "first_name": "Jonny",
+    "last_name": ""
+  }
+}
+```
+Error response - 422 Unprocessable Entity
+```
+{
+    "error": "Last name can't be blank"
+}
+```
+
+Error response - invalid email format
+
+Request:
+```
+{
+  "contact": {
+    "first_name": "Johnny",
+    "last_name": "Smith",
+    "email": "invalid-email"
+  }
+}
+```
+Response: 422 Unprocessable Entity
+
+```
+{
+    "error": "Email must be a valid email address"
+}
+```
+Error response - invalid phone number format
+
+Request:
+```
+{
+  "contact": {
+    "first_name": "Johnny",
+    "last_name": "Smith",
+    "email": "invalid-email"
+  }
+}
+```
+Response: 422 Unprocessable Entity
+
+```
+{
+    "error": "Phone number must be in the format '555-555-5555'"
+}
+```
+
+# Authentication, User Roles, and Authorization
+
+- Authentication is handled by the [JWT(Json Web Token) Gem](https://github.com/jwt/ruby-jwt/blob/main/README.md)
+- User Roles is handled by the [Rolify Gem](https://github.com/RolifyCommunity/rolify/blob/master/README.md)
+- Authorization is enforced by the [Pundit Gem](https://github.com/varvet/pundit/blob/main/README.md)
+
+- ## Installation
+    1. Pull the latest changes to your branch ```git pull origin main``` resolve merge conflicts
+    2. Bundle Install and Migrate ```bundle install``` then ```rails db:migrate```
+    3. Run ```bundle exec rspec spec/``` and note what requests tests are now failing
+    4. Refactor controllers, their associated _spec.rb files. Make policies for corresponding controllers (app/policies/_policy.rb) and test policies
+    5. Use examples in **UserPolicy**, **ApplicationPolicy**,  **UsersController**, **ApplicationController** and all corresponding spec files.
+
+
+- ### ***Important Schema Note***
+    - This branch introduces 2 new tables to our db schema - **roles** and **users_roles** that were generated by Rolify:
+
+        - **roles** table has name, resouce_type and resource_id.  Name string is the name of the role and can either be ["admin"] OR ["user"]. Resource type string is an optional polymorphic association that specifies the type of resource the role applies to (company, job, contact). 
+            - Whenever a user is created, they are automatically assigned a role[:name] of ```["user"]```
+        - **users_roles** is a join table for the many-to-many relationship between users and roles.
+
+- ## Understanding [JWT(Json Web Token) Gem](https://github.com/jwt/ruby-jwt/blob/main/README.md)
+     We now use JSON Web Tokens for user authentication. Here's what to know:
+
+    - ### Key Concepts
+        - **Token-Based Authentication**
+            - Upon login, a JWT is issued to the registered user.
+            - The token must be included in the **Headers** for every authenticated request in Postman. 
+                - Authorization: Bearer <jwt_token>
+            - The token encodes a **payload** that contains:
+                - User's id
+                - User's role (either "admin" or "user")
+                - Tokens expiration time (24 hours after issue)
+        - **Changes made in Codebase**
+            - **ApplicationController** now has 2 new methods:
+                - ```authenticate_user``` ensures tokens validity and corresponds to a logged-in user. 
+                - ```decoded_token(token)``` to extract info from token
+                - All controllers will inherit this logic.
+            - **SessionsController** 
+                - Handles login and session creation
+                - ```#create``` action:
+                    - Verifies user's credentials
+                    - ```generate_token(payload)``` generates an encoded JWT using above-mentioned **payload**
+                    - Sends the token back in the response
+
+- ## Understanding the [Rolify Gem](https://github.com/RolifyCommunity/rolify/blob/master/README.md)
+    Rolify simplifies the management of user roles by introducing a flexible, role-based system. This gem created the **roles** and **users_roles** tables. 
+
+    - ### Key Concepts
+        - When a new user is created, they are automatically assigned the user role.
+        - Methods in **user.rb** created as querying and setting shortcuts:
+            - `assign_default_role` is called to set a user's role to `:user` upon a new instance of User being created. All new users will get role :user.
+            - `is_admin?` and/or `is_user?` queries any user's role
+            - `set_role(role_name)` assigns a specific role to a user(e.g `user1.set_role(:admin)` will set a user to the :admin role)
+        - For future scalability, polymorphic roles can be scoped to specific users. For example, we can add in a :moderator role in the future that would be an :admin for only the company table. Enabled by resource_type and resource_id fields in **roles** table.
+
+    - ### Usage in Codebase
+        - In your models where roles are needed (e.g., User, Company), use: `resourcify` at the top of the class(near validations/relations) to make the model "role-aware" and capable of interacting with Rolify
+        - Use above-mentioned methods in **user.rb** to query and set user roles.
+
+    - ### How this affected the Codebase
+        - **UsersController** now leverages roles to restrict access. For example, only an :admin can view all users (subject to change, ofc)
+        - **ApplicationPolicy** Includes logic to ensure actions are authorized based on roles.
+        - Affects RSpec testing to test role-based permitted controller actions (see **index_spec.rb** ln:7 for an example)
+
+- ## Understanding the [Pundit Gem](https://github.com/varvet/pundit/blob/main/README.md)
+    Pundit enforces authorization through policy classes and ensures that only authorized users can perform specific actions. To fully understand Pundit, you must understand what a policy is:
+    - A policy is a PORO that defines the rules governing what actions a user is authorized to perform on a resource (e.g., User, Job, Company). Each policy corresponds to a model's controller and centralizes the access control logic for that resource.
+    - I have set up **UserPolicy** for it's corresponding **UsersController** as a template for all to use. **UserPolicy** restricts which CRUD actions a user can use depending on that user's role. All of **Users** associated request spec files have also been refactored to pass and are a template for you.
+
+    - ### Key Concepts
+        - **Policy Classes** as mentioned above define an action a user can take
+            - stored in app/policies and inherit from **ApplicationPolicy**
+            - Policies are then passed to **ApplicationController** via `  include Pundit::Authorization` ln:2. Remember that all controllers inherit from **ApplicationController** unless explicitly told not to.
+        - **Authorization Logic**
+            - Authorization is defined in methods corresponding to controller actions (e.g., **create?**, **update?**).
+	        - **ApplicationPolicy** provides a default template where ALL actions are unauthorized by default. 
+            - Use **UserPolicy** (and it's associated spec file for testing) as a template for making your controller's policies.
+        - **Scoping**
+            - Policies include a nested **Scope** class (see **UserPolicy**) to define which records a user can access when retrieving a collection.
+    - ### Usage in Codebase
+        - Use the `authorize` method IN your controller action code blocks to enforce policy checks (see **UsersController** ln: 5, 15, 21, 28 for examples. Yes, it is THAT easy :))
+        - If a user is unauthorized, Pundit raises a `Pundit::NotAuthorizedError` in your console RSpec testing suite.
+        - For testing, refer to **user_policy_spec.rb** as a template. Note that ln:3 `subject { described_class }` subject == **UserPolicy**
+        - Policies integrate with Rolify to check user roles
+
+    ## In conclusion
+        - JWT secures the app by ensuring only authenticated users can access resources.
+        - Rolify manages who can act (roles), while Pundit manages what they can do (authorization).
+        - Refactoring controllers and policies is critical to aligning with this new system.
+        - Ensure all tests are updated to reflect these changes, including controller specs and new policy tests.
+        - It is up to you, as you develop to keep in mind what actions users are authorized to take.  :Admin role users should be authorized to do anything.
