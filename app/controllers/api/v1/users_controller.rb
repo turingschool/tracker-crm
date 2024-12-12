@@ -20,7 +20,7 @@ module Api
       def show
         user = User.find(params[:id])
         authorize user
-        render json: UserSerializer.new(User.find(params[:id]))
+        render json: UserSerializer.new(user)
       end
 
       def update
