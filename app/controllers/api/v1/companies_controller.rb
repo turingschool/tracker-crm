@@ -4,8 +4,8 @@ module Api
       before_action :authenticate_user
 
       def index
-        companies = @current_user.companies
-        
+        companies = policy_scope(@current_user.companies)
+        authorize companies
         if companies.empty?
           render json: { data: [], message: "No companies found" }
         else
@@ -14,6 +14,7 @@ module Api
       end
 
       def create
+        authorize Company
         company = @current_user.companies.build(company_params)
         if company.save
           render json: CompanySerializer.new(company), status: :created
@@ -27,6 +28,8 @@ module Api
       def company_params
         params.permit(:name, :website, :street_address, :city, :state, :zip_code, :notes)
       end
+
+      
     end
   end
 end

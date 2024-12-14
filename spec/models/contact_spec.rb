@@ -38,6 +38,20 @@ RSpec.describe Contact, type: :model do
         expect(same_contact).to be_valid
       end
 
+      it "capitalizes names before saving" do
+        contact = Contact.create!(first_name: " sandy ", last_name: "johnson", user: @user1)
+        expect(contact.first_name).to eq("Sandy")
+        expect(contact.last_name).to eq("Johnson")
+      end
+
+      it "does not allow duplicates with case or whitespace differences" do
+        Contact.create!(first_name: "Sandy", last_name: "Johnson", user: @user1)
+        duplicate_contact = Contact.new(first_name: "sandy", last_name: " johnson ", user: @user1)
+
+        expect(duplicate_contact).not_to be_valid
+        expect(duplicate_contact.errors.full_messages).to include("First name and Last name already exist for this user")
+      end
+
       it "is valid with a company" do
         company = Company.create!(
           name: "Turing", 
