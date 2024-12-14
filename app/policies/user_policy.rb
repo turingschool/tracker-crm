@@ -30,7 +30,7 @@ class UserPolicy < ApplicationPolicy
       if admin? #method inherited from ApplicationPolicy to check role of current user(:admin)
         scope.all
       elsif user?#method inherited from ApplicationPolicy to check role of current user(:user)
-        scope.where(id: user.id)
+        scope.where(id: user.id) || scope.where(user_id: user.id)
       else
         scope.none
       end

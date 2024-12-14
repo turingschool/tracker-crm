@@ -74,6 +74,14 @@ RSpec.describe UserPolicy, type: :policy do
         expect(scope).not_to match_array(User.all)
       end
     end
+    
+    context "no user" do
+      let(:current_user) { nil }
+
+      it "returns nothing" do
+        expect(scope).to be_empty
+      end
+    end
   end
 
 end
