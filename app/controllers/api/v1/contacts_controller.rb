@@ -4,6 +4,7 @@ module Api
       before_action :authenticate_user
 
       def index
+				authorize Contact
         contacts = @current_user.contacts
         if contacts.empty?
           render json: { data: [], message: "No contacts found" }, status: :ok
@@ -13,6 +14,7 @@ module Api
       end
 
 			def create 
+				authorize Contact
 				contact = @current_user.contacts.new(contact_params)
 				if contact.save
 					render json: ContactsSerializer.new(contact), status: :created

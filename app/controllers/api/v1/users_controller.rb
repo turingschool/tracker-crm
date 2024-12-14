@@ -19,7 +19,6 @@ module Api
 
       def show
         @user = authorize User.find(params[:id])
-
         render json: UserSerializer.new(User.find(params[:id]))
       end
 

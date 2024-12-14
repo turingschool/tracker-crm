@@ -2,7 +2,7 @@ class Api::V1::JobApplicationsController < ApplicationController
   before_action :authenticate_user
 
   def create
-    user = User.find(params[:user_id])
+    user = authorize User.find(params[:user_id])
 
     job_application = user.job_applications.build(job_application_params)
 

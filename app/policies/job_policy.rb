@@ -9,6 +9,10 @@ class JobPolicy < ApplicationPolicy
     admin? || user == record
   end
   
+  def create?
+    user == record
+  end
+
   def show?
     admin? || user == record
   end
