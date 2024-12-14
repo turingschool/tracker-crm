@@ -48,6 +48,13 @@ RSpec.describe CompanyPolicy, type: :policy do
     end
   end
 
+  permissions :index? do
+    it "allows an admin or a user to view all the companies" do
+      expect(subject).to permit(user, Company.new)
+      expect(subject).to permit(admin, Company.new)
+    end
+  end
+
   permissions ".scope" do
     let(:scope) { Pundit.policy_scope!(current_user, Company) }
 
