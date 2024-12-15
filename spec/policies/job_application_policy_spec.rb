@@ -56,10 +56,8 @@ RSpec.describe JobApplicationPolicy, type: :policy do
   end
 
   permissions :index? do
-    it "allows a user to view only their own job apps" do
-      expect(subject).to permit(user, job_app_user)
-      expect(subject).not_to permit(user, job_app_other_user)
-      expect(subject).not_to permit(user, job_app_admin)
+    it "allows a user to view all job apps when logged in" do
+      expect(subject).to permit(user, JobApplication.all)
     end
   end
 
@@ -73,6 +71,7 @@ RSpec.describe JobApplicationPolicy, type: :policy do
   permissions :show? do
     it "allows a user to view a single one of their job apps" do
       expect(subject).to permit(user, job_app_user)
+      expect(subject).not_to permit(user, job_app_admin)
     end
   end
 
@@ -84,13 +83,13 @@ RSpec.describe JobApplicationPolicy, type: :policy do
         expect(scope).to include(job_app_user)
         expect(scope).not_to include(job_app_other_user)
       end
-      
-      context "no user" do
-        let(:current_user) { nil }
-  
-        it "returns nothing" do
-          expect(scope).to be_empty
-        end
+    end
+    
+    context "no user" do
+      let(:current_user) { nil }
+
+      it "returns nothing" do
+        expect(scope).to be_empty
       end
     end
   end

@@ -1,7 +1,7 @@
 class JobApplicationPolicy < ApplicationPolicy
 
   def index?
-    record.user_id == user.id
+    user.present?
   end
   
   def create?

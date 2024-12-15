@@ -34,9 +34,11 @@ class Api::V1::JobApplicationsController < ApplicationController
 
 
   def index
-    job_applications = @current_user.job_applications 
+    authorize JobApplication
+    job_applications = policy_scope(JobApplication)
     render json: JobApplicationSerializer.new(job_applications), status: :ok
   end
+
   private
 
   def job_application_params
