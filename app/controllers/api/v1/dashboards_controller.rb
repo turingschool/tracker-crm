@@ -1,7 +1,9 @@
 class Api::V1::DashboardsController < ApplicationController
+  before_action :authenticate_user
 
   def show
-    user = authorize User.find(params[:user_id])
-    render json: DashboardSerializer.new(user)
+    user = current_user
+    authorize user
+    render json: DashboardSerializer.new(user), status: :ok
   end
 end
