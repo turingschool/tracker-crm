@@ -76,7 +76,7 @@ RSpec.describe "DashboardsController", type: :request do
       expect(json[:attributes][:email]).to eq("testytim420@email.com")
 
       dashboard_summary = json[:attributes][:dashboard][:weekly_summary]
-
+      
       expect(dashboard_summary[:job_applications].count).to eq(2)
       expect(dashboard_summary[:job_applications].first[:position_title]).to eq("Jr. CTO")
       expect(dashboard_summary[:job_applications].last[:position_title]).to eq("Frontend Developer")
