@@ -3,6 +3,10 @@ class CompanyPolicy < ApplicationPolicy
     user.present?
   end
 
+  def show?
+    admin? || user?
+  end
+
   def index?
     admin? || user?
   end
