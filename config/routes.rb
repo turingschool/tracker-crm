@@ -12,7 +12,7 @@ Rails.application.routes.draw do
       resources :users, only: [:create, :index, :show, :update] do
 
         resources :job_applications, only: [:create, :index, :show]
-        resources :companies, only: [:create, :index]
+        resources :companies, only: [:create, :index, :show]
         resources :contacts, only: [:create, :index]
         resource :dashboard, only: :show
       end
