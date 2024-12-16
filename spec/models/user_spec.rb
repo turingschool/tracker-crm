@@ -4,7 +4,7 @@ RSpec.describe User, type: :model do
   describe "associations" do
     it { should have_many(:companies) }
     it { should have_many(:job_applications) }
-    
+    it { should have_many(:contacts).dependent(:destroy) }
   end
   
   describe "validations" do
@@ -13,8 +13,6 @@ RSpec.describe User, type: :model do
     it { should validate_uniqueness_of(:email) }
     it { should validate_presence_of(:password) }
     it { should have_secure_password }
-
-    it { should have_many(:contacts).dependent(:destroy) }
   end
 
   describe "#after_create callback" do
