@@ -2,7 +2,7 @@ class Api::V1::JobApplicationsController < ApplicationController
   before_action :authenticate_user
 
   def create
-    user = User.find(params[:user_id])
+    user = authorize User.find(params[:user_id])
 
     job_application = user.job_applications.build(job_application_params)
 
@@ -34,9 +34,11 @@ class Api::V1::JobApplicationsController < ApplicationController
 
 
   def index
-    job_applications = @current_user.job_applications 
+    authorize JobApplication
+    job_applications = policy_scope(JobApplication)
     render json: JobApplicationSerializer.new(job_applications), status: :ok
   end
+
   private
 
   def job_application_params

@@ -1,9 +1,11 @@
 module Api
   module V1
     class UsersController < ApplicationController
+
       def create
-        authorize User
         user = User.new(user_params)
+        authorize user
+
         if user.save
           render json: UserSerializer.new(user), status: :created
         else
@@ -19,7 +21,6 @@ module Api
 
       def show
         @user = authorize User.find(params[:id])
-
         render json: UserSerializer.new(User.find(params[:id]))
       end
 

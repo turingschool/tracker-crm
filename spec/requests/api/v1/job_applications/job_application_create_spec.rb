@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Job Application #create", type: :request do
+RSpec.describe "Job Application #create & #index", type: :request do
   before(:each) do
     @user = User.create!(name: "Dolly Parton", email: "dollyP123@email.com", password: "Jolene123")
 
@@ -16,7 +16,7 @@ RSpec.describe "Job Application #create", type: :request do
       status: 1,
       notes: "Fingers crossed!",
       job_description: "Looking for Turing grad/jr dev to be CTO",
-      application_url: "www.example.com",
+      application_url: "www.example1.com",
       contact_information: "boss@example.com",
       company: @google,
       user: @user
@@ -51,7 +51,7 @@ RSpec.describe "Job Application #create", type: :request do
     }
   end
 
-  context "happy path" do
+  context "#Create happy path" do
     it "Returns expected fields" do
       post "/api/v1/users/#{@user.id}/job_applications",
         params: { job_application: job_application_params },
@@ -76,7 +76,7 @@ RSpec.describe "Job Application #create", type: :request do
     end
   end
 
-  context "sad path" do
+  context "#Create sad path" do
     it "Returns error serializer if params are missing attribute" do
       post "/api/v1/users/#{@user.id}/job_applications",
         params: {
@@ -124,7 +124,7 @@ RSpec.describe "Job Application #create", type: :request do
     end
   end
 
-  context "happy path" do
+  context "#Index happy path" do
     it "returns all job applications for the logged-in user" do
       get "/api/v1/users/#{@user.id}/job_applications",
           headers: { "Authorization" => "Bearer #{@token}" },
@@ -149,7 +149,7 @@ RSpec.describe "Job Application #create", type: :request do
     end
   end
 
-  context "sad path" do
+  context "#Index sad path" do
     it "returns a 401 error if the user is not authenticated" do
       get "/api/v1/users/#{@user.id}/job_applications", as: :json
 

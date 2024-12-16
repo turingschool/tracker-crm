@@ -716,6 +716,124 @@ Response: 422 Unprocessable Entity
     "error": "Phone number must be in the format '555-555-5555'"
 }
 ```
+### User Dashboard
+
+Get login credentials: <br>
+`Refer to Companies "Get login credentials" above`
+
+**Make sure to not only create/login a user, but to have that user also create a Company/Job Application/Contact for your Postman scripts.  Refer to above endpoints to do so and make sure that user is the one creating the other resources**
+
+#### Get Dashboard
+Request:
+
+```
+GET /api/v1/users/:user_id/dashboard
+
+Authorization: Bearer Token - put in token for user
+```
+Successful Response:
+
+```
+{
+    "data": {
+        "id": "5",
+        "type": "dashboard",
+        "attributes": {
+            "id": 5,
+            "name": "Danny DeVito",
+            "email": "danny_de@email.com",
+            "dashboard": {
+                "weekly_summary": {
+                    "job_applications": [
+                        {
+                            "id": 1,
+                            "position_title": "Jr. CTO",
+                            "date_applied": "2024-10-31",
+                            "status": 1,
+                            "notes": "Fingers crossed!",
+                            "job_description": "Looking for Turing grad/jr dev to be CTO",
+                            "application_url": "www.example.com",
+                            "contact_information": "boss@example.com",
+                            "created_at": "2024-12-14T17:20:41.979Z",
+                            "updated_at": "2024-12-14T17:20:41.979Z",
+                            "company_id": 1,
+                            "user_id": 5
+                        },
+                        {
+                            "id": 2,
+                            "position_title": " CTO",
+                            "date_applied": "2024-10-31",
+                            "status": 2,
+                            "notes": "Fingers crossed!",
+                            "job_description": "Looking for Turing grad/jr dev to be CTO",
+                            "application_url": "www.testexample.com",
+                            "contact_information": "boss1@example.com",
+                            "created_at": "2024-12-14T17:37:28.465Z",
+                            "updated_at": "2024-12-14T17:37:28.465Z",
+                            "company_id": 2,
+                            "user_id": 5
+                        }
+                    ],
+                    "contacts": [
+                        {
+                            "id": 1,
+                            "first_name": "Jonny",
+                            "last_name": "Smith",
+                            "email": "jonny@gmail.com",
+                            "phone_number": "555-785-5555",
+                            "notes": "Good contact for XYZ",
+                            "created_at": "2024-12-14T17:55:21.875Z",
+                            "updated_at": "2024-12-14T17:55:21.875Z",
+                            "user_id": 5,
+                            "company_id": 1
+                        },
+                        {
+                            "id": 2,
+                            "first_name": "Josnny",
+                            "last_name": "Smsith",
+                            "email": "jonny@gmail.com",
+                            "phone_number": "555-785-5555",
+                            "notes": "Good contact for XYZ",
+                            "created_at": "2024-12-15T01:57:14.557Z",
+                            "updated_at": "2024-12-15T01:57:14.557Z",
+                            "user_id": 5,
+                            "company_id": 1
+                        }
+                    ],
+                    "companies": [
+                        {
+                            "id": 1,
+                            "user_id": 5,
+                            "name": "New Company",
+                            "website": "www.company.com",
+                            "street_address": "123 Main St",
+                            "city": "New York",
+                            "state": "NY",
+                            "zip_code": "10001",
+                            "notes": "This is a new company.",
+                            "created_at": "2024-12-14T17:20:10.909Z",
+                            "updated_at": "2024-12-14T17:20:10.909Z"
+                        },
+                        {
+                            "id": 2,
+                            "user_id": 5,
+                            "name": "New Company1",
+                            "website": "www.company1.com",
+                            "street_address": "1231 Main St",
+                            "city": "New York",
+                            "state": "NY",
+                            "zip_code": "10001",
+                            "notes": "This is a new company1.",
+                            "created_at": "2024-12-14T17:37:24.153Z",
+                            "updated_at": "2024-12-14T17:37:24.153Z"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
+```
 
 # Authentication, User Roles, and Authorization
 

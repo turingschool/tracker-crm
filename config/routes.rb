@@ -14,7 +14,7 @@ Rails.application.routes.draw do
         resources :job_applications, only: [:create, :index, :show]
         resources :companies, only: [:create, :index]
         resources :contacts, only: [:create, :index]
-
+        resource :dashboard, only: :show
       end
 
       resources :sessions, only: :create

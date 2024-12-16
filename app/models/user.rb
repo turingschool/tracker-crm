@@ -3,6 +3,7 @@ class User < ApplicationRecord
 
   has_many :companies, dependent: :destroy
   has_many :job_applications, dependent: :destroy
+  has_many :contacts, dependent: :destroy
   
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
