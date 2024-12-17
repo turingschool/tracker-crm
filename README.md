@@ -244,7 +244,8 @@ Status: 200
                 "job_description": "Looking for Turing grad/jr dev to be CTO",
                 "application_url": "www.example.com",
                 "contact_information": "boss@example.com",
-                "company_id": 1
+                "company_id": 1,
+                "company_name": "Google"
             }
         },
         {
@@ -258,7 +259,8 @@ Status: 200
                 "job_description": "Developing RESTful APIs and optimizing server performance.",
                 "application_url": "https://creativesolutions.com/careers/backend-developer",
                 "contact_information": "techlead@creativesolutions.com",
-                "company_id": 3
+                "company_id": 3,
+                "company_name": "Amazon"
             }
         }
     ]
@@ -348,7 +350,8 @@ Status: 200 OK
       :job_description=>"Looking for Turing grad/jr dev to be CTO",
       :application_url=>"www.example.com",
       :contact_information=>"boss@example.com",
-      :company_id=>35}}
+      :company_id=>35,
+      :company_name=>"Google"}}
 }
 ```
 
