@@ -42,5 +42,25 @@ describe "Companies API", type: :request do
         expect(contact[:notes]).to eq("This is a contact.").or eq("This is another contact for the company.")
       end
     end
+
+    it 'should show an empty array if there are no contacts for that user company' do 
+      company = Company.create!(user_id: user.id, name: "New Company", website: "http://newcompany.com", street_address: "123 Main St", city: "New City", state: "NY", zip_code: "10001", notes: "This is a new company.")
+
+      get "/api/v1/users/#{user.id}/companies/#{company.id}", headers: { "Authorization" => "Bearer #{@token}" }, as: :json
+      expect(response).to have_http_status(:success)
+
+      json = JSON.parse(response.body, symbolize_names: true)[:data]
+      
+      expect(json[:id]).to eq(company.id.to_s)
+      expect(json[:type]).to eq("company")
+      expect(json[:attributes][:name]).to eq(company.name)
+      expect(json[:attributes][:website]).to eq(company.website)
+      expect(json[:attributes][:street_address]).to eq(company.street_address)
+      expect(json[:attributes][:city]).to eq(company.city)
+      expect(json[:attributes][:state]).to eq(company.state)
+      expect(json[:attributes][:zip_code]).to eq(company.zip_code)
+      expect(json[:attributes][:notes]).to eq(company.notes)
+      expect(json[:attributes][:contacts]).to eq([])
+    end
   end
 end
