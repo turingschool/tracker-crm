@@ -4,7 +4,8 @@ class CompanyPolicy < ApplicationPolicy
   end
 
   def show?
-    admin? || user?
+    return false unless user
+    admin? || record.user_id == user.id
   end
 
   def index?
