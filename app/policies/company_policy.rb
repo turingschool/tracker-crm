@@ -8,7 +8,7 @@ class CompanyPolicy < ApplicationPolicy
   end
 
   def index?
-    admin? || user?
+    user.present?
   end
 
   class Scope < ApplicationPolicy::Scope

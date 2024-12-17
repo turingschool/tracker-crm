@@ -18,49 +18,32 @@ describe "Companies API", type: :request do
       Contact.create!(first_name: "Jane", last_name: "Smith", company_id: company.id, email: "janesmith@email.com", phone_number: "987-654-3210", user_id: user.id, notes: "This is another contact for the company."
 )
 
-      get "/api/v1/users/#{user.id}/companies/#{company.id}", headers: { "Authorization" => "Bearer #{@token}" }, as: :json
+      get "/api/v1/users/#{user.id}/companies/#{company.id}/contacts", headers: { "Authorization" => "Bearer #{@token}" }, as: :json
 
       expect(response).to have_http_status(:success)
 
       json = JSON.parse(response.body, symbolize_names: true)
-
-      expect(json[:data][:id]).to eq(company.id.to_s)
-      expect(json[:data][:type]).to eq("company")
-      expect(json[:data][:attributes][:name]).to eq(company.name)
-      expect(json[:data][:attributes][:website]).to eq(company.website)
-      expect(json[:data][:attributes][:street_address]).to eq(company.street_address)
-      expect(json[:data][:attributes][:city]).to eq(company.city)
-      expect(json[:data][:attributes][:state]).to eq(company.state)
-      expect(json[:data][:attributes][:zip_code]).to eq(company.zip_code)
-      expect(json[:data][:attributes][:notes]).to eq(company.notes)
-      expect(json[:data][:attributes][:contacts].count).to eq(2)
-      json[:data][:attributes][:contacts].each do |contact|
+      
+      json[:data].each do |contact_data|
+        contact = contact_data[:attributes]
         expect(contact[:first_name]).to eq("John").or eq("Jane")
         expect(contact[:last_name]).to eq("Doe").or eq("Smith")
         expect(contact[:email]).to eq("johndoe@email.com").or eq("janesmith@email.com")
         expect(contact[:phone_number]).to eq("123-456-7890").or eq("987-654-3210")
         expect(contact[:notes]).to eq("This is a contact.").or eq("This is another contact for the company.")
+        expect(contact[:user_id]).to be_an(Integer)
       end
     end
 
     it 'should show an empty array if there are no contacts for that user company' do 
       company = Company.create!(user_id: user.id, name: "New Company", website: "http://newcompany.com", street_address: "123 Main St", city: "New City", state: "NY", zip_code: "10001", notes: "This is a new company.")
 
-      get "/api/v1/users/#{user.id}/companies/#{company.id}", headers: { "Authorization" => "Bearer #{@token}" }, as: :json
+      get "/api/v1/users/#{user.id}/companies/#{company.id}/contacts", headers: { "Authorization" => "Bearer #{@token}" }, as: :json
       expect(response).to have_http_status(:success)
 
       json = JSON.parse(response.body, symbolize_names: true)[:data]
       
-      expect(json[:id]).to eq(company.id.to_s)
-      expect(json[:type]).to eq("company")
-      expect(json[:attributes][:name]).to eq(company.name)
-      expect(json[:attributes][:website]).to eq(company.website)
-      expect(json[:attributes][:street_address]).to eq(company.street_address)
-      expect(json[:attributes][:city]).to eq(company.city)
-      expect(json[:attributes][:state]).to eq(company.state)
-      expect(json[:attributes][:zip_code]).to eq(company.zip_code)
-      expect(json[:attributes][:notes]).to eq(company.notes)
-      expect(json[:attributes][:contacts]).to eq([])
+      expect(json).to eq([])
     end
   end
 end

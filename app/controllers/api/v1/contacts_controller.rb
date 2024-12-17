@@ -13,6 +13,18 @@ module Api
         end
       end
 
+			def show
+        company = @current_user.companies.find_by(id: params[:id])
+        authorize company
+
+        if company
+          contacts = company.contacts
+          render json: { company: CompanySerializer.new(company), contacts: ContactSerializer.new(contacts) }
+        else
+          render json: { error: "Company not found or unauthorized access" }, status: :not_found
+        end
+      end
+
 			def create 
 				authorize Contact
 				contact = @current_user.contacts.new(contact_params)
