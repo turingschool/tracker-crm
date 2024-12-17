@@ -4,12 +4,25 @@ module Api
       before_action :authenticate_user
 
       def index
-				authorize Contact
-        contacts = @current_user.contacts
-        if contacts.empty?
-          render json: { data: [], message: "No contacts found" }, status: :ok
+        if params[:company_id]
+          company = @current_user.companies.find_by(id: params[:company_id])
+          
+          if company
+            authorize company
+            contacts = company.contacts
+            render json: { company: CompanySerializer.new(company), contacts: ContactsSerializer.new(contacts) }
+          else
+            skip_authorization
+            render json: { error: "Company not found or unauthorized access" }, status: :not_found
+          end
         else
-          render json: ContactsSerializer.new(contacts), status: :ok
+				  authorize Contact
+          contacts = @current_user.contacts
+          if contacts.empty?
+            render json: { data: [], message: "No contacts found" }, status: :ok
+          else
+            render json: ContactsSerializer.new(contacts), status: :ok
+          end
         end
       end
 
