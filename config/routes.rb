@@ -12,8 +12,10 @@ Rails.application.routes.draw do
       resources :users, only: [:create, :index, :show, :update] do
 
         resources :job_applications, only: [:create, :index, :show]
-        resources :companies, only: [:create, :index]
-        resources :contacts, only: [:create, :index]
+        resources :companies, only: [:create, :index] do
+          resources :contacts, only: [:create, :index]
+        end
+        resources :contacts, only: [:index, :create]
         resource :dashboard, only: :show
       end
 
@@ -21,3 +23,4 @@ Rails.application.routes.draw do
     end
   end
 end
+
