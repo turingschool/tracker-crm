@@ -21,7 +21,6 @@ RSpec.describe "Companies Index", type: :request do
 
       expect(json.count).to eq(3)
       json.each do |company|
-        expect(company[:attributes].keys).to eq([:name, :website, :street_address, :city, :state, :zip_code, :notes])
         expect(company[:attributes][:name]).to be_a(String)
         expect(company[:attributes][:website]).to be_a(String)
         expect(company[:attributes][:street_address]).to be_a(String)

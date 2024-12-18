@@ -10,8 +10,6 @@ class User < ApplicationRecord
   validates :password, presence: { require: true }
   has_secure_password
 
-  has_many :contacts, dependent: :destroy
-
   after_create :assign_default_role
 
   def assign_default_role
