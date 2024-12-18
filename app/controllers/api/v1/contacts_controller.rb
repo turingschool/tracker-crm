@@ -5,39 +5,28 @@ module Api
 
       def index
         if params[:company_id]
-        company = @current_user.companies.find_by(id: params[:id])
-        authorize company
-  
-        if company
-          contacts = company.contacts
-          render json: { company: CompanySerializer.new(company), contacts: ContactSerializer.new(contacts) }
+        company = @current_user.companies.find_by(id: params[:company_id])
+          if company
+            authorize company
+            contacts = company.contacts
+            render json: { company: CompanySerializer.new(company), contacts: ContactsSerializer.new(contacts) }
+          else
+            skip_authorization
+            render json: { error: "Company not found or unauthorized access" }, status: :not_found
+          end
         else
-          render json: { error: "Company not found or unauthorized access" }, status: :not_found
-        end
-      else
-				authorize Contact
-        contacts = @current_user.contacts
-        if contacts.empty?
-          render json: { data: [], message: "No contacts found" }, status: :ok
-        else
-          render json: ContactsSerializer.new(contacts), status: :ok
+          authorize Contact
+          contacts = @current_user.contacts
+          if contacts.empty?
+            render json: { data: [], message: "No contacts found" }, status: :ok
+          else
+            render json: ContactsSerializer.new(contacts), status: :ok
+          end
         end
       end
-    end
 
-    # def show
-    #   contact = @current_user.contacts.find_by(id: params[:id])
-    #   authorize contact
-    
-    #   if contact
-    #     render json: ContactsSerializer.new(contact), status: :ok
-    #   else
-    #     render json: { error: "Contact not found or unauthorized access" }, status: :not_found
-    #   end
-    # end
-
-			def create 
-				authorize Contact
+      def create 
+        authorize Contact
         if params[:company_id] 
           company = @current_user.companies.find_by(id: params[:company_id])
           if company
@@ -46,20 +35,21 @@ module Api
             return render json: { error: "Company not found" }, status: :not_found
           end
         else
-				contact = @current_user.contacts.new(contact_params)
+          contact = @current_user.contacts.new(contact_params)
         end
-				if contact.save
-					render json: ContactsSerializer.new(contact), status: :created
-				else
-					render json: { error: contact.errors.full_messages.to_sentence }, status: :unprocessable_entity
-				end
-			end
+        
+        if contact.save
+          render json: ContactsSerializer.new(contact), status: :created
+        else
+          render json: { error: contact.errors.full_messages.to_sentence }, status: :unprocessable_entity
+        end
+      end
 
-			private
+      private
 
-			def contact_params
-				params.require(:contact).permit(:first_name, :last_name, :company_id, :email, :phone_number, :notes)
-			end
+      def contact_params
+        params.require(:contact).permit(:first_name, :last_name, :company_id, :email, :phone_number, :notes)
+      end
 	  end
   end
 end
