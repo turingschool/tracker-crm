@@ -601,7 +601,7 @@ Successful response for users without saved contacts:
 ```
 
 #### Create a contact with required and optional fields.
-New contacts require a unique first and last name. All other fields are optional.
+***New contacts require a unique first and last name. All other fields are optional.***
 
 Request:
 ```
@@ -645,9 +645,11 @@ Status: 201 created
 
 ```
 #### Create a contact with a company name from the dropdown box
+***New contacts with company name require a unique first and last name, and company ID in the URI. All other fields are optional.***
+
 Request:
 ```
-POST api/v1/users/2/companies/2/contacts
+POST api/v1/users/:user_id/companies/:company_id/contacts
 
 Authorization: Bearer Token - put in token for user
 
