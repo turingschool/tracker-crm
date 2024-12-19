@@ -6,13 +6,10 @@ module Api
         user = User.new(user_params)
         skip_authorization
         if user.save 
-          serializer = UserSerializer.new(user)
-          status = :created
+          render json: UserSerializer.new(user), status: :created
         else
-          serializer = ErrorSerializer.format_error(ErrorMessage.new(user.errors.full_messages.to_sentence, 400))
-          status = :bad_request
+          render json: ErrorSerializer.format_error(ErrorMessage.new(user.errors.full_messages.to_sentence, 400)), status: :bad_request
         end
-        render json: serializer, status: status
       end
 
       def index
