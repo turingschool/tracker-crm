@@ -601,7 +601,7 @@ Successful response for users without saved contacts:
 ```
 
 #### Create a contact with required and optional fields.
-New contacts require a unique first and last name. All other fields are optional.
+***New contacts require a unique first and last name. All other fields are optional.***
 
 Request:
 ```
@@ -644,6 +644,45 @@ Status: 201 created
 }
 
 ```
+#### Create a contact with a company name from the dropdown box
+***New contacts with company name require a unique first and last name, and company ID in the URI. All other fields are optional.***
+
+Request:
+```
+POST api/v1/users/:user_id/companies/:company_id/contacts
+
+Authorization: Bearer Token - put in token for user
+
+raw json body with all fields: 
+
+{
+    "data": [
+        {
+            "id": "1",
+            "type": "contacts",
+            "attributes": {
+                "first_name": "Jane",
+                "last_name": "Doe",
+                "company_id": 2,
+                "email": "",
+                "phone_number": "",
+                "notes": "",
+                "user_id": 2,
+                "company": {
+                    "id": 2,
+                    "name": "Future Designs LLC",
+                    "website": "https://futuredesigns.com",
+                    "street_address": "456 Future Blvd",
+                    "city": "Austin",
+                    "state": "TX",
+                    "zip_code": "73301",
+                    "notes": "Submitted application for the UI Designer role."
+                }
+            }
+        }
+        ]
+        },
+   ```
 
 #### Contact Errors
 401 Error Response if no token provided:
