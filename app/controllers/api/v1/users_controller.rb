@@ -4,9 +4,8 @@ module Api
 
       def create
         user = User.new(user_params)
-        authorize user
-
-        if user.save
+        skip_authorization
+        if user.save 
           render json: UserSerializer.new(user), status: :created
         else
           render json: ErrorSerializer.format_error(ErrorMessage.new(user.errors.full_messages.to_sentence, 400)), status: :bad_request

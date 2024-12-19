@@ -3,8 +3,13 @@ class CompanyPolicy < ApplicationPolicy
     user.present?
   end
 
+  def show?
+    return false unless user
+    admin? || record.user_id == user.id
+  end
+
   def index?
-    admin? || user?
+    user.present?
   end
 
   class Scope < ApplicationPolicy::Scope

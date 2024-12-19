@@ -5,7 +5,8 @@ module Api
 
       def index
         if params[:company_id]
-        company = @current_user.companies.find_by(id: params[:company_id])
+          company = @current_user.companies.find_by(id: params[:company_id])
+          
           if company
             authorize company
             contacts = company.contacts
@@ -15,7 +16,7 @@ module Api
             render json: { error: "Company not found or unauthorized access" }, status: :not_found
           end
         else
-          authorize Contact
+				  authorize Contact
           contacts = @current_user.contacts
           if contacts.empty?
             render json: { data: [], message: "No contacts found" }, status: :ok
