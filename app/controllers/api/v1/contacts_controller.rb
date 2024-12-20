@@ -47,7 +47,6 @@ module Api
       end
 
       def show
-
         if params[:id].blank?
           render json: ErrorSerializer.format_error(ErrorMessage.new("Contact ID is missing", 400)), status: :bad_request
           return
@@ -65,7 +64,7 @@ module Api
           render json: contact_data, status: :ok
         end
       end
-      
+
       private
 
       def contact_params
