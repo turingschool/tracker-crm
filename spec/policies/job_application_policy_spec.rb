@@ -30,7 +30,6 @@ RSpec.describe JobApplicationPolicy, type: :policy do
     status: 1, notes: "Fingers crossed!",
     job_description: "Looking for Turing grad/jr dev to be CTO",
     application_url: "www.example.com",
-    contact_information: "boss@example.com",
     company_id: company_1.id, user_id: admin.id) }
 
   let(:job_app_user) { JobApplication.create!(
@@ -38,7 +37,6 @@ RSpec.describe JobApplicationPolicy, type: :policy do
     status: 0, notes: "Submitted portfolio and waiting for feedback.",
     job_description: "Designing innovative and user-friendly interfaces.",
     application_url: "https://futuredesigns.com/jobs/ui-designer",
-    contact_information: "hr@futuredesigns.com",
     company_id: company_2.id, user_id: user.id) }
 
   let(:job_app_other_user) { JobApplication.create!(
@@ -46,7 +44,6 @@ RSpec.describe JobApplicationPolicy, type: :policy do
     status: 2, notes: "Had a technical interview, awaiting decision.",
     job_description: "Developing RESTful APIs and optimizing server performance.",
     application_url: "https://creativesolutions.com/careers/backend-developer",
-    contact_information: "techlead@creativesolutions.com",
     company_id: company_3.id, user_id: other_user.id) }
 
   let(:scope) { Pundit.policy_scope!(current_user, JobApplication) }

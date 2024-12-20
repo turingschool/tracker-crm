@@ -23,7 +23,6 @@ RSpec.describe "DashboardsController", type: :request do
     notes: "Fingers crossed!",
     job_description: "Looking for Turing grad/jr dev to be CTO",
     application_url: "www.example1.com",
-    contact_information: "boss@example.com",
     company_id: test_company.id,
     user_id: user.id) }
 
@@ -34,7 +33,6 @@ RSpec.describe "DashboardsController", type: :request do
     notes: "Excited about this opportunity!",
     job_description: "Frontend Developer role with React expertise",
     application_url: "www.frontend.com",
-    contact_information: "hiring@example.com",
     company_id: test_company.id,
     user_id: user.id) }
 
