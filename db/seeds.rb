@@ -66,7 +66,6 @@ job_applications = [
     notes: "Fingers crossed!",
     job_description: "Looking for Turing grad/jr dev to be CTO",
     application_url: "www.example.com",
-    contact_information: "boss@example.com",
     company_id: Company.find_by(name: "Tech Innovators").id,
     user_id: User.find_by(email: "danny_de@email.com").id
   },
@@ -77,7 +76,6 @@ job_applications = [
     notes: "Submitted portfolio and waiting for feedback.",
     job_description: "Designing innovative and user-friendly interfaces.",
     application_url: "https://futuredesigns.com/jobs/ui-designer",
-    contact_information: "hr@futuredesigns.com",
     company_id: Company.find_by(name: "Future Designs LLC").id,
     user_id: User.find_by(email: "dollyP@email.com").id
   },
@@ -88,7 +86,6 @@ job_applications = [
     notes: "Had a technical interview, awaiting decision.",
     job_description: "Developing RESTful APIs and optimizing server performance.",
     application_url: "https://creativesolutions.com/careers/backend-developer",
-    contact_information: "techlead@creativesolutions.com",
     company_id: Company.find_by(name: "Creative Solutions Inc.").id,
     user_id: User.find_by(email: "danny_de@email.com").id
   },
@@ -99,7 +96,6 @@ job_applications = [
     notes: "Excited to work with their data-driven team.",
     job_description: "Analyzing complex datasets to provide actionable insights.",
     application_url: "https://futuredesigns.com/jobs/data-analyst",
-    contact_information: "analytics@futuredesigns.com",
     company_id: Company.find_by(name: "Future Designs LLC").id,
     user_id: User.find_by(email: "futbol_geek@email.com").id
   },
@@ -110,7 +106,6 @@ job_applications = [
     notes: "Great team, excited about the potential role!",
     job_description: "Developing and maintaining both client-side and server-side applications.",
     application_url: "https://techinnovators.com/careers/full-stack-engineer",
-    contact_information: "hiring@techinnovators.com",
     company_id: Company.find_by(name: "Tech Innovators").id,
     user_id: User.find_by(email: "futbol_geek@email.com").id
   }

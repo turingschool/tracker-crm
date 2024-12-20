@@ -18,7 +18,6 @@ RSpec.describe "Job Application #show", type: :request do
         notes: "Not sure im familiar with the tech-stack",
         job_description: "You turn the big crank that powers google",
         application_url: "www.example.com",
-        contact_information: "owneroperator@gmail.com",
         company_id: @google.id,
         user_id: @user.id
       )
@@ -30,7 +29,6 @@ RSpec.describe "Job Application #show", type: :request do
         notes: "Visit dentist before interview!!!",
         job_description: "Raise the facility smile rates.",
         application_url: "www.example.com/secret_param",
-        contact_information: "owneroperator@gmail.com",
         company_id: @facebook.id,
         user_id: @user.id
       )
@@ -41,7 +39,6 @@ RSpec.describe "Job Application #show", type: :request do
         status: 1,
         job_description: "Make our hallways look fresh and clean",
         application_url: "www.example.com/super_secret_param",
-        contact_information: "owneroperator@gmail.com",
         company_id: @amazon.id,
         user_id: @user.id
       )
@@ -70,7 +67,6 @@ RSpec.describe "Job Application #show", type: :request do
         expect(jobApp[:data][:attributes][:notes]).to eq(@facebook_application[:notes])
         expect(jobApp[:data][:attributes][:job_description]).to eq(@facebook_application[:job_description])
         expect(jobApp[:data][:attributes][:application_url]).to eq(@facebook_application[:application_url])
-        expect(jobApp[:data][:attributes][:contact_information]).to eq(@facebook_application[:contact_information])
         expect(jobApp[:data][:attributes][:company_id]).to eq(@facebook_application[:company_id])      
       end
     end
@@ -106,7 +102,6 @@ RSpec.describe "Job Application #show", type: :request do
           notes: "Not sure im familiar with the tech-stack",
           job_description: "You turn the big crank that powers google",
           application_url: "www.example.com",
-          contact_information: "owneroperator@gmail.com",
           company_id: @google.id,
           user_id: user_2.id
         )

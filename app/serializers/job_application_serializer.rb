@@ -6,7 +6,6 @@ class JobApplicationSerializer
              :notes, 
              :job_description, 
              :application_url, 
-             :contact_information, 
              :company_id,
              :company_name
              
