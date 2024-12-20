@@ -7,7 +7,7 @@ class ContactPolicy < ApplicationPolicy
   def create?
     admin? || user.present?
   end
-  
+
   class Scope < ApplicationPolicy::Scope
 
     def resolve

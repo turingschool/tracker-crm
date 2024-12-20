@@ -697,6 +697,43 @@ raw json body with all fields:
         ]
         },
    ```
+#### Show a Contact that belongs to a User (not company contact)
+***Ensure you Create the Contact first for the user NOT company - 2 different Routes!***
+
+Request:
+```
+GET http://localhost:3001/api/v1/users/:user_id/contacts/:contact_id
+Authorization: Bearer Token - put in token for user
+```
+Successful Response:
+
+```
+{
+    "data": {
+        "id": "1",
+        "type": "contacts",
+        "attributes": {
+            "first_name": "Josnny",
+            "last_name": "Smsith",
+            "company_id": 1,
+            "email": "jonny@gmail.com",
+            "phone_number": "555-785-5555",
+            "notes": "Good contact for XYZ",
+            "user_id": 1,
+            "company": {
+                "id": 1,
+                "name": "Tech Innovators",
+                "website": "https://techinnovators.com",
+                "street_address": "123 Innovation Way",
+                "city": "San Francisco",
+                "state": "CA",
+                "zip_code": "94107",
+                "notes": "Reached out on LinkedIn, awaiting response."
+            }
+        }
+    }
+}
+```
 
 #### Contact Errors
 401 Error Response if no token provided:
