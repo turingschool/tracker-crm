@@ -42,6 +42,24 @@ RSpec.describe "Job Application #show", type: :request do
         company_id: @amazon.id,
         user_id: @user.id
       )
+
+      @john = Contact.create!(
+        first_name: "John", 
+        last_name: "Smith", 
+        company_id: @facebook.id, 
+        email: "123@example.com", 
+        phone_number: "123-555-6789", 
+        notes: "Notes here...", 
+        user_id: @user.id)
+
+        @hody = Contact.create!(
+        first_name: "Hody", 
+        last_name: "Jones", 
+        company_id: @facebook.id, 
+        email: "fishman4lyf3@gmail.com", 
+        phone_number: "484-321-1738", 
+        notes: "This guy...", 
+        user_id: @user.id)
     end
 
     context "happy path" do
@@ -58,7 +76,7 @@ RSpec.describe "Job Application #show", type: :request do
         expect(response.status).to eq(200)
 
         jobApp = JSON.parse(response.body, symbolize_names: true)
-        
+
         expect(jobApp[:data][:type]).to eq("job_application")
         expect(jobApp[:data][:id]).to eq(@facebook_application.id.to_s)
         expect(jobApp[:data][:attributes][:position_title]).to eq(@facebook_application[:position_title])
@@ -68,6 +86,8 @@ RSpec.describe "Job Application #show", type: :request do
         expect(jobApp[:data][:attributes][:job_description]).to eq(@facebook_application[:job_description])
         expect(jobApp[:data][:attributes][:application_url]).to eq(@facebook_application[:application_url])
         expect(jobApp[:data][:attributes][:company_id]).to eq(@facebook_application[:company_id])      
+        expect(jobApp[:data][:attributes][:contacts].length).to eq(2)
+        expect(jobApp[:data][:attributes][:contacts][0][:first_name]).to eq(@john[:first_name])
       end
     end
 

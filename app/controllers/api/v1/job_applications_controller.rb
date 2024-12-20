@@ -28,7 +28,11 @@ class Api::V1::JobApplicationsController < ApplicationController
     if job_application.nil? || job_application.user_id != user.id
       render json: ErrorSerializer.format_error(ErrorMessage.new("Job application not found", 404)), status: :not_found
     else
-      render json: JobApplicationSerializer.new(job_application), status: :ok
+      job_application_data = JobApplicationSerializer.new(job_application).serializable_hash
+
+      job_application_data[:data][:attributes][:contacts] = JobApplicationSerializer.contacts_for(job_application)
+
+      render json: job_application_data, status: :ok
     end
   end
 
