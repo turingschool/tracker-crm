@@ -15,7 +15,7 @@ Rails.application.routes.draw do
         resources :companies, only: [:create, :index] do
           resources :contacts, only: [:create, :index]
         end
-        resources :contacts, only: [:index, :create]
+        resources :contacts, only: [:index, :create, :show]
         resource :dashboard, only: :show
       end
 
