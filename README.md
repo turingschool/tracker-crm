@@ -557,7 +557,34 @@ No token or bad token response
     "error": "Not authenticated"
 }
 ```
+### Company show
+Request:
 
+Get login credintials: <br>
+`Refer to Companies "Get login credentials" above`
+```
+GET /api/v1/users/#{user.id}/companies/#{company.id}/contacts
+
+Authorization: Bearer Token - put in token for user
+```
+
+Successful Response:
+
+```
+{
+  "id": "#{id}",
+  "type": "company",
+  "attributes": {
+  "name": "New Company122",
+  "website": "www.company.com",
+  "street_address": "122 Main St",
+  "city": "New York11",
+  "state": "NY11",
+  "zip_code": "10001111",
+  "notes": "This is a new company111."
+  "contacts": []
+}
+```
 ### Contacts
 
 Get login credentials: <br>
