@@ -7,10 +7,15 @@ class JobApplicationSerializer
              :job_description, 
              :application_url, 
              :company_id,
-             :company_name
-             
+             :company_name,
+             :updated_at
+            
   attribute :company_name do |job_application|
     job_application.company&.name
+  end
+
+  attribute :updated_at do |job_app|
+    job_app.updated_at.strftime('%Y-%m-%d') if job_app.updated_at
   end
 
   def self.contacts_for(job_application)
