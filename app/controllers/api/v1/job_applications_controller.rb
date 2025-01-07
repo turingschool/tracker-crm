@@ -43,10 +43,13 @@ class Api::V1::JobApplicationsController < ApplicationController
   end
 
   def update
-    render json: ErrorSerializer.format_error(ErrorMessage.new("Job application ID is missing", 400)), status: :bad_request if params[:id].blank?
-
     user = User.find(params[:user_id])
     authorize user
+
+    if job_application_params.blank?
+      render json: ErrorSerializer.format_error(ErrorMessage.new("No parameters provided", 400)), status: :bad_request
+      return
+    end
     
     job_application = JobApplication.find_by(id: params[:id])
 
@@ -71,5 +74,7 @@ class Api::V1::JobApplicationsController < ApplicationController
       :contact_information, 
       :company_id
     )
+  rescue ActionController::ParameterMissing
+    nil
   end
 end

@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe "Job Application #update", type: :request do
   before(:each) do
     @user = User.create!(name: "Dolly Parton", email: "dollyP123@email.com", password: "Jolene123")
+    @user2 = User.create!(name: "Joe Dirt", email: "eatDirt@email.com", password: "D!rtD!gg3r")
 
     @google = Company.create!(user_id: @user.id, name: "Google", website: "google.com", street_address: "1600 Amphitheatre Parkway", city: "Mountain View", state: "CA", zip_code: "94043", notes: "Search engine")
 
@@ -29,29 +30,35 @@ RSpec.describe "Job Application #update", type: :request do
       job_description: "Frontend Developer role with React expertise",
       application_url: "www.frontend.com",
       company: @google,
-      user: @user
+      user: @user2
     )
  
     post api_v1_sessions_path, params: { email: @user.email, password: "Jolene123" }, as: :json
     @token = JSON.parse(response.body)["token"]
   end
 
-  let(:job_application_params) do
+  let(:major_update) do
     {
       position_title: "Sr. CTO",
       date_applied: "2024-10-31",
       status: 3,
-      notes: "Fingers crossed!",
-      job_description: "Looking for Turing grad/jr dev to be CTO",
+      notes: "Fingers crossed! With extra notes",
+      job_description: "Looking for Turing grad/jr dev to be CTO, extended details",
       application_url: "www.example.com",
       company_id: @google.id
     }
   end
 
-  context "#Update happy path" do
+  let(:basic_update) do
+    {
+      status: 3
+    }
+  end
+
+  context "#Update happy path with multiple attributes updated" do
     it "Returns expected updated fields" do
       patch "/api/v1/users/#{@user.id}/job_applications/#{@job_application1.id}",
-        params: { job_application: job_application_params },
+        params: { job_application: major_update },
         headers: { "Authorization" => "Bearer #{@token}" },
         as: :json
 
@@ -59,64 +66,91 @@ RSpec.describe "Job Application #update", type: :request do
       expect(response.status).to eq(200)
 
       job_app = JSON.parse(response.body, symbolize_names: true)
-    #   binding.pry
+
       expect(job_app[:data][:type]).to eq("job_application")
       expect(job_app[:data][:id].to_i).to eq(@job_application1.id)
-      expect(job_app[:data][:attributes][:position_title]).to eq(job_application_params[:position_title])
-      expect(job_app[:data][:attributes][:date_applied]).to eq(job_application_params[:date_applied])
-      expect(job_app[:data][:attributes][:status]).to eq(job_application_params[:status])
-      expect(job_app[:data][:attributes][:notes]).to eq(job_application_params[:notes])
-      expect(job_app[:data][:attributes][:job_description]).to eq(job_application_params[:job_description])
-      expect(job_app[:data][:attributes][:application_url]).to eq(job_application_params[:application_url])
-      expect(job_app[:data][:attributes][:company_id]).to eq(job_application_params[:company_id])
+      expect(job_app[:data][:attributes][:position_title]).to eq(major_update[:position_title])
+      expect(job_app[:data][:attributes][:date_applied]).to eq(major_update[:date_applied])
+      expect(job_app[:data][:attributes][:status]).to eq(major_update[:status])
+      expect(job_app[:data][:attributes][:notes]).to eq(major_update[:notes])
+      expect(job_app[:data][:attributes][:job_description]).to eq(major_update[:job_description])
+      expect(job_app[:data][:attributes][:application_url]).to eq(major_update[:application_url])
+      expect(job_app[:data][:attributes][:company_id]).to eq(major_update[:company_id])
       expect(job_app[:data][:attributes][:company_name]).to eq(@google.name)
       expect(job_app[:data][:attributes][:updated_at]).to match(/^\d{4}-\d{2}-\d{2}$/)
     end
   end
 
-#   context "#Create sad path" do
-#     it "Returns error serializer if params are missing attribute" do
-#       post "/api/v1/users/#{@user.id}/job_applications",
-#         params: {
-#           date_applied: "2024-10-31",
-#           status: 1,
-#           job_description: "Looking for Turing grad/jr dev to be CTO",
-#           application_url: "www.example.com",
-#           company_id: 1
-#         },
-#         headers: { "Authorization" => "Bearer #{@token}" },
-#         as: :json
+  context "#Update happy path with single attribute updated and rest of params empty" do
+    it "Returns expected updated fields" do
+      patch "/api/v1/users/#{@user.id}/job_applications/#{@job_application1.id}",
+        params: { job_application: basic_update },
+        headers: { "Authorization" => "Bearer #{@token}" },
+        as: :json
 
-#       expect(response).to_not be_successful
-#       expect(response).to have_http_status(:bad_request)
+      expect(response).to be_successful
+      expect(response.status).to eq(200)
 
-#       json = JSON.parse(response.body, symbolize_names: true)
+      job_app = JSON.parse(response.body, symbolize_names: true)
 
-#       expect(json[:message]).to eq("Company must exist and Position title can't be blank")
-#       expect(json[:status]).to eq(400)
-#     end
+      expect(job_app[:data][:type]).to eq("job_application")
+      expect(job_app[:data][:id].to_i).to eq(@job_application1.id)
+      expect(job_app[:data][:attributes][:position_title]).to eq(@job_application1.position_title)
+      expect(job_app[:data][:attributes][:date_applied]).to eq(@job_application1.date_applied.strftime('%Y-%m-%d'))
+      expect(job_app[:data][:attributes][:status]).to eq(basic_update[:status])
+      expect(job_app[:data][:attributes][:notes]).to eq(@job_application1.notes)
+      expect(job_app[:data][:attributes][:job_description]).to eq(@job_application1.job_description)
+      expect(job_app[:data][:attributes][:application_url]).to eq(@job_application1.application_url)
+      expect(job_app[:data][:attributes][:company_id]).to eq(@job_application1.company_id)
+      expect(job_app[:data][:attributes][:company_name]).to eq(@google.name)
+      expect(job_app[:data][:attributes][:updated_at]).to match(/^\d{4}-\d{2}-\d{2}$/)
+    end
+  end
 
-#     it "Returns error serializer if param keys are missing value" do
-#       post "/api/v1/users/#{@user.id}/job_applications",
-#         params: {
-#           position_title: "",
-#           date_applied: "2024-10-31",
-#           status: 1,
-#           notes: "Fingers crossed!",
-#           job_description: "Looking for Turing grad/jr dev to be CTO",
-#           application_url: "www.example.com",
-#           company_id: 1
-#         },
-#         headers: { "Authorization" => "Bearer #{@token}" },
-#         as: :json
+  context "#Update sad path" do
+    it "Returns error serializer if no params are provided" do
+      patch "/api/v1/users/#{@user.id}/job_applications/#{@job_application1.id}",
+        params: { job_application: {} },
+        headers: { "Authorization" => "Bearer #{@token}" },
+        as: :json
 
-#       expect(response).to_not be_successful
-#       expect(response).to have_http_status(:bad_request)
+      expect(response).to_not be_successful
+      expect(response).to have_http_status(:bad_request)
 
-#       json = JSON.parse(response.body, symbolize_names: true)
+      json = JSON.parse(response.body, symbolize_names: true)
 
-#       expect(json[:message]).to eq("Company must exist and Position title can't be blank")
-#       expect(json[:status]).to eq(400)
-#     end
-#   end
+      expect(json[:message]).to eq("No parameters provided")
+      expect(json[:status]).to eq(400)
+    end
+
+    it "Returns error serializer if no job application is found" do
+        patch "/api/v1/users/#{@user.id}/job_applications/99999",
+          params: { job_application: major_update },
+          headers: { "Authorization" => "Bearer #{@token}" },
+          as: :json
+  
+        expect(response).to_not be_successful
+        expect(response).to have_http_status(:not_found)
+  
+        json = JSON.parse(response.body, symbolize_names: true)
+  
+        expect(json[:message]).to eq("Job application not found")
+        expect(json[:status]).to eq(404)
+    end
+
+    it "Returns error serializer if job application does not belong to user" do
+        patch "/api/v1/users/#{@user.id}/job_applications/#{@job_application2.id}",
+          params: { job_application: major_update },
+          headers: { "Authorization" => "Bearer #{@token}" },
+          as: :json
+  
+        expect(response).to_not be_successful
+        expect(response).to have_http_status(:not_found)
+  
+        json = JSON.parse(response.body, symbolize_names: true)
+  
+        expect(json[:message]).to eq("Job application not found")
+        expect(json[:status]).to eq(404)
+    end
+  end
 end
