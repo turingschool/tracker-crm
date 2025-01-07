@@ -392,6 +392,67 @@ Unsuccessful Response(pre-existing application for user):
 {:message=>"Application url You already have an application with this URL", :status=>400}
 ```
 
+#### Update a Job Application
+
+Request:
+```
+PATCH /api/v1/users/:user_id/job_applications
+```
+Headers:
+```
+{
+  "Authorization": "Bearer <your_token_here>"
+}
+```
+Body
+```
+Body: {
+  {
+    position_title: "Jr. CTO",
+    date_applied: "2024-10-31",
+    status: 1,
+    notes: "Fingers crossed!",
+    job_description: "Looking for Turing grad/jr dev to be CTO",
+    application_url: "www.example.com",
+    contact_information: "boss@example.com",
+    company_id: id_1
+  }
+}
+```
+Minimum of one attribute needs to be changed in the update for it to be successful
+<br>
+Successful Response:
+```
+
+Status: 200
+
+{:data=>
+  {:id=>"4",
+   :type=>"job_application",
+   :attributes=>
+    {:position_title=>"Jr. CTO",
+      :date_applied=>"2024-10-31",
+      :status=>1,
+      :notes=>"Fingers crossed!",
+      :job_description=>"Looking for Turing grad/jr dev to be CTO",
+      :application_url=>"www.example.com",
+      :contact_information=>"boss@example.com",
+      :company_id=>35,
+      :updated_at=>"2025-01-07"
+    }
+  }
+}
+```
+
+Unsuccessful Response:
+```
+{:message=>"No parameters provided", :status=>400}
+```
+No parameters were recognized by the application, check the request parameters to see that they match.
+```
+{:message=>"Job application not found", :status=>404}
+```
+Either the application doesn't exist or it doesn't belong to the current user. Verify that it exists and matches the user identity in the token.
 
 ### Companies
 
