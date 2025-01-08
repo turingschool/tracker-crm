@@ -55,6 +55,26 @@ RSpec.describe CompanyPolicy, type: :policy do
     end
   end
 
+  permissions :show? do
+    it "allows an admin to view any company" do
+      expect(subject).to permit(admin, company)
+      expect(subject).to permit(admin, other_company)
+    end
+  
+    it "allows the user who created the company to view it" do
+      expect(subject).to permit(user, company)
+    end
+  
+    it "does not allow a user to view another user's company" do
+      expect(subject).not_to permit(user, other_company)
+    end
+  
+    it "returns false for guests trying to view a company" do
+      expect(subject).not_to permit(nil, company)
+      expect(subject).not_to permit(nil, other_company)
+    end
+  end
+
   permissions ".scope" do
     let(:scope) { Pundit.policy_scope!(current_user, Company) }
 

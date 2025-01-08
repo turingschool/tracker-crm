@@ -81,6 +81,18 @@ describe "Contacts Controller", type: :request do
       expect(json[:attributes][:last_name]).to eq("Smith")
 			expect(json[:attributes][:phone_number]).to eq("123-555-6789")
 		end
+
+		it 'creates a contact when given the company ID, returns a 201' do
+			minimal_params =  { contact: {first_name: "John", last_name: "Smith" } }
+			post api_v1_user_company_contacts_path(user_id: @user1.id, company_id: @company.id), params: minimal_params , headers: { "Authorization" => "Bearer #{@token}" }, as: :json
+			
+			expect(response).to have_http_status(:created)
+			json = JSON.parse(response.body, symbolize_names: true)[:data]
+			
+			expect(json[:attributes][:first_name]).to eq("John")
+			expect(json[:attributes][:last_name]).to eq("Smith")
+			expect(json[:attributes][:company][:name]).to eq("Turing")
+		end
 	end
 	
 	context "when the request is invalid - Sad Paths" do
@@ -153,6 +165,16 @@ describe "Contacts Controller", type: :request do
 			expect(response).to have_http_status(:unprocessable_entity)
 			json = JSON.parse(response.body, symbolize_names: true)
 			expect(json[:error]).to eq("Phone number must be in the format '555-555-5555'")
+		end
+
+		it 'returns a 404 error when a company is not found by ID number' do
+			minimal_params =  { contact: {first_name: "John", last_name: "Smith" } }
+			post api_v1_user_company_contacts_path(user_id: @user1.id, company_id: 99999), params: minimal_params , headers: { "Authorization" => "Bearer #{@token}" }, as: :json
+			
+			expect(response).to have_http_status(:not_found)
+			json = JSON.parse(response.body, symbolize_names: true)
+			
+			expect(json[:error]).to eq("Company not found")
 		end
 	end
 
