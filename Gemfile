@@ -49,4 +49,5 @@ end
 
 group :test do
   gem "simplecov"
+  gem "dotenv-rails"
 end
