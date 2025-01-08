@@ -15,6 +15,13 @@ rails db:migrate
 rails db:seed
 ```
 
+### Install Postgres User
+```
+createuser -s postgres
+
+psql -d template1 -c "ALTER USER postgres WITH PASSWORD 'trackercrm';"
+```
+
 This app will run on port 3001 locally.
 
 ## Testing
