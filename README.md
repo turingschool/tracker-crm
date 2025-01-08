@@ -1,4 +1,35 @@
 # Tracker CRM by Turing School of Software and Design
+<a id="readme-top"></a>
+## Table of Contents
+- [Overview](#overview)
+- [Setup](#setup)
+- [Testing](#testing)
+- [API Documentation](#api-documentation)
+  - [Users](#users)
+    - [Create a User](#create-a-user)
+    - [Get all Users](#get-all-users)
+    - [Get a User](#get-a-user)
+    - [Update a User](#update-a-user)
+    - [Create a Session](#create-a-session)
+  - [Job Applications](#job-applications)
+    - [Fetch all Job Applications](#fetch-all-job-applications-for-a-user)
+    - [Create a Job Application](#create-a-job-application)
+    - [Get a Job Application](#get-a-job-application)
+    - [Update a Job Application](#update-a-job-application)
+  - [Companies](#companies)
+    - [Create a Company](#create-a-company)
+    - [Get all Companies](#get-all-companies)
+  - [Contacts](#contacts)
+    - [Get all Contacts](#get-all-contacts-for-a-user)
+    - [Create a Contact](#create-a-contact-with-required-and-optional-fields)
+    - [Create a Contact within a Company](#create-a-contact-with-a-company-name-from-the-dropdown-box)
+    - [Show a Contact](#show-a-contact-that-belongs-to-a-user-not-company-contact)
+  - [User Dashboard](#user-dashboard)
+    - [Get Dashboard](#get-dashboard)
+- [Authentication, User Roles, and Authorization](#authentication-user-roles-and-authorization)
+  - [Installation](#installation)
+- [Contributing](#contributing)
+
 
 ## Overview
 This app is a Rails backend API for a job tracking CRM tool. 
@@ -30,6 +61,7 @@ This app uses RSpec for testing.
 ```
 bundle exec rspec
 ```
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## API Documentation
 
@@ -219,6 +251,7 @@ Body: {
     "status": 401
 }
 ```
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Job Applications
 
@@ -399,59 +432,82 @@ Unsuccessful Response(pre-existing application for user):
 {:message=>"Application url You already have an application with this URL", :status=>400}
 ```
 
-
-### Companies
-
-Get login credentials
+#### Update a Job Application
 
 Request:
 ```
-POST /api/v1/sessions
-
-Body:
+PATCH /api/v1/users/:user_id/job_applications
+```
+Headers:
+```
 {
-  "email": "john.doe@example.com",
-  "password": "password"
+  "Authorization": "Bearer <your_token_here>"
 }
 ```
-
+Body
+```
+Body: {
+  {
+    position_title: "Jr. CTO",
+    date_applied: "2024-10-31",
+    status: 1,
+    notes: "Fingers crossed!",
+    job_description: "Looking for Turing grad/jr dev to be CTO",
+    application_url: "www.example.com",
+    contact_information: "boss@example.com",
+    company_id: id_1
+  }
+}
+```
+Minimum of one attribute needs to be changed in the update for it to be successful
+<br>
 Successful Response:
-
 ```
-Status: 200 OK
 
-This response will have a token like this:
-eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3MzM0MzUzMDJ9.O6FtfoVjcobUiBHfKmZNovtt57061ktlPx-UgIZFGaQ
+Status: 200
 
-Body: {
-    "data": {
-        "id": "4",
-        "type": "user",
-        "attributes": {
-            "name": "John Doe",
-            "email": "john.doe@example.com"
-        }
+{:data=>
+  {:id=>"4",
+   :type=>"job_application",
+   :attributes=>
+    {:position_title=>"Jr. CTO",
+      :date_applied=>"2024-10-31",
+      :status=>1,
+      :notes=>"Fingers crossed!",
+      :job_description=>"Looking for Turing grad/jr dev to be CTO",
+      :application_url=>"www.example.com",
+      :contact_information=>"boss@example.com",
+      :company_id=>35,
+      :updated_at=>"2025-01-07"
     }
+  }
 }
 ```
 
-Error Response if no token provided:
-
+Unsuccessful Response:
 ```
-Status: 401 Unauthorized
-
-Body: {
-    "message": "Invalid login credentials",
-    "status": 401
-}
+{:message=>"No parameters provided", :status=>400}
 ```
+No parameters were recognized by the application, check the request parameters to see that they match.
+```
+{:message=>"Job application not found", :status=>404}
+```
+Either the application doesn't exist or it doesn't belong to the current user. Verify that it exists and matches the user identity in the token.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Companies
+
 #### Create a company
 
 Request:
 ```
-post "/api/v1/users/userid/companies" 
-
-Add the bearer token to the auth tab in postman and will be able to create a company now for that specific user. Make sure to have the token for that user.
+POST "/api/v1/users/:userid/companies" 
+```
+Headers:
+```
+{
+  "Authorization": "Bearer <your_token_here>"
+}
 
 raw json body: 
 {
@@ -564,38 +620,9 @@ No token or bad token response
     "error": "Not authenticated"
 }
 ```
-### Company show
-Request:
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-Get login credintials: <br>
-`Refer to Companies "Get login credentials" above`
-```
-GET /api/v1/users/#{user.id}/companies/#{company.id}/contacts
-
-Authorization: Bearer Token - put in token for user
-```
-
-Successful Response:
-
-```
-{
-  "id": "#{id}",
-  "type": "company",
-  "attributes": {
-  "name": "New Company122",
-  "website": "www.company.com",
-  "street_address": "122 Main St",
-  "city": "New York11",
-  "state": "NY11",
-  "zip_code": "10001111",
-  "notes": "This is a new company111."
-  "contacts": []
-}
-```
 ### Contacts
-
-Get login credentials: <br>
-`Refer to Companies "Get login credentials" above`
 
 #### Get all contacts for a user
 Request:
@@ -843,10 +870,12 @@ Response: 422 Unprocessable Entity
     "error": "Phone number must be in the format '555-555-5555'"
 }
 ```
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### User Dashboard
 
 Get login credentials: <br>
-`Refer to Companies "Get login credentials" above`
+`Refer to "Create a Session" above`
 
 **Make sure to not only create/login a user, but to have that user also create a Company/Job Application/Contact for your Postman scripts.  Refer to above endpoints to do so and make sure that user is the one creating the other resources**
 
@@ -961,6 +990,7 @@ Successful Response:
     }
 }
 ```
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 # Authentication, User Roles, and Authorization
 
@@ -1054,3 +1084,68 @@ Successful Response:
         - Refactoring controllers and policies is critical to aligning with this new system.
         - Ensure all tests are updated to reflect these changes, including controller specs and new policy tests.
         - It is up to you, as you develop to keep in mind what actions users are authorized to take.  :Admin role users should be authorized to do anything.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+# Contributing
+
+**Banks, Charles**
+- [Github](https://github.com/DRIF7ER)
+- [LinkedIn](https://www.linkedin.com/in/charles-t-banks-jr-6b982b152//)
+
+**Bloom, Stefan**
+- [Github](https://github.com/stefanjbloom)
+- [LinkedIn](https://www.linkedin.com/in/stefanjbloom/)
+
+**Chirchirillo, Joe**
+- [Github](https://github.com/jchirch)
+- [LinkedIn](https://www.linkedin.com/in/joechirchirillo/)
+
+**Cirbo, Candice**
+   - [Github](https://github.com/ccirbo)
+   - [LinkedIn](https://www.linkedin.com/in/candicecirbo/)
+
+**Croy, Lito**
+- [Github](https://github.com/litobot)
+- [LinkedIn](https://www.linkedin.com/in/litocroy/)
+
+**De La Rosa, Melchor**   
+   - [Github](https://github.com/MDelarosa1993)
+   - [LinkedIn](https://www.linkedin.com/in/melchordelarosa/)
+
+**Chirchirillo, Joe**
+   - [Github](https://github.com/jchirch)
+   - [LinkedIn](https://www.linkedin.com/in/joechirchirillo/)
+
+**Delaney, Kyle**
+- [Github](https://gist.github.com/kylomite)
+- [LinkedIn](https://www.linkedin.com/in/kylehamptondelaney/)
+
+**Galvin, Shane**
+- [Github](https://github.com/sgalvin36)
+- [LinkedIn](https://www.linkedin.com/in/shane-galvin36/)
+
+**Hill, John**
+- [Github](https://github.com/jphill19)
+- [LinkedIn](https://www.linkedin.com/in/johnpierrehill/)
+
+**Hotaling, Marshall**
+- [Github](https://github.com/marshallhotaling)
+- [LinkedIn](https://www.linkedin.com/in/marshall-hotaling-7b52a8304/)
+
+**Macur, Jim**
+   - [Github](https://github.com/jimmacur)
+   - [LinkedIn](https://www.linkedin.com/in/jimmacur/)
+
+**Messersmith, Renee**
+   - [Github](https://github.com/reneemes)
+   - [LinkedIn](https://www.linkedin.com/in/reneehessersmith/)
+
+**O'Leary, Ryan**
+- [Github](https://github.com/ROlearyPro)
+- [LinkedIn](https://www.linkedin.com/in/ryan-o-leary-6a963b211/)
+
+**Pintozzi, Erin - (Project Manager)**
+- [Github](https://github.com/epintozzi)
+- [LinkedIn](https://www.linkedin.com/in/erin-pintozzi/)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>

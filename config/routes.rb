@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: [:create, :index, :show, :update] do
 
-        resources :job_applications, only: [:create, :index, :show]
+        resources :job_applications, only: [:create, :index, :show, :update]
         resources :companies, only: [:create, :index] do
           resources :contacts, only: [:create, :index]
         end
