@@ -26,10 +26,7 @@ jobs: # a collection of steps
           node-version: '16.13'
       - run:
           name: Force Bundler Version
-          command: |
-            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
-            source $BASH_ENV
-            gem install bundler
+          command: gem install bundler
       - run:
           name: Bundle Install
           command: bundle install
