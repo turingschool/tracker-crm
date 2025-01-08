@@ -244,7 +244,8 @@ Status: 200
                 "job_description": "Looking for Turing grad/jr dev to be CTO",
                 "application_url": "www.example.com",
                 "contact_information": "boss@example.com",
-                "company_id": 1
+                "company_id": 1,
+                "company_name": "Google"
             }
         },
         {
@@ -258,7 +259,8 @@ Status: 200
                 "job_description": "Developing RESTful APIs and optimizing server performance.",
                 "application_url": "https://creativesolutions.com/careers/backend-developer",
                 "contact_information": "techlead@creativesolutions.com",
-                "company_id": 3
+                "company_id": 3,
+                "company_name": "Amazon"
             }
         }
     ]
@@ -336,31 +338,46 @@ GET /api/v1/users/:user_id/job_applications/:job_application_id
 
 Successful Response:
 ```
-Status: 200 OK
-{:data=>
-  {:id=>"4",
-   :type=>"job_application",
-   :attributes=>
-    {:position_title=>"Jr. CTO",
-      :date_applied=>"2024-10-31",
-      :status=>1,
-      :notes=>"Fingers crossed!",
-      :job_description=>"Looking for Turing grad/jr dev to be CTO",
-      :application_url=>"www.example.com",
-      :contact_information=>"boss@example.com",
-      :company_id=>35}}
+{
+  "data": {
+    "id": "3",
+    "type": "job_application",
+    "attributes": {
+      "position_title": "Backend Developer",
+      "date_applied": "2024-08-20",
+      "status": 2,
+      "notes": "Had a technical interview, awaiting decision.",
+      "job_description": "Developing RESTful APIs and optimizing server performance.",
+      "application_url": "https://creativesolutions.com/careers/backend-developer",
+      "company_id": 3,
+      "company_name": "Creative Solutions Inc.",
+      "contacts": [
+        {
+          "id": 3,
+          "first_name": "Michael",
+          "last_name": "Johnson",
+          "email": "michael.johnson@example.com",
+          "phone_number": "123-555-9012",
+          "notes": "Hiring manager at Creative Solutions Inc."
+        }
+      ]
+    }
+  }
 }
 ```
 
 Unsuccessful Response(job application does not exist OR belongs to another user):
 ```
-{:message=>"Job application not found", :status=>404}
+{
+  "message": "Job application not found",
+  "status": 404
+}
 ```
-
+<!-- 
 Unsuccessful Response(missing job application ID param):
 ```
 {:message=>"Job application ID is missing", :status=>400}
-```
+``` -->
 
 If the user is not authenticated:
 ```
@@ -540,7 +557,34 @@ No token or bad token response
     "error": "Not authenticated"
 }
 ```
+### Company show
+Request:
 
+Get login credintials: <br>
+`Refer to Companies "Get login credentials" above`
+```
+GET /api/v1/users/#{user.id}/companies/#{company.id}/contacts
+
+Authorization: Bearer Token - put in token for user
+```
+
+Successful Response:
+
+```
+{
+  "id": "#{id}",
+  "type": "company",
+  "attributes": {
+  "name": "New Company122",
+  "website": "www.company.com",
+  "street_address": "122 Main St",
+  "city": "New York11",
+  "state": "NY11",
+  "zip_code": "10001111",
+  "notes": "This is a new company111."
+  "contacts": []
+}
+```
 ### Contacts
 
 Get login credentials: <br>
@@ -598,7 +642,7 @@ Successful response for users without saved contacts:
 ```
 
 #### Create a contact with required and optional fields.
-New contacts require a unique first and last name. All other fields are optional.
+***New contacts require a unique first and last name. All other fields are optional.***
 
 Request:
 ```
@@ -640,6 +684,82 @@ Status: 201 created
     }
 }
 
+```
+#### Create a contact with a company name from the dropdown box
+***New contacts with company name require a unique first and last name, and company ID in the URI. All other fields are optional.***
+
+Request:
+```
+POST api/v1/users/:user_id/companies/:company_id/contacts
+
+Authorization: Bearer Token - put in token for user
+
+raw json body with all fields: 
+
+{
+    "data": [
+        {
+            "id": "1",
+            "type": "contacts",
+            "attributes": {
+                "first_name": "Jane",
+                "last_name": "Doe",
+                "company_id": 2,
+                "email": "",
+                "phone_number": "",
+                "notes": "",
+                "user_id": 2,
+                "company": {
+                    "id": 2,
+                    "name": "Future Designs LLC",
+                    "website": "https://futuredesigns.com",
+                    "street_address": "456 Future Blvd",
+                    "city": "Austin",
+                    "state": "TX",
+                    "zip_code": "73301",
+                    "notes": "Submitted application for the UI Designer role."
+                }
+            }
+        }
+        ]
+        },
+   ```
+#### Show a Contact that belongs to a User (not company contact)
+***Ensure you Create the Contact first for the user NOT company - 2 different Routes!***
+
+Request:
+```
+GET http://localhost:3001/api/v1/users/:user_id/contacts/:contact_id
+Authorization: Bearer Token - put in token for user
+```
+Successful Response:
+
+```
+{
+    "data": {
+        "id": "1",
+        "type": "contacts",
+        "attributes": {
+            "first_name": "Josnny",
+            "last_name": "Smsith",
+            "company_id": 1,
+            "email": "jonny@gmail.com",
+            "phone_number": "555-785-5555",
+            "notes": "Good contact for XYZ",
+            "user_id": 1,
+            "company": {
+                "id": 1,
+                "name": "Tech Innovators",
+                "website": "https://techinnovators.com",
+                "street_address": "123 Innovation Way",
+                "city": "San Francisco",
+                "state": "CA",
+                "zip_code": "94107",
+                "notes": "Reached out on LinkedIn, awaiting response."
+            }
+        }
+    }
+}
 ```
 
 #### Contact Errors

@@ -40,11 +40,27 @@ describe "Contacts Controller", type: :request do
         expect(json[:data]).to eq([])
         expect(json[:message]).to eq("No contacts found")
       end
+
+      it "should return 200 and all contacts associated with a company" do
+        get api_v1_user_company_contacts_path(user_id: @user.id, company_id: @company.id), headers: { "Authorization" => "Bearer #{@token}" }, as: :json
+
+        expect(response).to be_successful
+        expect(response).to have_http_status(:ok)
+        json = JSON.parse(response.body, symbolize_names: true)
+
+        expect(json[:company][:data][:attributes][:name]).to eq("Turing")
+        expect(json[:contacts][:data][0][:attributes][:last_name]).to eq("Smith")
+
+      end
     end
 
     context "Sad Paths" do 
       before(:each) do
         @user = User.create!(name: "Me", email: "its_me", password: "reallyGoodPass")
+        @company = Company.create!(name: "Turing", website: "www.turing.com", street_address: "123 Main St", city: "Denver", state: "CO", zip_code: "80218", user_id: @user.id)
+        user_params = { email: "its_me", password: "reallyGoodPass" }
+        post api_v1_sessions_path, params: user_params, as: :json
+        @token = JSON.parse(response.body)["token"]
       end
 
       it "returns a 403 and an error message if no token is provided" do
@@ -75,6 +91,16 @@ describe "Contacts Controller", type: :request do
         json = JSON.parse(response.body, symbolize_names: true)
   
         expect(json[:error]).to eq("Not authenticated")
+      end
+
+      it "returns a 404 and an error message if company ID is not found" do
+        get api_v1_user_company_contacts_path(user_id: @user.id, company_id: 99999), headers: { "Authorization" => "Bearer #{@token}" }, as: :json
+
+        expect(response).to_not be_successful
+        expect(response).to have_http_status(:not_found)
+        json = JSON.parse(response.body, symbolize_names: true)
+
+        expect(json[:error]).to eq("Company not found or unauthorized access")
       end
     end
   end

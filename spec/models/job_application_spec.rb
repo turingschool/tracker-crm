@@ -7,7 +7,6 @@ RSpec.describe JobApplication, type: :model do
     it { should validate_presence_of(:status) }
     it { should validate_presence_of(:job_description) }
     it { should validate_presence_of(:application_url) }
-    it { should validate_presence_of(:contact_information) }
     it { should validate_presence_of(:company_id) }
 
     subject {
@@ -35,7 +34,6 @@ RSpec.describe JobApplication, type: :model do
         notes: "Fingers crossed!",
         job_description: "Looking for Turing grad/jr dev to be CTO",
         application_url: "www.example.com",
-        contact_information: "boss@example.com",
         company_id: google.id,
         user_id: user.id
       )

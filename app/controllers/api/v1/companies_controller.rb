@@ -28,8 +28,6 @@ module Api
       def company_params
         params.permit(:name, :website, :street_address, :city, :state, :zip_code, :notes)
       end
-
-      
     end
   end
 end

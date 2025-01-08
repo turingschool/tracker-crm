@@ -17,7 +17,6 @@ RSpec.describe "Job Application #create & #index", type: :request do
       notes: "Fingers crossed!",
       job_description: "Looking for Turing grad/jr dev to be CTO",
       application_url: "www.example1.com",
-      contact_information: "boss@example.com",
       company: @google,
       user: @user
     )
@@ -29,7 +28,6 @@ RSpec.describe "Job Application #create & #index", type: :request do
       notes: "Excited about this opportunity!",
       job_description: "Frontend Developer role with React expertise",
       application_url: "www.frontend.com",
-      contact_information: "hiring@example.com",
       company: @google,
       user: @user
     )
@@ -46,7 +44,6 @@ RSpec.describe "Job Application #create & #index", type: :request do
       notes: "Fingers crossed!",
       job_description: "Looking for Turing grad/jr dev to be CTO",
       application_url: "www.example.com",
-      contact_information: "boss@example.com",
       company_id: @google.id
     }
   end
@@ -71,8 +68,8 @@ RSpec.describe "Job Application #create & #index", type: :request do
       expect(jobApp[:data][:attributes][:notes]).to eq(job_application_params[:notes])
       expect(jobApp[:data][:attributes][:job_description]).to eq(job_application_params[:job_description])
       expect(jobApp[:data][:attributes][:application_url]).to eq(job_application_params[:application_url])
-      expect(jobApp[:data][:attributes][:contact_information]).to eq(job_application_params[:contact_information])
       expect(jobApp[:data][:attributes][:company_id]).to eq(job_application_params[:company_id])
+      expect(jobApp[:data][:attributes][:company_name]).to eq(@google.name)
     end
   end
 
@@ -84,7 +81,6 @@ RSpec.describe "Job Application #create & #index", type: :request do
           status: 1,
           job_description: "Looking for Turing grad/jr dev to be CTO",
           application_url: "www.example.com",
-          contact_information: "boss@example.com",
           company_id: 1
         },
         headers: { "Authorization" => "Bearer #{@token}" },
@@ -108,7 +104,6 @@ RSpec.describe "Job Application #create & #index", type: :request do
           notes: "Fingers crossed!",
           job_description: "Looking for Turing grad/jr dev to be CTO",
           application_url: "www.example.com",
-          contact_information: "boss@example.com",
           company_id: 1
         },
         headers: { "Authorization" => "Bearer #{@token}" },
@@ -145,7 +140,8 @@ RSpec.describe "Job Application #create & #index", type: :request do
       expect(first_application[:notes]).to eq(@job_application1.notes)
       expect(first_application[:job_description]).to eq(@job_application1.job_description)
       expect(first_application[:application_url]).to eq(@job_application1.application_url)
-      expect(first_application[:contact_information]).to eq(@job_application1.contact_information)
+      expect(first_application[:company_name]).to eq(@google.name)
+      expect(first_application[:company_id]).to eq(@google.id)
     end
   end
 
