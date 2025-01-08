@@ -1,0 +1,62 @@
+version: 2.1 # use CircleCI 2.1
+orbs:
+   node: circleci/node@5.0.0 # Needed for javascript runtime
+   heroku: circleci/heroku@1.0.1 # Use the Heroku orb in your config
+jobs: # a collection of steps
+  build-and-test: # runs not using Workflows must have a `build` job as entry point
+    docker: # run the steps with Docker
+      # - image: circleci/ruby:3.x.y # if you're using ruby version >= 3.0, use cimg/ruby:3.x.y 
+      - image: cimg/ruby:3.2.2
+        environment: # environment variables for primary container
+          BUNDLE_JOBS: 3
+          BUNDLE_RETRY: 3
+          BUNDLE_PATH: vendor/bundle
+          PGHOST: 127.0.0.1
+          PGUSER: postgres
+          RAILS_ENV: test
+      - image: circleci/postgres:11 # database image
+        environment: # environment variables for database, it is kind of obvious but it is important that they match with your test config in database.yml
+          POSTGRES_USER: postgres
+          POSTGRES_DB: users_api_test
+          POSTGRES_PASSWORD: trackercrm 
+    steps: # a collection of executable commands
+      - checkout # special step to check out source code to working directory
+      # Which version of bundler?
+      - node/install:
+          install-yarn: true
+          node-version: '16.13'
+      - run:
+          name: Force Bundler Version
+
+          command: gem install bundler
+      - run:
+          name: Bundle Install
+          command: bundle install
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run:
+          name: Database setup
+          command: bin/rails db:{create,migrate} --trace
+      - run:
+          name: Run rspec in parallel
+          command: bundle exec rspec
+      # Save test results for timing analysis
+      - store_test_results: # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
+          path: test_results
+      # See https://circleci.com/docs/2.0/deployment-integrations/ for example deploy configs
+workflows:
+  build-test-deploy:
+    jobs:
+      - build-and-test
+      - heroku/deploy-via-git: # Use the pre-configured job, deploy-via-git
+          requires:
+            - build-and-test
+          post-steps:
+            - run:
+                name: migrate
+                command: heroku run -a $HEROKU_APP_NAME rails db:migrate
+          filters:
+            branches:
+              only:
+                - main
