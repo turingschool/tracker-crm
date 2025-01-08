@@ -5,7 +5,7 @@ orbs:
 jobs: # a collection of steps
   build-and-test: # runs not using Workflows must have a `build` job as entry point
     docker: # run the steps with Docker
-      - image: circleci/ruby:3.2.2 # if you're using ruby version >= 3.0, use cimg/ruby:3.x.y 
+      - image: circleci/ruby:3.x.y # if you're using ruby version >= 3.0, use cimg/ruby:3.x.y 
         environment: # environment variables for primary container
           BUNDLE_JOBS: 3
           BUNDLE_RETRY: 3
