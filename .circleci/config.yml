@@ -1,7 +1,7 @@
 version: 2.1 # use CircleCI 2.1
 orbs:
    node: circleci/node@5.0.0 # Needed for javascript runtime
-  #  heroku: circleci/heroku@1.0.1 # Use the Heroku orb in your config<REMOVE CI DEPLOYMENT>
+   #heroku: circleci/heroku@1.0.1 # Use the Heroku orb in your config <REMOVE FOR DEPLOYMENT>
 jobs: # a collection of steps
   build-and-test: # runs not using Workflows must have a `build` job as entry point
     docker: # run the steps with Docker
@@ -45,18 +45,18 @@ jobs: # a collection of steps
       - store_test_results: # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
           path: test_results
       # See https://circleci.com/docs/2.0/deployment-integrations/ for example deploy configs
-# workflows:<REMOVE CI DEPLOYMENT>
-#   build-test-deploy:
-#     jobs:
-#       - build-and-test
-#       - heroku/deploy-via-git: # Use the pre-configured job, deploy-via-git
-#           requires:
-#             - build-and-test
-#           post-steps:
-#             - run:
-#                 name: migrate
-#                 command: heroku run -a $HEROKU_APP_NAME rails db:migrate
-#           filters:
-#             branches:
-#               only:
-#                 - main
+workflows:
+  build-test-deploy:
+    jobs:
+      - build-and-test
+      # - heroku/deploy-via-git: # Use the pre-configured job, deploy-via-git<REMOVE FOR DEPLOYMENT>
+      #     requires:
+      #       - build-and-test
+      #     post-steps:
+      #       - run:
+      #           name: migrate
+      #           command: heroku run -a $HEROKU_APP_NAME rails db:migrate
+      #     filters:
+      #       branches:
+      #         only:
+      #           - main
