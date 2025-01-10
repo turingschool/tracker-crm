@@ -436,7 +436,7 @@ Unsuccessful Response(pre-existing application for user):
 
 Request:
 ```
-PATCH /api/v1/users/:user_id/job_applications
+PATCH /api/v1/users/:user_id/job_applications/:job_application_id
 ```
 Headers:
 ```
