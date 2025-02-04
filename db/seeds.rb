@@ -78,6 +78,15 @@ contacts = [
     company_id: Company.find_by(name: "Future Designs LLC").id
   },
   {
+    first_name: "Jim",
+    last_name: "Steinman",
+    email: "jim.steinman@example.com",
+    phone_number: "123-555-6789",
+    notes: "Musical Director at Future Designs LLC",
+    user_id: User.find_by(email: "dollyP@email.com").id,
+    company_id: Company.find_by(name: "Future Designs LLC").id
+  },
+  {
     first_name: "Michael",
     last_name: "Johnson",
     email: "michael.johnson@example.com",
