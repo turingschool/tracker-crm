@@ -70,6 +70,6 @@ module Api
       def contact_params
         params.require(:contact).permit(:first_name, :last_name, :company_id, :email, :phone_number, :notes)
       end
-	  end
+    end
   end
 end
