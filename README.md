@@ -1144,6 +1144,10 @@ Successful Response:
 - [Github](https://github.com/ROlearyPro)
 - [LinkedIn](https://www.linkedin.com/in/ryan-o-leary-6a963b211/)
 
+**Willett, Bryan**
+- [Github](https://github.com/bwillett2003)
+- [LinkedIn](https://www.linkedin.com/in/bryan--willett/)
+
 **Pintozzi, Erin - (Project Manager)**
 - [Github](https://github.com/epintozzi)
 - [LinkedIn](https://www.linkedin.com/in/erin-pintozzi/)
