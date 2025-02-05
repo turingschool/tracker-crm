@@ -24,14 +24,10 @@ module Api
 
       def create 
         authorize Contact
-        if params[:company_id] 
-          if company = Company.find_company(@current_user, params[:company_id])
-            contact = Contact.create_with_company(contact_params, @current_user.id, params[:company_id])
-          else
-            return render json: { error: "Company not found" }, status: :not_found
-          end
+        if (company = Company.find_company(@current_user, params[:company_id])) || params[:company_id].blank?
+          contact = Contact.create_optional_company(contact_params, @current_user.id, params[:company_id])
         else
-          contact = @current_user.contacts.new(contact_params)
+          return render json: { error: "Company not found" }, status: :not_found
         end
         
         if contact.save
