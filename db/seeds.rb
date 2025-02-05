@@ -101,7 +101,7 @@ contacts = [
     email: "emily.brown@example.com",
     phone_number: "222-555-3456",
     notes: "Data lead at Future Designs LLC",
-    user_id: User.find_by(email: "futbol_geek@email.com").id,
+    user_id: User.find_by(email: "dollyP@email.com").id,
     company_id: Company.find_by(name: "Future Designs LLC").id
   },
   {
@@ -110,7 +110,7 @@ contacts = [
     email: "sarah.lee@example.com",
     phone_number: "333-555-7890",
     notes: "Software lead at Tech Innovators",
-    user_id: User.find_by(email: "futbol_geek@email.com").id,
+    user_id: User.find_by(email: "danny_de@email.com").id,
     company_id: Company.find_by(name: "Tech Innovators").id
   }
 ]
