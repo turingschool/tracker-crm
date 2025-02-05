@@ -5,12 +5,9 @@ module Api
 
       def index
         if params[:company_id]
-          company = @current_user.companies.find_by(id: params[:company_id])
-          
-          if company
+          if company = Company.find_company(@current_user, params[:company_id])
             authorize company
-            contacts = company.contacts
-            render json: { company: CompanySerializer.new(company), contacts: ContactsSerializer.new(contacts) }
+            render json: { company: CompanySerializer.new(company), contacts: ContactsSerializer.new(company.contacts) }
           else
             skip_authorization
             render json: { error: "Company not found or unauthorized access" }, status: :not_found
