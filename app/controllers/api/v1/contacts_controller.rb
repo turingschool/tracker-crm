@@ -14,8 +14,7 @@ module Api
           end
         else
 				  authorize Contact
-          contacts = @current_user.contacts
-          if contacts.empty?
+          if (contacts = @current_user.contacts).empty?
             render json: { data: [], message: "No contacts found" }, status: :ok
           else
             render json: ContactsSerializer.new(contacts), status: :ok
@@ -26,7 +25,7 @@ module Api
       def create 
         authorize Contact
         if params[:company_id] 
-          if company = @current_user.companies.find_by(id: params[:company_id])
+          if company = Company.find_company(@current_user, params[:company_id])
             contact = Contact.create_with_company(contact_params, @current_user.id, params[:company_id])
           else
             return render json: { error: "Company not found" }, status: :not_found
