@@ -18,6 +18,12 @@ class Contact < ApplicationRecord
   validates :phone_number, format: { with: VALID_PHONE_REGEX, message: "must be in the format '555-555-5555'" }, allow_blank: true
   validates :email, format: { with: VALID_EMAIL_REGEX, message: "must be a valid email address" }, allow_blank: true
 
+  def self.create_with_company(contact_params, user_id, company_id)
+    contact = new(contact_params.merge(user_id: user_id, company_id: company_id))
+    contact.save
+    contact
+  end
+
   private
 
   def normalize_names
