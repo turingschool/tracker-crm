@@ -1088,10 +1088,6 @@ Successful Response:
 
 # Contributing
 
-**Wallace, Wally**
-- [Github](https://github.com/wally-yawn)
-- [LinkedIn](https://www.https://www.linkedin.com/in/wally-wallace-719b0875/)
-
 **Banks, Charles**
 - [Github](https://github.com/DRIF7ER)
 - [LinkedIn](https://www.linkedin.com/in/charles-t-banks-jr-6b982b152//)
@@ -1151,5 +1147,9 @@ Successful Response:
 **Pintozzi, Erin - (Project Manager)**
 - [Github](https://github.com/epintozzi)
 - [LinkedIn](https://www.linkedin.com/in/erin-pintozzi/)
+
+**Wallace, Wally**
+- [Github](https://github.com/wally-yawn)
+- [LinkedIn](https://www.https://www.linkedin.com/in/wally-wallace-719b0875/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
