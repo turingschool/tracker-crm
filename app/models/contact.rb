@@ -21,9 +21,7 @@ class Contact < ApplicationRecord
   def self.create_optional_company(contact_params, user_id, company_id)
     attributes = contact_params.merge(user_id: user_id)
     attributes[:company_id] = company_id if company_id.present?
-    contact = new(attributes)
-    contact.save
-    contact
+    new(attributes)
   end
 
   private
