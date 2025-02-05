@@ -6,7 +6,7 @@ class Company < ApplicationRecord
   
   validates :name, presence: true
 
-  def self.find_by_user(user, company_id)
+  def self.find_company(user, company_id)
     if company = user.companies.find_by(id: company_id)
       return company
     else
