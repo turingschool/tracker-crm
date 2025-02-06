@@ -23,6 +23,17 @@ module Api
         end
       end
 
+      def destroy
+        company = @current_user.companies.find_by(id: params[:id])
+
+        if company
+          company.handle_deletion
+          render json: { message: "Company successfully deleted" }, status: :no_content
+        else
+          render json: { error: "Company not found" }, status: :not_found
+        end
+      end
+
       private
 
       def company_params
