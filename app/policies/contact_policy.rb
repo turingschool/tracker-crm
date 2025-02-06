@@ -8,6 +8,10 @@ class ContactPolicy < ApplicationPolicy
     admin? || user.present?
   end
 
+  def destroy?
+    admin? || (user? && user.id == record.user_id)
+  end
+
   class Scope < ApplicationPolicy::Scope
 
     def resolve
