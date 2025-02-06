@@ -23,6 +23,28 @@ module Api
         end
       end
 
+      def update
+        company = @current_user.companies.find_by(id: params[:id])
+
+        if company.nil?
+          skip_authorization
+          render json: ErrorSerializer.format_error(
+            ErrorMessage.new("Company not found", 404)
+          ), status: :not_found
+          return
+        end
+
+        authorize company
+
+        if company.update(company_params)
+          render json: CompanySerializer.new(company), status: :ok
+        else
+          render json: ErrorSerializer.format_error(
+            ErrorMessage.new(company.errors.full_messages.to_sentence, 422)
+          ), status: :unprocessable_entity
+        end
+      end
+
       private
 
       def company_params
