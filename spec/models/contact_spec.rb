@@ -156,5 +156,26 @@ RSpec.describe Contact, type: :model do
         expect(contact).to be_valid
       end
     end
+
+    context "dependent destroy" do
+      before(:each) do
+        @user = User.create!(name: "Johnte", email: "jsmith@hotmail.com", password: "st#nGP@ss")
+        @company = Company.create!(
+          name: "Turing",
+          website: "www.turing.edu",
+          street_address: "555 Main",
+          city: "Denver",
+          state: "CO",
+          zip_code: "80222",
+          user: @user
+        )
+        @contact1 = Contact.create!(first_name: "John", last_name: "Smith", user: @user, company: @company)
+        @contact2 = Contact.create!(first_name: "Jane", last_name: "Doe", user: @user)
+
+        it "destroys contacts when the user is deleted" do
+          expect { @user.destroy }.to change { Contact.count }.by(-2)
+        end
+      end
+    end
   end
 end

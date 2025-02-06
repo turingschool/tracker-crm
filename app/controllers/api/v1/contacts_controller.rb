@@ -65,11 +65,29 @@ module Api
         end
       end
 
+      def destroy
+        contact = Contact.find_by(id: params[:id], user_id: @current_user.id)
+
+        if contact.nil?
+          skip_authorization
+          render json: ErrorSerializer.format_error(ErrorMessage.new("Contact not found or unauthorized access", 404)), status: :not_found
+          return
+        end
+
+        authorize contact
+
+        if contact.destroy
+          render json: { message: "Contact deleted successfully" }, status: :ok
+        else
+          render json: ErrorSerializer.format_error(ErrorMessage.new("Failed to delete contact", 422)), status: :unprocessable_entity
+        end
+      end
+
       private
 
       def contact_params
         params.require(:contact).permit(:first_name, :last_name, :company_id, :email, :phone_number, :notes)
       end
-	  end
+    end
   end
 end
