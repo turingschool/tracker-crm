@@ -36,6 +36,13 @@ module Api
 
         authorize company
 
+        if company_params.empty?
+          render json: ErrorSerializer.format_error(
+            ErrorMessage.new("No updates provided", 400)
+          ), status: :bad_request
+          return
+        end
+
         if company.update(company_params)
           render json: CompanySerializer.new(company), status: :ok
         else

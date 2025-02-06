@@ -56,5 +56,33 @@ RSpec.describe "Update Company", type: :request do
       expect(json[:message]).to eq("Name can't be blank")
       expect(json[:status]).to eq(422)
     end
+
+    it "returns a validation error if required fields are missing" do
+      invalid_params = { state: "" }
+
+      patch "/api/v1/users/#{user.id}/companies/#{company.id}",
+        params: invalid_params,
+        headers: { "Authorization" => "Bearer #{@token}", "Content-Type" => "application/json" },
+        as: :json
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      json = JSON.parse(response.body, symbolize_names: true)
+
+      expect(json[:message]).to eq("State can't be blank")
+      expect(json[:status]).to eq(422)
+    end
+
+    it "returns a 400 bad request error if no updates are sent in the request" do
+      patch "/api/v1/users/#{user.id}/companies/#{company.id}",
+        params: {},
+        headers: { "Authorization" => "Bearer #{@token}", "Content-Type" => "application/json" },
+        as: :json
+    
+      expect(response).to have_http_status(:bad_request)
+      json = JSON.parse(response.body, symbolize_names: true)
+    
+      expect(json[:message]).to eq("No updates provided")
+      expect(json[:status]).to eq(400)
+    end    
   end
 end
