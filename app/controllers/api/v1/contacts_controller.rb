@@ -10,7 +10,7 @@ module Api
             render json: { company: CompanySerializer.new(company), contacts: ContactsSerializer.new(company.contacts) }
           else
             skip_authorization
-            render json: { error: "Company not found or unauthorized access" }, status: :not_found
+            render json: ErrorSerializer.format_error(ErrorMessage.new("Company not found", 404)), status: :not_found
           end
         else
 				  authorize Contact
