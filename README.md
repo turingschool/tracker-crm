@@ -1244,6 +1244,6 @@ Successful Response:
 
 **Wallace, Wally**
 - [Github](https://github.com/wally-yawn)
-- [LinkedIn](https://www.https://www.linkedin.com/in/wally-wallace-719b0875/)
+- [LinkedIn](https://www.linkedin.com/in/wally-wallace-719b0875/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
