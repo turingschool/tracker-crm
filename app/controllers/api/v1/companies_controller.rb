@@ -24,7 +24,6 @@ module Api
       end
 
       def destroy
-        # binding.pry
         company = @current_user.companies.find_by(id: params[:id])
         if company.nil?
           skip_authorization
