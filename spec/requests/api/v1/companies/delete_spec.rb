@@ -26,7 +26,7 @@ describe "Companies API", type: :request do
       expect(Company.find_by(id: @google.id)).not_to be_nil
       expect(JobApplication.find_by(id: @job_application.id)).not_to be_nil
 
-      delete "/api/v1/users/#{@user.id}/companies/#{@google.id}", headers: { "Authorization" => "Bearer #{@token}" }, as: :json
+      delete "/api/v1/users/#{@user.id}/companies/#{@google.id}", headers: { "Authorization" => "Bearer #{@token}", "Content-Type" => "application/json" }, as: :json
 
       expect(response).to have_http_status(:no_content)
       expect(Company.find_by(id: @google.id)).to be_nil
@@ -34,7 +34,7 @@ describe "Companies API", type: :request do
     end
 
     it "returns an error if the company does not exist" do
-      delete "/api/v1/users/#{@user.id}/companies/9999", headers: { "Authorization" => "Bearer #{@token}" }, as: :json
+      delete "/api/v1/users/#{@user.id}/companies/9999", headers: { "Authorization" => "Bearer #{@token}", "Content-Type" => "application/json" }, as: :json
 
       expect(response).to have_http_status(:not_found)
       json = JSON.parse(response.body, symbolize_names: true)
@@ -52,7 +52,7 @@ describe "Companies API", type: :request do
     end
 
     it "returns an unauthorized error if an invalid token is provided" do
-      delete "/api/v1/users/#{@user.id}/companies/#{@google.id}", headers: { "Authorization" => "Bearer invalid.token.here" }, as: :json
+      delete "/api/v1/users/#{@user.id}/companies/#{@google.id}", headers: { "Authorization" => "Bearer invalid.token.here", "Content-Type" => "application/json" }, as: :json
 
       expect(response).to have_http_status(:unauthorized)
       json = JSON.parse(response.body, symbolize_names: true)
