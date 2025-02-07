@@ -607,6 +607,69 @@ Body:{
 }
 ```
 
+#### Delete a Company
+
+Request:
+
+DELETE /api/v1/users/:userid/companies/:id
+Headers:
+```
+json
+{
+  "Authorization": "Bearer <your_token_here>",
+  "Content-Type": "application/json"
+}
+```
+```
+Status: 200 OK
+{
+  "message": "Company successfully deleted"
+}
+```
+
+Error Responses:
+
+Company Not Found
+
+DELETE /api/v1/users/:userid/companies/9999
+Response:
+```
+Status: 404 Not Found
+{
+  "error": "Company not found"
+}
+```
+
+Unauthorized: No Token Provided
+
+DELETE /api/v1/users/:userid/companies/:id
+Response:
+```
+Status: 401 Unauthorized
+{
+  "error": "Not authenticated"
+}
+```
+
+Unauthorized: Invalid Token
+
+DELETE /api/v1/users/:userid/companies/:id
+Headers:
+```
+{
+  "Authorization": "Bearer invalid.token.here",
+  "Content-Type": "application/json"
+}
+```
+
+Response:
+Status: 401 Unauthorized
+```
+{
+  "error": "Not authenticated"
+}
+```
+
 User with no companies:
 ```
 {
