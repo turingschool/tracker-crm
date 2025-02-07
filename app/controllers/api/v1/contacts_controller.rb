@@ -41,7 +41,7 @@ module Api
         authorize @current_user
         
         if !(contact = Contact.find_by(id: params[:id], user_id: params[:user_id]))
-          render json: { error: "Contact not found" }, status: :not_found
+          render json: ErrorSerializer.format_error(ErrorMessage.new("Contact not found", 404)), status: :not_found
         else
           render json: ContactsSerializer.new(contact), status: :ok
         end
