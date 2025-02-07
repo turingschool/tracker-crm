@@ -42,7 +42,7 @@ RSpec.describe "Update Company", type: :request do
       expect(json[:status]).to eq(404)
     end
 
-    it "returns a validation error if required fields are missing" do
+    it "returns a validation error if required fields for name are missing" do
       invalid_params = { name: "" }
 
       patch "/api/v1/users/#{user.id}/companies/#{company.id}",
@@ -57,7 +57,7 @@ RSpec.describe "Update Company", type: :request do
       expect(json[:status]).to eq(422)
     end
 
-    it "returns a validation error if required fields are missing" do
+    it "returns a validation error if required fields for state are missing" do
       invalid_params = { state: "" }
 
       patch "/api/v1/users/#{user.id}/companies/#{company.id}",
