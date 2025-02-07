@@ -78,6 +78,17 @@ describe "Contacts Controller", type: :request do
 
           expect(json[:error]).to eq("Contact not found")
         end
+
+        it "returns a 400 and error message if user has no contacts" do
+          get api_v1_user_contact_path(@user2.id, id: @contact.id), headers: { "Authorization" => "Bearer #{@token}" }, as: :json
+
+          expect(response).not_to be_successful
+
+          expect(response).to have_http_status(:not_found)
+          json = JSON.parse(response.body, symbolize_names: true)
+
+          expect(json[:error]).to eq("Contact not found")
+        end
       end
     end
   end
