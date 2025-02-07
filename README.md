@@ -1179,10 +1179,6 @@ Successful Response:
    - [Github](https://github.com/MDelarosa1993)
    - [LinkedIn](https://www.linkedin.com/in/melchordelarosa/)
 
-**Chirchirillo, Joe**
-   - [Github](https://github.com/jchirch)
-   - [LinkedIn](https://www.linkedin.com/in/joechirchirillo/)
-
 **Delaney, Kyle**
 - [Github](https://gist.github.com/kylomite)
 - [LinkedIn](https://www.linkedin.com/in/kylehamptondelaney/)
