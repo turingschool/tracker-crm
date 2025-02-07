@@ -796,6 +796,50 @@ Successful Response:
 }
 ```
 
+#### Edit a Contact
+
+***Change at least one value***
+
+Request:
+```
+POST /api/v1/users/:user_id/contacts/:contact_id
+Authorization: Bearer Token - put in token for user
+
+raw json body with all fields: 
+
+{
+  "contact": {
+    "first_name": "Jonny",
+    "last_name": "Smith",
+    "company_id": 1,
+    "email": "jonny@gmail.com",
+    "phone_number": "555-785-5555",
+    "notes": "Good contact for XYZ",
+    "user_id": 7
+  }
+}
+
+```
+Successful Response:
+```
+Status: 201 created
+
+{
+    "data": {
+        "id": "5",
+        "type": "contacts",
+        "attributes": {
+            "first_name": "Jonny",
+            "last_name": "Smith",
+            "company_id": 1,
+            "email": "jonny@gmail.com",
+            "phone_number": "555-785-5555",
+            "notes": "Good contact for XYZ",
+            "user_id": 7
+        }
+    }
+}
+
 #### Delete a Contact
 Request:
 ```
@@ -1154,6 +1198,10 @@ Successful Response:
 **Hotaling, Marshall**
 - [Github](https://github.com/marshallhotaling)
 - [LinkedIn](https://www.linkedin.com/in/marshall-hotaling-7b52a8304/)
+
+**Manning, Terra**
+   - [Github](https://github.com/TDManning/)
+   - [LinkedIn](https://www.linkedin.com/in/terra-manning/)
 
 **Macur, Jim**
    - [Github](https://github.com/jimmacur)
