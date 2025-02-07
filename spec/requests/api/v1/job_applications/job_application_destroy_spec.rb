@@ -70,8 +70,14 @@ RSpec.describe "Job Application Destory", type: :request do
       delete "/api/v1/users/#{@user.id}/job_applications/9999",
            headers: { "Authorization" => "Bearer #{@token}" },
            as: :json
-           
+
       expect(response).to have_http_status(404)
+
+      delete "/api/v1/users/#{9999}/job_applications/#{JobApplication.last.id}",
+      headers: { "Authorization" => "Bearer #{@token}" },
+      as: :json
+    
+    expect(response).to have_http_status(404)
 
       # HAPPY PATH
       delete "/api/v1/users/#{@user.id}/job_applications/#{JobApplication.last.id}",
