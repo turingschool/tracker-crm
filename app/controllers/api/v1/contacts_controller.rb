@@ -37,21 +37,12 @@ module Api
       end
 
       def show
-        if params[:id].blank?
-          render json: ErrorSerializer.format_error(ErrorMessage.new("Contact ID is missing", 400)), status: :bad_request
-          return
-        end
-
-        user = User.find(params[:user_id])
-        authorize user
-    
-        contact = Contact.find_by(id: params[:id])
-
-        if contact.nil? || contact.user_id != user.id
-          render json: ErrorSerializer.format_error(ErrorMessage.new("Contact not found", 404)), status: :not_found
+        authorize @current_user
+        
+        if !(contact = Contact.find_by(id: params[:id], user_id: params[:user_id]))
+          render json: { error: "Contact not found" }, status: :not_found
         else
-          contact_data = ContactsSerializer.new(contact)
-          render json: contact_data, status: :ok
+          render json: ContactsSerializer.new(contact), status: :ok
         end
       end
 
