@@ -106,7 +106,7 @@ contacts = [
   },
   {
     first_name: "Sarah",
-    last_name: "Lee",x
+    last_name: "Lee",
     email: "sarah.lee@example.com",
     phone_number: "333-555-7890",
     notes: "Software lead at Tech Innovators",
