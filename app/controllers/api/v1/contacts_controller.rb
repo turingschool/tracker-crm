@@ -21,7 +21,7 @@ module Api
           end
         end
       end
-
+      
       def create 
         authorize Contact
         if (company = Company.find_company(@current_user, params[:company_id])) || params[:company_id].blank?
@@ -29,12 +29,13 @@ module Api
           if contact.save
             render json: ContactsSerializer.new(contact), status: :created
           else
-            render json: { error: contact.errors.full_messages.to_sentence }, status: :unprocessable_entity
+            render json: ErrorSerializer.format_error(ErrorMessage.new(contact.errors.full_messages, 422)), status: :unprocessable_entity
           end
         else
-          return render json: { error: "Company not found" }, status: :not_found
+          render json: ErrorSerializer.format_error(ErrorMessage.new("Company not found", 404)), status: :not_found
         end
       end
+      
 
       def show
         authorize @current_user
