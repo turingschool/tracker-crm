@@ -1205,7 +1205,7 @@ Successful Response:
 
 **Messersmith, Renee**
    - [Github](https://github.com/reneemes)
-   - [LinkedIn](https://www.linkedin.com/in/reneehessersmith/)
+   - [LinkedIn](https://www.linkedin.com/in/reneemessersmith/)
 
 **O'Leary, Ryan**
 - [Github](https://github.com/ROlearyPro)
