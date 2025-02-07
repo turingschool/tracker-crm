@@ -12,6 +12,11 @@ class CompanyPolicy < ApplicationPolicy
     user.present?
   end
 
+  def destroy?
+    return false unless user
+    admin? || record.user_id == user.id
+  end
+
   class Scope < ApplicationPolicy::Scope
     def resolve
       return scope.none unless user
