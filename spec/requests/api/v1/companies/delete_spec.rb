@@ -28,7 +28,7 @@ describe "Companies API", type: :request do
 
       delete "/api/v1/users/#{@user.id}/companies/#{@google.id}", headers: { "Authorization" => "Bearer #{@token}", "Content-Type" => "application/json" }, as: :json
 
-      expect(response).to have_http_status(:no_content)
+      expect(response).to have_http_status(:ok)
       expect(Company.find_by(id: @google.id)).to be_nil
       expect(JobApplication.find_by(id: @job_application.id)).to be_nil
     end

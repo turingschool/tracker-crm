@@ -31,7 +31,7 @@ module Api
         end
           authorize company 
           company.handle_deletion
-          render json: { message: "Company successfully deleted" }, status: :no_content
+          render json: { message: "Company successfully deleted" }, status: :ok
       end
 
       private
