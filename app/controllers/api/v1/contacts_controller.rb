@@ -47,21 +47,30 @@ module Api
       end
 
       def show
-        if params[:id].blank?
-          render json: ErrorSerializer.format_error(ErrorMessage.new("Contact ID is missing", 400)), status: :bad_request
+        authorize @current_user
+        
+        if !(contact = Contact.find_by(id: params[:id], user_id: params[:user_id]))
+          render json: { error: "Contact not found" }, status: :not_found
+        else
+          render json: ContactsSerializer.new(contact), status: :ok
+        end
+      end
+
+      def destroy
+        contact = Contact.find_by(id: params[:id], user_id: @current_user.id)
+
+        if contact.nil?
+          skip_authorization
+          render json: ErrorSerializer.format_error(ErrorMessage.new("Contact not found or unauthorized access", 404)), status: :not_found
           return
         end
 
-        user = User.find(params[:user_id])
-        authorize user
-    
-        contact = Contact.find_by(id: params[:id])
+        authorize contact
 
-        if contact.nil? || contact.user_id != user.id
-          render json: ErrorSerializer.format_error(ErrorMessage.new("Contact not found", 404)), status: :not_found
+        if contact.destroy
+          render json: { message: "Contact deleted successfully" }, status: :ok
         else
-          contact_data = ContactsSerializer.new(contact)
-          render json: contact_data, status: :ok
+          render json: ErrorSerializer.format_error(ErrorMessage.new("Failed to delete contact", 422)), status: :unprocessable_entity
         end
       end
 
@@ -70,6 +79,6 @@ module Api
       def contact_params
         params.require(:contact).permit(:first_name, :last_name, :company_id, :email, :phone_number, :notes)
       end
-	  end
+    end
   end
 end

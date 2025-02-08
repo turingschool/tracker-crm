@@ -854,6 +854,20 @@ Successful Response:
 }
 ```
 
+#### Delete a Contact
+Request:
+```
+DELETE http://localhost:3001/api/v1/users/:user_id/contacts/:id
+Authorization: Bearer Token - put in token for user
+```
+
+Successful Response:
+```
+{
+  "message": "Contact deleted successfully"
+}
+```
+
 #### Contact Errors
 401 Error Response if no token provided:
 
@@ -863,6 +877,15 @@ Status: 401 Unauthorized
 Body: {
     "message": "Invalid login credentials",
     "status": 401
+}
+```
+
+Status: 404 Not Found:
+
+```
+{
+  "message": "Contact not found or unauthorized access",
+  "status": 404
 }
 ```
 
@@ -1205,6 +1228,14 @@ Successful Response:
 **Pintozzi, Erin - (Project Manager)**
 - [Github](https://github.com/epintozzi)
 - [LinkedIn](https://www.linkedin.com/in/erin-pintozzi/)
+
+**Verrill, Seth**
+- [Github](https://github.com/sethverrill)
+- [LinkedIn](https://www.linkedin.com/in/sethverrill/)
+
+**Wallace, Wally**
+- [Github](https://github.com/wally-yawn)
+- [LinkedIn](https://www.linkedin.com/in/wally-wallace-719b0875/)
 
 **Willett, Bryan**
 - [Github](https://github.com/bwillett2003)
