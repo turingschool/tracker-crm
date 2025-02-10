@@ -683,6 +683,64 @@ No token or bad token response
     "error": "Not authenticated"
 }
 ```
+
+
+#### Edit a company
+
+Request:
+```
+PATCH /api/v1/users/user_id/companies/company_id
+
+Authorization Bearer -put user token here without dashes-
+
+Body - raw 
+
+{
+  "name": "New Name"
+}
+```
+
+Successful Response:
+
+```
+{
+    "data": [
+        {
+            "id": "2",
+            "type": "company",
+            "attributes": {
+                "name": "New Name",
+                "website": "https://futuredesigns.com",
+                "street_address": "456 Future Blvd",
+                "city": "Austin",
+                "state": "Texas",
+                "zip_code": "73301",
+                "notes": "Submitted application for the UI Designer role."
+            }
+        }
+    ]
+}
+```
+
+Request with empty body:
+
+```
+{
+    "message": "No updates provided",
+    "status": 400
+}
+```
+
+Request with empty value:
+
+```
+{
+    "message": "Name can't be blank",
+    "status": 422
+}
+```
+Multiple attributes can be updated at once but none of the values can be blank or it will error out.
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Contacts
@@ -1245,5 +1303,9 @@ Successful Response:
 **Wallace, Wally**
 - [Github](https://github.com/wally-yawn)
 - [LinkedIn](https://www.linkedin.com/in/wally-wallace-719b0875/)
+
+**Willett, Bryan**
+- [Github](https://github.com/bwillett2003)
+- [LinkedIn](https://www.linkedin.com/in/bryan--willett/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

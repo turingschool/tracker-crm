@@ -12,6 +12,11 @@ class CompanyPolicy < ApplicationPolicy
     user.present?
   end
 
+  def update?
+    return false unless user
+    admin? || record.user_id == user.id
+  end
+
   def destroy?
     return false unless user
     admin? || record.user_id == user.id
