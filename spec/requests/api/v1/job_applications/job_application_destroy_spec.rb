@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Job Application Destory", type: :request do
+RSpec.describe "Job Application Destroy", type: :request do
   before(:each) do
     @user = User.create!(name: "Dolly Parton", email: "dollyP123@email.com", password: "Jolene123")
 
