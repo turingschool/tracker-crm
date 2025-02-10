@@ -52,6 +52,17 @@ module Api
         end
       end
 
+      def destroy
+        company = @current_user.companies.find_by(id: params[:id])
+        if company.nil?
+          skip_authorization
+          return render json: { error: "Company not found" }, status: :not_found
+        end
+          authorize company 
+          company.handle_deletion
+          render json: { message: "Company successfully deleted" }, status: :ok
+      end
+
       private
 
       def company_params
