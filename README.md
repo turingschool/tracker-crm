@@ -1226,16 +1226,16 @@ Successful Response:
 - [LinkedIn](https://www.linkedin.com/in/joechirchirillo/)
 
 **Cirbo, Candice**
-   - [Github](https://github.com/ccirbo)
-   - [LinkedIn](https://www.linkedin.com/in/candicecirbo/)
+- [Github](https://github.com/ccirbo)
+- [LinkedIn](https://www.linkedin.com/in/candicecirbo/)
 
 **Croy, Lito**
 - [Github](https://github.com/litobot)
 - [LinkedIn](https://www.linkedin.com/in/litocroy/)
 
 **De La Rosa, Melchor**   
-   - [Github](https://github.com/MDelarosa1993)
-   - [LinkedIn](https://www.linkedin.com/in/melchordelarosa/)
+- [Github](https://github.com/MDelarosa1993)
+- [LinkedIn](https://www.linkedin.com/in/melchordelarosa/)
 
 **Delaney, Kyle**
 - [Github](https://gist.github.com/kylomite)
@@ -1254,16 +1254,16 @@ Successful Response:
 - [LinkedIn](https://www.linkedin.com/in/marshall-hotaling-7b52a8304/)
 
 **Manning, Terra**
-   - [Github](https://github.com/TDManning/)
-   - [LinkedIn](https://www.linkedin.com/in/terra-manning/)
+- [Github](https://github.com/TDManning/)
+- [LinkedIn](https://www.linkedin.com/in/terra-manning/)
 
 **Macur, Jim**
-   - [Github](https://github.com/jimmacur)
-   - [LinkedIn](https://www.linkedin.com/in/jimmacur/)
+- [Github](https://github.com/jimmacur)
+- [LinkedIn](https://www.linkedin.com/in/jimmacur/)
 
 **Messersmith, Renee**
-   - [Github](https://github.com/reneemes)
-   - [LinkedIn](https://www.linkedin.com/in/reneemessersmith/)
+- [Github](https://github.com/reneemes)
+- [LinkedIn](https://www.linkedin.com/in/reneemessersmith/)
 
 **O'Leary, Ryan**
 - [Github](https://github.com/ROlearyPro)
