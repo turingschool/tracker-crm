@@ -100,7 +100,8 @@ describe "Contacts Controller", type: :request do
         expect(response).to have_http_status(:not_found)
         json = JSON.parse(response.body, symbolize_names: true)
 
-        expect(json[:error]).to eq("Company not found or unauthorized access")
+        expect(json[:message]).to include("Company not found")
+        expect(json[:status]).to eq(404)
       end
     end
   end
