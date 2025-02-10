@@ -124,8 +124,10 @@ describe "Contacts Controller", type: :request do
 			expect(response).to have_http_status(:unprocessable_entity)
 
       json = JSON.parse(response.body, symbolize_names: true)
-      expect(json[:error]).to eq("First name and Last name already exist for this user")
-    end
+
+			expect(json[:message]).to include("First name and Last name already exist for this user")
+			expect(json[:status]).to eq(422)
+	end
 
 		it "returns a 422 error for missing first_name" do
 			missing_contact_params = { contact: { first_name: "", last_name: "Smith" } }
@@ -134,7 +136,8 @@ describe "Contacts Controller", type: :request do
 
 			expect(response).to have_http_status(:unprocessable_entity)
 			json = JSON.parse(response.body, symbolize_names: true)
-			expect(json[:error]).to eq("First name can't be blank")
+			expect(json[:message]).to include("First name can't be blank")
+			expect(json[:status]).to eq(422)
 		end
 
 		it "returns a 422 error for missing last_name" do
@@ -144,7 +147,8 @@ describe "Contacts Controller", type: :request do
 
 			expect(response).to have_http_status(:unprocessable_entity)
 			json = JSON.parse(response.body, symbolize_names: true)
-			expect(json[:error]).to eq("Last name can't be blank")
+			expect(json[:message]).to include("Last name can't be blank")
+			expect(json[:status]).to eq(422)
 		end
 
 		it "returns a 422 error for invalid email format" do
@@ -154,7 +158,8 @@ describe "Contacts Controller", type: :request do
 
 			expect(response).to have_http_status(:unprocessable_entity)
 			json = JSON.parse(response.body, symbolize_names: true)
-			expect(json[:error]).to eq("Email must be a valid email address")
+			expect(json[:message]).to include("Email must be a valid email address")
+			expect(json[:status]).to eq(422)
 		end
 
 		it "returns a 422 error for an invalid phone number format" do
@@ -164,7 +169,8 @@ describe "Contacts Controller", type: :request do
 
 			expect(response).to have_http_status(:unprocessable_entity)
 			json = JSON.parse(response.body, symbolize_names: true)
-			expect(json[:error]).to eq("Phone number must be in the format '555-555-5555'")
+			expect(json[:message]).to include("Phone number must be in the format '555-555-5555'")
+			expect(json[:status]).to eq(422)
 		end
 
 		it 'returns a 404 error when a company is not found by ID number' do
@@ -174,7 +180,8 @@ describe "Contacts Controller", type: :request do
 			expect(response).to have_http_status(:not_found)
 			json = JSON.parse(response.body, symbolize_names: true)
 			
-			expect(json[:error]).to eq("Company not found")
+			expect(json[:message]).to include("Company not found")
+			expect(json[:status]).to eq(404)
 		end
 	end
 
