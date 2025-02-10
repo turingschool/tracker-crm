@@ -10,7 +10,7 @@ class Company < ApplicationRecord
   validates :city, presence: true, allow_blank: false
   validates :state, presence: true, allow_blank: false
   validates :zip_code, presence: true, allow_blank: false
-  validates :notes, presence: true, allow_nil: true
+  validates :notes, presence: true, allow_blank: true
 
   def self.find_company(user, company_id)
     if company = user.companies.find_by(id: company_id)
