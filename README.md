@@ -880,7 +880,8 @@ raw json body with all fields:
 ```
 Successful Response:
 ```
-Status: 201 created
+Contact without associated company:
+Status: 200 ok
 
 {
     "data": {
@@ -894,6 +895,35 @@ Status: 201 created
             "phone_number": "555-785-5555",
             "notes": "Good contact for XYZ",
             "user_id": 7
+        }
+    }
+}
+
+Contact with associated company:
+Status: 200 ok
+
+{
+    "data": {
+        "id": "9",
+        "type": "contacts",
+        "attributes": {
+            "first_name": "Jonny",
+            "last_name": "Jonny",
+            "company_id": 1,
+            "email": "jj@gmail.com",
+            "phone_number": "555-785-5555",
+            "notes": "Good contact for XYZ",
+            "user_id": 7,
+            "company": {
+                "id": 1,
+                "name": "Tech Innovators",
+                "website": "https://techinnovators.com",
+                "street_address": "123 Innovation Way",
+                "city": "San Francisco",
+                "state": "CA",
+                "zip_code": "94107",
+                "notes": "Reached out on LinkedIn, awaiting response."
+            }
         }
     }
 }
