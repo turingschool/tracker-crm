@@ -16,7 +16,7 @@ class Company < ApplicationRecord
     if company = user.companies.find_by(id: company_id)
       return company
     else
-      return false
+      return nil
     end
   end
 end
