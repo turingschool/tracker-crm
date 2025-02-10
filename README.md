@@ -1190,6 +1190,10 @@ Successful Response:
    - [Github](https://github.com/ccirbo)
    - [LinkedIn](https://www.linkedin.com/in/candicecirbo/)
 
+**Cochran, James**
+- [Github](https://github.com/James-Cochran)
+- [LinkedIn](https://www.linkedin.com/in/james-cochran-/)
+
 **Croy, Lito**
 - [Github](https://github.com/litobot)
 - [LinkedIn](https://www.linkedin.com/in/litocroy/)
@@ -1229,10 +1233,6 @@ Successful Response:
 **O'Leary, Ryan**
 - [Github](https://github.com/ROlearyPro)
 - [LinkedIn](https://www.linkedin.com/in/ryan-o-leary-6a963b211/)
-
-**Cochran, James**
-- [Github](https://github.com/James-Cochran)
-- [LinkedIn](https://www.linkedin.com/in/james-cochran-/)
 
 **Pintozzi, Erin - (Project Manager)**
 - [Github](https://github.com/epintozzi)
