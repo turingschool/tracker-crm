@@ -12,6 +12,10 @@ class JobApplicationPolicy < ApplicationPolicy
     record.user_id == user.id
   end
 
+  def destroy?
+    admin? || record.user_id == user.id
+  end
+
   class Scope < ApplicationPolicy::Scope
 
     def resolve 
