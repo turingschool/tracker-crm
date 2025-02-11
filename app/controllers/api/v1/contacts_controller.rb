@@ -25,7 +25,7 @@ module Api
       def create 
         authorize Contact
         if (company = Company.find_company(@current_user, params[:company_id])) || params[:company_id].blank?
-          contact = Contact.create_optional_company(contact_params, @current_user.id, params[:company_id])
+          contact = Contact.create_optional_company(contact_params, @current_user.id, company&.id)
           if contact.persisted?
             render json: ContactsSerializer.new(contact), status: :created
           else
