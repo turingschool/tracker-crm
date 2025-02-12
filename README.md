@@ -1283,13 +1283,13 @@ Successful Response:
 - [Github](https://github.com/marshallhotaling)
 - [LinkedIn](https://www.linkedin.com/in/marshall-hotaling-7b52a8304/)
 
-**Manning, Terra**
-- [Github](https://github.com/TDManning/)
-- [LinkedIn](https://www.linkedin.com/in/terra-manning/)
-
 **Macur, Jim**
 - [Github](https://github.com/jimmacur)
 - [LinkedIn](https://www.linkedin.com/in/jimmacur/)
+
+**Manning, Terra**
+- [Github](https://github.com/TDManning/)
+- [LinkedIn](https://www.linkedin.com/in/terra-manning/)
 
 **Messersmith, Renee**
 - [Github](https://github.com/reneemes)
