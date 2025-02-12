@@ -12,6 +12,10 @@ class ContactPolicy < ApplicationPolicy
     admin? || (user? && user.id == record.user_id)
   end
 
+  def update?
+    admin? || (user? && user.id == record.user_id)
+  end
+
   class Scope < ApplicationPolicy::Scope
 
     def resolve

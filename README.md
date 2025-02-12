@@ -917,6 +917,80 @@ Successful Response:
 }
 ```
 
+#### Edit a Contact
+
+***Change at least one value***
+
+Request:
+```
+POST /api/v1/users/:user_id/contacts/:contact_id
+Authorization: Bearer Token - put in token for user
+
+raw json body with all fields: 
+
+{
+  "contact": {
+    "first_name": "Jonny",
+    "last_name": "Smith",
+    "company_id": 1,
+    "email": "jonny@gmail.com",
+    "phone_number": "555-785-5555",
+    "notes": "Good contact for XYZ",
+    "user_id": 7
+  }
+}
+
+```
+Successful Response:
+```
+Contact without associated company:
+Status: 200 ok
+
+{
+    "data": {
+        "id": "5",
+        "type": "contacts",
+        "attributes": {
+            "first_name": "Jonny",
+            "last_name": "Smith",
+            "company_id": 1,
+            "email": "jonny@gmail.com",
+            "phone_number": "555-785-5555",
+            "notes": "Good contact for XYZ",
+            "user_id": 7
+        }
+    }
+}
+
+Contact with associated company:
+Status: 200 ok
+
+{
+    "data": {
+        "id": "9",
+        "type": "contacts",
+        "attributes": {
+            "first_name": "Jonny",
+            "last_name": "Jonny",
+            "company_id": 1,
+            "email": "jj@gmail.com",
+            "phone_number": "555-785-5555",
+            "notes": "Good contact for XYZ",
+            "user_id": 7,
+            "company": {
+                "id": 1,
+                "name": "Tech Innovators",
+                "website": "https://techinnovators.com",
+                "street_address": "123 Innovation Way",
+                "city": "San Francisco",
+                "state": "CA",
+                "zip_code": "94107",
+                "notes": "Reached out on LinkedIn, awaiting response."
+            }
+        }
+    }
+}
+
 #### Delete a Contact
 Request:
 ```
@@ -1245,8 +1319,8 @@ Successful Response:
 - [LinkedIn](https://www.linkedin.com/in/joechirchirillo/)
 
 **Cirbo, Candice**
-   - [Github](https://github.com/ccirbo)
-   - [LinkedIn](https://www.linkedin.com/in/candicecirbo/)
+- [Github](https://github.com/ccirbo)
+- [LinkedIn](https://www.linkedin.com/in/candicecirbo/)
 
 **Cochran, James**
 - [Github](https://github.com/James-Cochran)
@@ -1257,12 +1331,8 @@ Successful Response:
 - [LinkedIn](https://www.linkedin.com/in/litocroy/)
 
 **De La Rosa, Melchor**   
-   - [Github](https://github.com/MDelarosa1993)
-   - [LinkedIn](https://www.linkedin.com/in/melchordelarosa/)
-
-**Chirchirillo, Joe**
-   - [Github](https://github.com/jchirch)
-   - [LinkedIn](https://www.linkedin.com/in/joechirchirillo/)
+- [Github](https://github.com/MDelarosa1993)
+- [LinkedIn](https://www.linkedin.com/in/melchordelarosa/)
 
 **Delaney, Kyle**
 - [Github](https://gist.github.com/kylomite)
@@ -1281,12 +1351,16 @@ Successful Response:
 - [LinkedIn](https://www.linkedin.com/in/marshall-hotaling-7b52a8304/)
 
 **Macur, Jim**
-   - [Github](https://github.com/jimmacur)
-   - [LinkedIn](https://www.linkedin.com/in/jimmacur/)
+- [Github](https://github.com/jimmacur)
+- [LinkedIn](https://www.linkedin.com/in/jimmacur/)
+
+**Manning, Terra**
+- [Github](https://github.com/TDManning/)
+- [LinkedIn](https://www.linkedin.com/in/terra-manning/)
 
 **Messersmith, Renee**
-   - [Github](https://github.com/reneemes)
-   - [LinkedIn](https://www.linkedin.com/in/reneehessersmith/)
+- [Github](https://github.com/reneemes)
+- [LinkedIn](https://www.linkedin.com/in/reneemessersmith/)
 
 **O'Brien, Michael**
 - [Github](https://github.com/ROlearyPro)
