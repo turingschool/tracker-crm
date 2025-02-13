@@ -74,8 +74,6 @@ RSpec.describe "Job Application #create & #index", type: :request do
       expect(jobApp[:data][:attributes][:application_url]).to eq(job_application_params[:application_url])
       expect(jobApp[:data][:attributes][:company_id]).to eq(job_application_params[:company_id])
       expect(jobApp[:data][:attributes][:company_name]).to eq(@google.name)
-      puts jobApp
-
       expect(jobApp[:data][:attributes][:contact_id]).to eq(@contact.id)
     end
   end
