@@ -1300,6 +1300,10 @@ Successful Response:
 - [Github](https://github.com/epintozzi)
 - [LinkedIn](https://www.linkedin.com/in/erin-pintozzi/)
 
+**Salazar, Kaelin**
+- [Github](https://github.com/kaelinpsalazar)
+- [LinkedIn](https://www.linkedin.com/in/kaelin-salazar/)
+
 **Verrill, Seth**
 - [Github](https://github.com/sethverrill)
 - [LinkedIn](https://www.linkedin.com/in/sethverrill/)

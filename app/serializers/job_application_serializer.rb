@@ -1,5 +1,6 @@
 class JobApplicationSerializer
   include JSONAPI::Serializer
+  
   attributes :position_title,
              :date_applied,
              :status,
@@ -10,13 +11,17 @@ class JobApplicationSerializer
              :company_name,
              :contact_id,
              :updated_at
-            
+
   attribute :company_name do |job_application|
     job_application.company&.name
   end
 
   attribute :updated_at do |job_app|
     job_app.updated_at.strftime('%Y-%m-%d') if job_app.updated_at
+  end
+
+  attribute :contacts do |job_application|
+    contacts_for(job_application)
   end
 
   def self.contacts_for(job_application)
