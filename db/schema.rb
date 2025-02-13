@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_12_20_123753) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_11_234807) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -55,6 +55,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_20_123753) do
     t.datetime "updated_at", null: false
     t.bigint "company_id", null: false
     t.bigint "user_id", null: false
+    t.bigint "contact_id"
     t.index ["company_id"], name: "index_job_applications_on_company_id"
     t.index ["user_id"], name: "index_job_applications_on_user_id"
   end
@@ -89,5 +90,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_20_123753) do
   add_foreign_key "contacts", "companies"
   add_foreign_key "contacts", "users"
   add_foreign_key "job_applications", "companies"
+  add_foreign_key "job_applications", "contacts"
   add_foreign_key "job_applications", "users"
 end

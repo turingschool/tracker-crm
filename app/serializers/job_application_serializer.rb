@@ -8,6 +8,7 @@ class JobApplicationSerializer
              :application_url, 
              :company_id,
              :company_name,
+             :contact_id,
              :updated_at
             
   attribute :company_name do |job_application|
