@@ -10,6 +10,8 @@ RSpec.describe "Job Application #create & #index", type: :request do
 
     @amazon = Company.create!(user_id: @user.id, name: "Amazon", website: "amazon.com", street_address: "410 Terry Ave N", city: "Seattle", state: "WA", zip_code: "98109", notes: "E-commerce")
 
+    @contact = Contact.create!(user_id: @user.id, first_name: "John", last_name: "Doe", email: "john@example.com", phone_number: "123-456-7890")
+
     @job_application1 = JobApplication.create!(
       position_title: "Jr. CTO",
       date_applied: "2024-10-31",
@@ -18,7 +20,8 @@ RSpec.describe "Job Application #create & #index", type: :request do
       job_description: "Looking for Turing grad/jr dev to be CTO",
       application_url: "www.example1.com",
       company: @google,
-      user: @user
+      user: @user,
+      contact_id: @contact.id
     )
 
     @job_application2 = JobApplication.create!(
@@ -44,7 +47,8 @@ RSpec.describe "Job Application #create & #index", type: :request do
       notes: "Fingers crossed!",
       job_description: "Looking for Turing grad/jr dev to be CTO",
       application_url: "www.example.com",
-      company_id: @google.id
+      company_id: @google.id,
+      contact_id: @contact.id
     }
   end
 
@@ -70,6 +74,7 @@ RSpec.describe "Job Application #create & #index", type: :request do
       expect(jobApp[:data][:attributes][:application_url]).to eq(job_application_params[:application_url])
       expect(jobApp[:data][:attributes][:company_id]).to eq(job_application_params[:company_id])
       expect(jobApp[:data][:attributes][:company_name]).to eq(@google.name)
+      expect(jobApp[:data][:attributes][:contact_id]).to eq(@contact.id)
     end
   end
 

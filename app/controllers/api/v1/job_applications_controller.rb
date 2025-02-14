@@ -85,7 +85,7 @@ class Api::V1::JobApplicationsController < ApplicationController
       :notes, 
       :job_description, 
       :application_url, 
-      :contact_information, 
+      :contact_id, 
       :company_id
     )
   rescue ActionController::ParameterMissing

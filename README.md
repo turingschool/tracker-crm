@@ -339,8 +339,8 @@ Body: {
         notes: "Fingers crossed!",
         job_description: "Looking for Turing grad/jr dev to be CTO",
         application_url: "www.example.com",
-        contact_information: "boss@example.com",
-        company_id: id_1
+        contact_id: "1",
+        company_id: "1"
       }
 }
 ```
@@ -350,19 +350,35 @@ Successful Response:
 
 Status: 200
 
-{:data=>
-  {:id=>"4",
-   :type=>"job_application",
-   :attributes=>
-    {:position_title=>"Jr. CTO",
-      :date_applied=>"2024-10-31",
-      :status=>1,
-      :notes=>"Fingers crossed!",
-      :job_description=>"Looking for Turing grad/jr dev to be CTO",
-      :application_url=>"www.example.com",
-      :contact_information=>"boss@example.com",
-      :company_id=>35}}
-}
+"data": [
+        {
+            "id": "1",
+            "type": "job_application",
+            "attributes": {
+                "position_title": "Jr. CTO",
+                "date_applied": "2024-10-31",
+                "status": 1,
+                "notes": "Fingers crossed!",
+                "job_description": "test"
+                "application_url": "www.example.com",
+                "company_id": 1,
+                "company_name": "Tech Innovators",
+                "contact_id": null,
+                "updated_at": "2025-02-11",
+                "contacts": [
+                    {
+                        "id": 1,
+                        "first_name": "John",
+                        "last_name": "Doe",
+                        "email": "john.doe@example.com",
+                        "phone_number": "123-555-1234",
+                        "notes": "Recruiter at Tech Innovators"
+                    },
+                ]
+            }
+        }
+]
+
 ```
 
 Unsuccessful Response:
@@ -1373,6 +1389,10 @@ Successful Response:
 **Pintozzi, Erin - (Project Manager)**
 - [Github](https://github.com/epintozzi)
 - [LinkedIn](https://www.linkedin.com/in/erin-pintozzi/)
+
+**Salazar, Kaelin**
+- [Github](https://github.com/kaelinpsalazar)
+- [LinkedIn](https://www.linkedin.com/in/kaelin-salazar/)
 
 **Verrill, Seth**
 - [Github](https://github.com/sethverrill)
