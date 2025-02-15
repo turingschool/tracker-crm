@@ -4,6 +4,7 @@ class Api::V1::DashboardsController < ApplicationController
   def show
     user = current_user
     authorize user
-    render json: DashboardSerializer.new(user), status: :ok
+    weekly_summary = Dashboard.filter_weekly_summary(user)
+    render json: DashboardSerializer.new(user, params: {weekly_summary: weekly_summary}), status: :ok
   end
 end

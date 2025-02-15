@@ -2,13 +2,9 @@ class DashboardSerializer
   include JSONAPI::Serializer
   attributes :id, :name, :email
 
-  attribute :dashboard do |user|
+  attribute :dashboard do |user, params|
     {
-      weekly_summary: {
-        job_applications: user.job_applications.where('created_at >= ?', 7.days.ago),
-        contacts: user.contacts.where('created_at >= ?', 7.days.ago),
-        companies: user.companies.where('created_at >= ?', 7.days.ago)
-      }
+      weekly_summary: params[:weekly_summary]
     }
   end
 end
