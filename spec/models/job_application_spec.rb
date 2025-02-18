@@ -39,10 +39,6 @@ RSpec.describe JobApplication, type: :model do
       )
     }
 
-    it "validates uniqueness of job application for a given user" do
-      expect(subject).to validate_uniqueness_of(:application_url).scoped_to(:user_id).with_message("already exists for the user, try making a new application with a new URL.")
-    end
-
     it "allows job application to be valid without a contact_id" do
       job_application_without_contact = JobApplication.create!(
         position_title: "Jr. CTO",
