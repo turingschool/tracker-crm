@@ -7,7 +7,7 @@ class JobApplication < ApplicationRecord
   validates :date_applied, presence: true
   validates :status, presence: true
   validates :job_description, presence: true
-  validates :application_url, presence: true, uniqueness: { scope: :user_id, message: "already exists for the user, try making a new application with a new URL." }
+  validates :application_url, presence: true
   validates :company_id, presence: true
   validates :contact, presence: true, if: :contact_id_present?
 
