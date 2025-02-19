@@ -42,10 +42,50 @@ RSpec.describe JobApplication, type: :model do
     it "validates uniqueness of job application for a given user" do
       expect(subject).to validate_uniqueness_of(:application_url).scoped_to(:user_id).with_message("already exists for the user, try making a new application with a new URL.")
     end
+
+    it "allows job application to be valid without a contact_id" do
+      job_application_without_contact = JobApplication.create!(
+        position_title: "Jr. CTO",
+        date_applied: "2024-10-31",
+        status: 1,
+        notes: "Fingers crossed!",
+        job_description: "Looking for Turing grad/jr dev to be CTO",
+        application_url: "www.different-example.com",
+        company_id: subject.company_id,
+        user_id: subject.user_id,
+        contact_id: nil  
+      )
+
+      expect(job_application_without_contact).to be_valid
+    end
+
+    it "validates presence of contact if contact_id is provided" do
+      contact = Contact.create!(
+        first_name: "John",
+        last_name: "Doe",
+        email: "john.doe@example.com",
+        user_id: subject.user_id
+      )
+
+      job_application_with_contact = JobApplication.create!(
+        position_title: "Jr. CTO",
+        date_applied: "2024-10-31",
+        status: 1,
+        notes: "Fingers crossed!",
+        job_description: "Looking for Turing grad/jr dev to be CTO",
+        application_url: "www.example-with-contact.com",
+        company_id: subject.company_id,
+        user_id: subject.user_id,
+        contact_id: contact.id  
+      )
+
+      expect(job_application_with_contact).to be_valid
+    end
   end
 
   describe "associations" do
     it { should belong_to(:company) }
     it { should belong_to(:user) }
+    it { should belong_to(:contact).optional }
   end
 end

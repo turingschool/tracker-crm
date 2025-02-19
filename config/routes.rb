@@ -11,11 +11,12 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: [:create, :index, :show, :update] do
 
-        resources :job_applications, only: [:create, :index, :show, :update]
-        resources :companies, only: [:create, :index] do
+        resources :job_applications, only: [:create, :index, :show, :update, :destroy]
+        resources :companies, only: [:create, :index, :update, :destroy] do
+
           resources :contacts, only: [:create, :index]
         end
-        resources :contacts, only: [:index, :create, :show, :destroy]
+        resources :contacts, only: [:index, :create, :show, :destroy, :update]
         resource :dashboard, only: :show
       end
 
@@ -23,4 +24,3 @@ Rails.application.routes.draw do
     end
   end
 end
-

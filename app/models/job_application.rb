@@ -1,6 +1,7 @@
 class JobApplication < ApplicationRecord
   belongs_to :company
   belongs_to :user
+  belongs_to :contact, optional: true
 
   validates :position_title, presence: true
   validates :date_applied, presence: true
@@ -8,4 +9,11 @@ class JobApplication < ApplicationRecord
   validates :job_description, presence: true
   validates :application_url, presence: true, uniqueness: { scope: :user_id, message: "already exists for the user, try making a new application with a new URL." }
   validates :company_id, presence: true
+  validates :contact, presence: true, if: :contact_id_present?
+
+  private
+
+  def contact_id_present?
+    contact_id.present?
+  end
 end

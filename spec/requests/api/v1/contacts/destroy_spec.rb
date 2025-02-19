@@ -75,6 +75,7 @@ describe "Contacts Controller", type: :request do
         json = JSON.parse(response.body, symbolize_names: true)
 
         expect(json[:message]).to eq("Contact not found or unauthorized access")
+        expect(json[:status]).to eq(404)
       end
     end
   end

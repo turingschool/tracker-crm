@@ -177,5 +177,74 @@ RSpec.describe Contact, type: :model do
         end
       end
     end
+
+  describe "#update_contact" do
+    before(:each) do
+      @user = User.create!(name: "Me", email: "its_me@example.com", password: "reallyGoodPass")
+      @company = Company.create!(
+        name: "Turing",
+        website: "www.turing.com",
+        street_address: "123 Main St",
+        city: "Denver",
+        state: "CO",
+        zip_code: "80218",
+        user: @user
+      )
+      @contact = Contact.create!(
+        first_name: "John",
+        last_name: "Smith",
+        email: "john@example.com",
+        phone_number: "555-555-5555",
+        user: @user,
+        company: @company
+      )
+    end
+
+    context "Happy Paths" do
+      it "successfully updates a contact's email" do
+        expect(@contact.update_contact(email: "new_email@example.com")).to be_truthy
+        expect(@contact.reload.email).to eq("new_email@example.com")
+      end
+
+      it "successfully updates a contact's phone number" do
+        expect(@contact.update_contact(phone_number: "123-456-7890")).to be_truthy
+        expect(@contact.reload.phone_number).to eq("123-456-7890")
+      end
+
+      it "allows updating multiple fields at once" do
+        update_params = { first_name: "Jane", last_name: "Doe", email: "jane@example.com" }
+        expect(@contact.update_contact(update_params)).to be_truthy
+        expect(@contact.reload.first_name).to eq("Jane")
+        expect(@contact.reload.last_name).to eq("Doe")
+        expect(@contact.reload.email).to eq("jane@example.com")
+      end
+    end
+
+    context "Sad Paths" do
+      it "fails to update if the phone number format is invalid" do
+        expect(@contact.update_contact(phone_number: "1234567890")).to be_falsey
+        expect(@contact.errors[:phone_number]).to include("must be in the format '555-555-5555'")
+      end
+
+      it "fails to update if the email format is invalid" do
+        expect(@contact.update_contact(email: "invalid-email")).to be_falsey
+        expect(@contact.errors[:email]).to include("must be a valid email address")
+      end
+    end
+
+    context "Edge Cases" do
+      it "does not change attributes if no updates are provided" do
+        expect(@contact.update_contact({})).to be_truthy
+        expect(@contact.reload.first_name).to eq("John")
+        expect(@contact.reload.last_name).to eq("Smith")
+      end
+
+      it "partially updates only the provided fields" do
+        @contact.update_contact(first_name: "Updated")
+        expect(@contact.reload.first_name).to eq("Updated")
+        expect(@contact.reload.last_name).to eq("Smith")
+      end
+    end
   end
+end
 end
