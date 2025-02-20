@@ -1390,6 +1390,10 @@ Successful Response:
 - [Github](https://github.com/epintozzi)
 - [LinkedIn](https://www.linkedin.com/in/erin-pintozzi/)
 
+**Riley, Alora**
+- [Github](https://github.com/aloraalee)
+- [LinkedIn](https://www.linkedin.com/in/alorariley/)
+
 **Salazar, Kaelin**
 - [Github](https://github.com/kaelinpsalazar)
 - [LinkedIn](https://www.linkedin.com/in/kaelin-salazar/)
