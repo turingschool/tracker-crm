@@ -1,0 +1,3 @@
+class InterviewQuestion < ApplicationRecord
+  
+end
