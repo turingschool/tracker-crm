@@ -1,6 +1,9 @@
 # Tracker CRM by Turing School of Software and Design
+
 <a id="readme-top"></a>
+
 ## Table of Contents
+
 - [Overview](#overview)
 - [Setup](#setup)
 - [Testing](#testing)
@@ -29,9 +32,9 @@
     - [Get Dashboard](#get-dashboard)
 - [Contributors](#contributors)
 
-
 ## Overview
-This app is a Rails backend API for a job tracking CRM tool. 
+
+This app is a Rails backend API for a job tracking CRM tool.
 
 ## Setup
 
@@ -55,13 +58,14 @@ rails db:create
 rails db:migrate
 rails db:seed
 ```
-
 ## Testing
-This app uses RSpec for testing. 
+
+This app uses RSpec for testing.
 
 ```
 bundle exec rspec
 ```
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 # Authentication, User Roles, and Authorization
@@ -78,9 +82,11 @@ More info:[Understanding the Pundit Gem](#understanding-the-pundit-gem)
 ### Users
 
 #### Create a User
+
 New users require a unique email address and a matching password and password confirmation.
 
 Request:
+
 ```
 POST /api/v1/users
 
@@ -94,6 +100,7 @@ Body:
 ```
 
 Successful Response:
+
 ```
 Status: 201 Created
 Body: {
@@ -109,6 +116,7 @@ Body: {
 ```
 
 Error Responses:
+
 ```
 Status: 400 Bad Request
 Body: {
@@ -126,12 +134,15 @@ Body: {
 ```
 
 #### Get All Users
+
 Request:
+
 ```
 GET /api/v1/users
 ```
 
 Successful Response:
+
 ```
 Status: 200 OK
 Body: {
@@ -157,13 +168,16 @@ Body: {
 }
 ```
 
-#### Get a User 
+#### Get a User
+
 Request:
+
 ```
 GET /api/v1/users/:id
 ```
 
 Successful Response:
+
 ```
 Status: 200 OK
 Body: {
@@ -179,7 +193,9 @@ Body: {
 ```
 
 #### Update a user
+
 Request:
+
 ```
 PUT /api/v1/users/:id
 
@@ -193,6 +209,7 @@ Body:
 ```
 
 Successful Response:
+
 ```
 Status: 200 OK
 Body: {
@@ -206,7 +223,9 @@ Body: {
   }
 }
 ```
+
 Error Responses:
+
 ```
 Status: 400 Bad Request
 Body: {
@@ -226,6 +245,7 @@ Body: {
 #### Create a Session (Login)
 
 Request:
+
 ```
 POST /api/v1/sessions
 
@@ -234,9 +254,10 @@ Body:
   "email": "john.doe@example.com",
   "password": "password"
 }
-``` 
+```
 
 Successful Response:
+
 ```
 Status: 200 OK
 
@@ -253,6 +274,7 @@ Body: {
 ```
 
 Error Response:
+
 ```
 Status: 401 Unauthorized
 
@@ -261,22 +283,29 @@ Body: {
     "status": 401
 }
 ```
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Job Applications
 
 #### Fetch all Job Applications for a user
+
 Request:
+
 ```
 GET /api/v1/users/:user_id/job_applications
 ```
+
 Headers:
+
 ```
 {
   "Authorization": "Bearer <your_token_here>"
 }
 ```
+
 Successful Response:
+
 ```
 
 Status: 200
@@ -316,6 +345,7 @@ Status: 200
     ]
 }
 ```
+
 Error Response if no token provided:
 
 ```
@@ -330,16 +360,21 @@ Body: {
 #### Create a Job Application
 
 Request:
+
 ```
 POST /api/v1/users/:user_id/job_applications
 ```
+
 Headers:
+
 ```
 {
   "Authorization": "Bearer <your_token_here>"
 }
 ```
+
 Body
+
 ```
 Body: {
     {
@@ -356,6 +391,7 @@ Body: {
 ```
 
 Successful Response:
+
 ```
 
 Status: 200
@@ -392,17 +428,21 @@ Status: 200
 ```
 
 Unsuccessful Response:
+
 ```
 {:message=>"Company must exist and Position title can't be blank", :status=>400}
 ```
 
-#### Get a Job Application 
+#### Get a Job Application
+
 Request:
+
 ```
 GET /api/v1/users/:user_id/job_applications/:job_application_id
 ```
 
 Successful Response:
+
 ```
 {
   "data": {
@@ -433,19 +473,22 @@ Successful Response:
 ```
 
 Unsuccessful Response(job application does not exist OR belongs to another user):
+
 ```
 {
   "message": "Job application not found",
   "status": 404
 }
 ```
-<!-- 
+
+<!--
 Unsuccessful Response(missing job application ID param):
 ```
 {:message=>"Job application ID is missing", :status=>400}
 ``` -->
 
 If the user is not authenticated:
+
 ```
 {
   "message": "Unauthorized request",
@@ -454,6 +497,7 @@ If the user is not authenticated:
 ```
 
 Unsuccessful Response(pre-existing application for user):
+
 ```
 {:message=>"Application url You already have an application with this URL", :status=>400}
 ```
@@ -461,16 +505,21 @@ Unsuccessful Response(pre-existing application for user):
 #### Update a Job Application
 
 Request:
+
 ```
 PATCH /api/v1/users/:user_id/job_applications
 ```
+
 Headers:
+
 ```
 {
   "Authorization": "Bearer <your_token_here>"
 }
 ```
+
 Body
+
 ```
 Body: {
   {
@@ -485,9 +534,11 @@ Body: {
   }
 }
 ```
+
 Minimum of one attribute needs to be changed in the update for it to be successful
 <br>
 Successful Response:
+
 ```
 
 Status: 200
@@ -511,14 +562,19 @@ Status: 200
 ```
 
 Unsuccessful Response:
+
 ```
 {:message=>"No parameters provided", :status=>400}
 ```
+
 No parameters were recognized by the application, check the request parameters to see that they match.
+
 ```
 {:message=>"Job application not found", :status=>404}
 ```
+
 Either the application doesn't exist or it doesn't belong to the current user. Verify that it exists and matches the user identity in the token.
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Companies
@@ -526,16 +582,19 @@ Either the application doesn't exist or it doesn't belong to the current user. V
 #### Create a company
 
 Request:
+
 ```
-POST "/api/v1/users/:userid/companies" 
+POST "/api/v1/users/:userid/companies"
 ```
+
 Headers:
+
 ```
 {
   "Authorization": "Bearer <your_token_here>"
 }
 
-raw json body: 
+raw json body:
 {
   "name": "New Company",
   "website": "www.company.com",
@@ -546,7 +605,9 @@ raw json body:
   "notes": "This is a new company."
 }
 ```
+
 Successful Response:
+
 ```
 Status: 201 created
 
@@ -569,18 +630,21 @@ Status: 201 created
 Error response - missing params
 
 Request:
+
 ```
 {
-    "name": "", 
-    "website": "amazon.com", 
-    "street_address": "410 Terry Ave N", 
-    "city": "Seattle", 
-    "state": "WA", 
-    "zip_code": "98109", 
+    "name": "",
+    "website": "amazon.com",
+    "street_address": "410 Terry Ave N",
+    "city": "Seattle",
+    "state": "WA",
+    "zip_code": "98109",
     "notes": "E-commerce"
 }
 ```
+
 Response:
+
 ```
 {
     "message": "Name can't be blank",
@@ -589,6 +653,7 @@ Response:
 ```
 
 #### Get all companies
+
 Request:
 
 ```
@@ -596,6 +661,7 @@ GET /api/v1/users/userid/companies
 
 Authorization: Bearer Token - put in token for user
 ```
+
 Successful Response:
 
 ```
@@ -639,6 +705,7 @@ Request:
 
 DELETE /api/v1/users/:userid/companies/:id
 Headers:
+
 ```
 json
 {
@@ -646,6 +713,7 @@ json
   "Content-Type": "application/json"
 }
 ```
+
 ```
 Status: 200 OK
 {
@@ -659,6 +727,7 @@ Company Not Found
 
 DELETE /api/v1/users/:userid/companies/9999
 Response:
+
 ```
 Status: 404 Not Found
 {
@@ -670,6 +739,7 @@ Unauthorized: No Token Provided
 
 DELETE /api/v1/users/:userid/companies/:id
 Response:
+
 ```
 Status: 401 Unauthorized
 {
@@ -681,6 +751,7 @@ Unauthorized: Invalid Token
 
 DELETE /api/v1/users/:userid/companies/:id
 Headers:
+
 ```
 {
   "Authorization": "Bearer invalid.token.here",
@@ -690,6 +761,7 @@ Headers:
 
 Response:
 Status: 401 Unauthorized
+
 ```
 {
   "error": "Not authenticated"
@@ -697,29 +769,32 @@ Status: 401 Unauthorized
 ```
 
 User with no companies:
+
 ```
 {
     "data": [],
     "message": "No companies found"
 }
 ```
+
 No token or bad token response
+
 ```
 {
     "error": "Not authenticated"
 }
 ```
 
-
 #### Edit a company
 
 Request:
+
 ```
 PATCH /api/v1/users/user_id/companies/company_id
 
 Authorization Bearer -put user token here without dashes-
 
-Body - raw 
+Body - raw
 
 {
   "name": "New Name"
@@ -765,6 +840,7 @@ Request with empty value:
     "status": 422
 }
 ```
+
 Multiple attributes can be updated at once but none of the values can be blank or it will error out.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -772,6 +848,7 @@ Multiple attributes can be updated at once but none of the values can be blank o
 ### Contacts
 
 #### Get all contacts for a user
+
 Request:
 
 ```
@@ -779,6 +856,7 @@ GET /api/v1/users/:user_id/contacts
 
 Authorization: Bearer Token - put in token for user
 ```
+
 Successful Response:
 
 ```
@@ -813,6 +891,7 @@ Successful Response:
   ]
 }
 ```
+
 Successful response for users without saved contacts:
 
 ```
@@ -823,14 +902,16 @@ Successful response for users without saved contacts:
 ```
 
 #### Create a contact with required and optional fields.
-***New contacts require a unique first and last name. All other fields are optional.***
+
+**_New contacts require a unique first and last name. All other fields are optional._**
 
 Request:
+
 ```
 POST /api/v1/users/:user_id/contacts
 Authorization: Bearer Token - put in token for user
 
-raw json body with all fields: 
+raw json body with all fields:
 
 {
   "contact": {
@@ -845,7 +926,9 @@ raw json body with all fields:
 }
 
 ```
+
 Successful Response:
+
 ```
 Status: 201 created
 
@@ -866,16 +949,19 @@ Status: 201 created
 }
 
 ```
+
 #### Create a contact with a company name from the dropdown box
-***New contacts with company name require a unique first and last name, and company ID in the URI. All other fields are optional.***
+
+**_New contacts with company name require a unique first and last name, and company ID in the URI. All other fields are optional._**
 
 Request:
+
 ```
 POST api/v1/users/:user_id/companies/:company_id/contacts
 
 Authorization: Bearer Token - put in token for user
 
-raw json body with all fields: 
+raw json body with all fields:
 
 {
     "data": [
@@ -904,15 +990,19 @@ raw json body with all fields:
         }
         ]
         },
-   ```
+```
+
 #### Show a Contact that belongs to a User (not company contact)
-***Ensure you Create the Contact first for the user NOT company - 2 different Routes!***
+
+**_Ensure you Create the Contact first for the user NOT company - 2 different Routes!_**
 
 Request:
+
 ```
 GET http://localhost:3001/api/v1/users/:user_id/contacts/:contact_id
 Authorization: Bearer Token - put in token for user
 ```
+
 Successful Response:
 
 ```
@@ -945,14 +1035,15 @@ Successful Response:
 
 #### Edit a Contact
 
-***Change at least one value***
+**_Change at least one value_**
 
 Request:
+
 ```
 POST /api/v1/users/:user_id/contacts/:contact_id
 Authorization: Bearer Token - put in token for user
 
-raw json body with all fields: 
+raw json body with all fields:
 
 {
   "contact": {
@@ -967,7 +1058,9 @@ raw json body with all fields:
 }
 
 ```
+
 Successful Response:
+
 ```
 Contact without associated company:
 Status: 200 ok
@@ -1020,36 +1113,44 @@ Status: 200 ok
 #### Delete a Contact
 Request:
 ```
+
 DELETE http://localhost:3001/api/v1/users/:user_id/contacts/:id
 Authorization: Bearer Token - put in token for user
+
 ```
 
 Successful Response:
 ```
+
 {
-  "message": "Contact deleted successfully"
+"message": "Contact deleted successfully"
 }
+
 ```
 
 #### Contact Errors
 401 Error Response if no token provided:
 
 ```
+
 Status: 401 Unauthorized
 
 Body: {
-    "message": "Invalid login credentials",
-    "status": 401
+"message": "Invalid login credentials",
+"status": 401
 }
+
 ```
 
 Status: 404 Not Found:
 
 ```
+
 {
-  "message": "Contact not found or unauthorized access",
-  "status": 404
+"message": "Contact not found or unauthorized access",
+"status": 404
 }
+
 ```
 
 422 Error Response Unprocessable Entity: Missing Required Fields
@@ -1057,62 +1158,74 @@ If required fields like first_name or last_name are missing:
 
 Request:
 ```
+
 POST /api/v1/users/:user_id/contacts
 Authorization: Bearer Token - put in token for user
 
 raw json body:
 
- {
-  "contact": {
-    "first_name": "Jonny",
-    "last_name": ""
-  }
+{
+"contact": {
+"first_name": "Jonny",
+"last_name": ""
 }
+}
+
 ```
 Error response - 422 Unprocessable Entity
 ```
+
 {
-    "error": "Last name can't be blank"
+"error": "Last name can't be blank"
 }
+
 ```
 
 Error response - invalid email format
 
 Request:
 ```
+
 {
-  "contact": {
-    "first_name": "Johnny",
-    "last_name": "Smith",
-    "email": "invalid-email"
-  }
+"contact": {
+"first_name": "Johnny",
+"last_name": "Smith",
+"email": "invalid-email"
 }
+}
+
 ```
 Response: 422 Unprocessable Entity
 
 ```
+
 {
-    "error": "Email must be a valid email address"
+"error": "Email must be a valid email address"
 }
+
 ```
 Error response - invalid phone number format
 
 Request:
 ```
+
 {
-  "contact": {
-    "first_name": "Johnny",
-    "last_name": "Smith",
-    "email": "invalid-email"
-  }
+"contact": {
+"first_name": "Johnny",
+"last_name": "Smith",
+"email": "invalid-email"
 }
+}
+
 ```
 Response: 422 Unprocessable Entity
 
 ```
+
 {
-    "error": "Phone number must be in the format '555-555-5555'"
+"error": "Phone number must be in the format '555-555-5555'"
 }
+
 ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -1127,119 +1240,123 @@ Get login credentials: <br>
 Request:
 
 ```
+
 GET /api/v1/users/:user_id/dashboard
 
 Authorization: Bearer Token - put in token for user
+
 ```
 Successful Response:
 
 ```
+
 {
-    "data": {
-        "id": "5",
-        "type": "dashboard",
-        "attributes": {
-            "id": 5,
-            "name": "Danny DeVito",
-            "email": "danny_de@email.com",
-            "dashboard": {
-                "weekly_summary": {
-                    "job_applications": [
-                        {
-                            "id": 1,
-                            "position_title": "Jr. CTO",
-                            "date_applied": "2024-10-31",
-                            "status": 1,
-                            "notes": "Fingers crossed!",
-                            "job_description": "Looking for Turing grad/jr dev to be CTO",
-                            "application_url": "www.example.com",
-                            "contact_information": "boss@example.com",
-                            "created_at": "2024-12-14T17:20:41.979Z",
-                            "updated_at": "2024-12-14T17:20:41.979Z",
-                            "company_id": 1,
-                            "user_id": 5
-                        },
-                        {
-                            "id": 2,
-                            "position_title": " CTO",
-                            "date_applied": "2024-10-31",
-                            "status": 2,
-                            "notes": "Fingers crossed!",
-                            "job_description": "Looking for Turing grad/jr dev to be CTO",
-                            "application_url": "www.testexample.com",
-                            "contact_information": "boss1@example.com",
-                            "created_at": "2024-12-14T17:37:28.465Z",
-                            "updated_at": "2024-12-14T17:37:28.465Z",
-                            "company_id": 2,
-                            "user_id": 5
-                        }
-                    ],
-                    "contacts": [
-                        {
-                            "id": 1,
-                            "first_name": "Jonny",
-                            "last_name": "Smith",
-                            "email": "jonny@gmail.com",
-                            "phone_number": "555-785-5555",
-                            "notes": "Good contact for XYZ",
-                            "created_at": "2024-12-14T17:55:21.875Z",
-                            "updated_at": "2024-12-14T17:55:21.875Z",
-                            "user_id": 5,
-                            "company_id": 1
-                        },
-                        {
-                            "id": 2,
-                            "first_name": "Josnny",
-                            "last_name": "Smsith",
-                            "email": "jonny@gmail.com",
-                            "phone_number": "555-785-5555",
-                            "notes": "Good contact for XYZ",
-                            "created_at": "2024-12-15T01:57:14.557Z",
-                            "updated_at": "2024-12-15T01:57:14.557Z",
-                            "user_id": 5,
-                            "company_id": 1
-                        }
-                    ],
-                    "companies": [
-                        {
-                            "id": 1,
-                            "user_id": 5,
-                            "name": "New Company",
-                            "website": "www.company.com",
-                            "street_address": "123 Main St",
-                            "city": "New York",
-                            "state": "NY",
-                            "zip_code": "10001",
-                            "notes": "This is a new company.",
-                            "created_at": "2024-12-14T17:20:10.909Z",
-                            "updated_at": "2024-12-14T17:20:10.909Z"
-                        },
-                        {
-                            "id": 2,
-                            "user_id": 5,
-                            "name": "New Company1",
-                            "website": "www.company1.com",
-                            "street_address": "1231 Main St",
-                            "city": "New York",
-                            "state": "NY",
-                            "zip_code": "10001",
-                            "notes": "This is a new company1.",
-                            "created_at": "2024-12-14T17:37:24.153Z",
-                            "updated_at": "2024-12-14T17:37:24.153Z"
-                        }
-                    ]
-                }
-            }
-        }
-    }
+"data": {
+"id": "5",
+"type": "dashboard",
+"attributes": {
+"id": 5,
+"name": "Danny DeVito",
+"email": "danny_de@email.com",
+"dashboard": {
+"weekly_summary": {
+"job_applications": [
+{
+"id": 1,
+"position_title": "Jr. CTO",
+"date_applied": "2024-10-31",
+"status": 1,
+"notes": "Fingers crossed!",
+"job_description": "Looking for Turing grad/jr dev to be CTO",
+"application_url": "www.example.com",
+"contact_information": "boss@example.com",
+"created_at": "2024-12-14T17:20:41.979Z",
+"updated_at": "2024-12-14T17:20:41.979Z",
+"company_id": 1,
+"user_id": 5
+},
+{
+"id": 2,
+"position_title": " CTO",
+"date_applied": "2024-10-31",
+"status": 2,
+"notes": "Fingers crossed!",
+"job_description": "Looking for Turing grad/jr dev to be CTO",
+"application_url": "www.testexample.com",
+"contact_information": "boss1@example.com",
+"created_at": "2024-12-14T17:37:28.465Z",
+"updated_at": "2024-12-14T17:37:28.465Z",
+"company_id": 2,
+"user_id": 5
 }
-```
+],
+"contacts": [
+{
+"id": 1,
+"first_name": "Jonny",
+"last_name": "Smith",
+"email": "jonny@gmail.com",
+"phone_number": "555-785-5555",
+"notes": "Good contact for XYZ",
+"created_at": "2024-12-14T17:55:21.875Z",
+"updated_at": "2024-12-14T17:55:21.875Z",
+"user_id": 5,
+"company_id": 1
+},
+{
+"id": 2,
+"first_name": "Josnny",
+"last_name": "Smsith",
+"email": "jonny@gmail.com",
+"phone_number": "555-785-5555",
+"notes": "Good contact for XYZ",
+"created_at": "2024-12-15T01:57:14.557Z",
+"updated_at": "2024-12-15T01:57:14.557Z",
+"user_id": 5,
+"company_id": 1
+}
+],
+"companies": [
+{
+"id": 1,
+"user_id": 5,
+"name": "New Company",
+"website": "www.company.com",
+"street_address": "123 Main St",
+"city": "New York",
+"state": "NY",
+"zip_code": "10001",
+"notes": "This is a new company.",
+"created_at": "2024-12-14T17:20:10.909Z",
+"updated_at": "2024-12-14T17:20:10.909Z"
+},
+{
+"id": 2,
+"user_id": 5,
+"name": "New Company1",
+"website": "www.company1.com",
+"street_address": "1231 Main St",
+"city": "New York",
+"state": "NY",
+"zip_code": "10001",
+"notes": "This is a new company1.",
+"created_at": "2024-12-14T17:37:24.153Z",
+"updated_at": "2024-12-14T17:37:24.153Z"
+}
+]
+}
+}
+}
+}
+}
+
+````
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 - ### ***Important Schema Note***
     - This branch introduces 2 new tables to our db schema - **roles** and **users_roles** that were generated by Rolify:
 
-        - **roles** table has name, resouce_type and resource_id.  Name string is the name of the role and can either be ["admin"] OR ["user"]. Resource type string is an optional polymorphic association that specifies the type of resource the role applies to (company, job, contact). 
+        - **roles** table has name, resouce_type and resource_id.  Name string is the name of the role and can either be ["admin"] OR ["user"]. Resource type string is an optional polymorphic association that specifies the type of resource the role applies to (company, job, contact).
             - Whenever a user is created, they are automatically assigned a role[:name] of ```["user"]```
         - **users_roles** is a join table for the many-to-many relationship between users and roles.
 
@@ -1249,7 +1366,7 @@ Successful Response:
     - ### Key Concepts
         - **Token-Based Authentication**
             - Upon login, a JWT is issued to the registered user.
-            - The token must be included in the **Headers** for every authenticated request in Postman. 
+            - The token must be included in the **Headers** for every authenticated request in Postman.
                 - Authorization: Bearer <jwt_token>
             - The token encodes a **payload** that contains:
                 - User's id
@@ -1257,10 +1374,10 @@ Successful Response:
                 - Tokens expiration time (24 hours after issue)
         - **Changes made in Codebase**
             - **ApplicationController** now has 2 new methods:
-                - ```authenticate_user``` ensures tokens validity and corresponds to a logged-in user. 
+                - ```authenticate_user``` ensures tokens validity and corresponds to a logged-in user.
                 - ```decoded_token(token)``` to extract info from token
                 - All controllers will inherit this logic.
-            - **SessionsController** 
+            - **SessionsController**
                 - Handles login and session creation
                 - ```#create``` action:
                     - Verifies user's credentials
@@ -1268,7 +1385,7 @@ Successful Response:
                     - Sends the token back in the response
 
 - ## Understanding the [Rolify Gem](https://github.com/RolifyCommunity/rolify/blob/master/README.md)
-    Rolify simplifies the management of user roles by introducing a flexible, role-based system. This gem created the **roles** and **users_roles** tables. 
+    Rolify simplifies the management of user roles by introducing a flexible, role-based system. This gem created the **roles** and **users_roles** tables.
 
     - ### Key Concepts
         - When a new user is created, they are automatically assigned the user role.
@@ -1298,7 +1415,7 @@ Successful Response:
             - Policies are then passed to **ApplicationController** via `  include Pundit::Authorization` ln:2. Remember that all controllers inherit from **ApplicationController** unless explicitly told not to.
         - **Authorization Logic**
             - Authorization is defined in methods corresponding to controller actions (e.g., **create?**, **update?**).
-	        - **ApplicationPolicy** provides a default template where ALL actions are unauthorized by default. 
+	        - **ApplicationPolicy** provides a default template where ALL actions are unauthorized by default.
             - Use **UserPolicy** (and it's associated spec file for testing) as a template for making your controller's policies.
         - **Scoping**
             - Policies include a nested **Scope** class (see **UserPolicy**) to define which records a user can access when retrieving a collection.
@@ -1342,7 +1459,7 @@ Successful Response:
 - [Github](https://github.com/litobot)
 - [LinkedIn](https://www.linkedin.com/in/litocroy/)
 
-**De La Rosa, Melchor**   
+**De La Rosa, Melchor**
 - [Github](https://github.com/MDelarosa1993)
 - [LinkedIn](https://www.linkedin.com/in/melchordelarosa/)
 
@@ -1361,6 +1478,10 @@ Successful Response:
 **Hotaling, Marshall**
 - [Github](https://github.com/marshallhotaling)
 - [LinkedIn](https://www.linkedin.com/in/marshall-hotaling-7b52a8304/)
+
+**Lynch, Devlin**
+- [Github](https://github.com/devklynch)
+- [LinkedIn](https://www.linkedin.com/in/devlin-lynch/)
 
 **Macur, Jim**
 - [Github](https://github.com/jimmacur)
@@ -1386,6 +1507,10 @@ Successful Response:
 - [Github](https://github.com/epintozzi)
 - [LinkedIn](https://www.linkedin.com/in/erin-pintozzi/)
 
+**Riley, Alora**
+- [Github](https://github.com/aloraalee)
+- [LinkedIn](https://www.linkedin.com/in/alorariley/)
+
 **Salazar, Kaelin**
 - [Github](https://github.com/kaelinpsalazar)
 - [LinkedIn](https://www.linkedin.com/in/kaelin-salazar/)
@@ -1403,3 +1528,4 @@ Successful Response:
 - [LinkedIn](https://www.linkedin.com/in/bryan--willett/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+````
