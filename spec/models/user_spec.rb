@@ -5,6 +5,7 @@ RSpec.describe User, type: :model do
     it { should have_many(:companies) }
     it { should have_many(:job_applications) }
     it { should have_many(:contacts).dependent(:destroy) }
+    it { should have_many(:interview_questions) }
   end
   
   describe "validations" do
