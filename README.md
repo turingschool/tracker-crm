@@ -5,7 +5,6 @@
 - [Setup](#setup)
 - [Testing](#testing)
 - [Authentication, User Roles, and Authorization](#authentication-user-roles-and-authorization)
-  - [Installation](#installation)
 - [API Documentation](#api-documentation)
   - [Users](#users)
     - [Create a User](#create-a-user)
@@ -73,14 +72,6 @@ More info: [Understanding JWT(Json Web Token) Gem](#understanding-jwtjson-web-to
 More info:[Understanding the Rolify Gem](#understanding-the-rolify-gem)
 - Authorization is enforced by the [Pundit Gem](https://github.com/varvet/pundit/blob/main/README.md)  
 More info:[Understanding the Pundit Gem](#understanding-the-pundit-gem)
-
-- ## Installation
-    1. Pull the latest changes to your branch ```git pull origin main``` resolve merge conflicts
-    2. Bundle Install and Migrate ```bundle install``` then ```rails db:migrate```
-    3. Run ```bundle exec rspec spec/``` and note what requests tests are now failing
-    4. Refactor controllers, their associated _spec.rb files. Make policies for corresponding controllers (app/policies/_policy.rb) and test policies
-    5. Use examples in **UserPolicy**, **ApplicationPolicy**,  **UsersController**, **ApplicationController** and all corresponding spec files.
-
 
 ## API Documentation
 
