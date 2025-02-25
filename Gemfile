@@ -38,6 +38,8 @@ gem "jsonapi-serializer"
 gem "rolify"
 gem "pundit", "~> 2.4"
 
+gem 'faraday'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
@@ -45,6 +47,8 @@ group :development, :test do
   gem "rspec-rails"
   gem "shoulda-matchers"
   gem 'pundit-matchers', '~> 3.1'
+  gem 'webmock'
+  gem "vcr"
 end
 
 group :test do

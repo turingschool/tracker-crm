@@ -14,18 +14,12 @@ class OpenaiGateway
       }.to_json
     end
 
-    require 'pry'; binding.pry
-
     if response.status == 200
       api_response = JSON.parse(response.body, symbolize_names: true)
       raw_content = api_response.dig(:choices, 0, :message, :content)
       
-      require 'pry'; binding.pry    
-      
       cleaned_content = raw_content.match(/\[.*\]/m)&.to_s if raw_content
 
-      require 'pry'; binding.pry
-      
       if cleaned_content
         {
           success: true,
@@ -46,13 +40,7 @@ class OpenaiGateway
   private 
 
   def build_prompt(description)
-    "Please generate 3 practice interview questions 
-    based on the following job description: #{description}.
-    ONLY return a JSON array of these questions"
-
-  end
-
-  def clean_response(response)
-
+    "Please generate 3 practice interview questions based on the following job description: #{description}.
+    ONLY return a JSON array of strings containing the questions, with no additional formatting or object keys."
   end
 end
