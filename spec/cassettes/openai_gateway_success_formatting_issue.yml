@@ -93,7 +93,7 @@ http_interactions:
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "[\n    \"Can you describe a project where you built a scalable web application? What technologies did you use and what challenges did you face?\",\n    \"How do you approach writing clean and maintainable code? Can you provide examples of practices or tools you use?\",\n    \"Describe your experience with code reviews. How do you provide constructive feedback, and how do you handle receiving feedback from others?\"\n]",
+                "content": "I'm not an array",
                 "refusal": null
               },
               "logprobs": null,

@@ -29,7 +29,7 @@ http_interactions:
       - "*/*"
   response:
     status:
-      code: 200
+      code: 500
       message: OK
     headers:
       Date:
@@ -93,7 +93,7 @@ http_interactions:
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "[\n    \"question"=>"Can you describe your experience with building scalable web applications and the technologies you have used in your previous projects?\",\n    \"How do you approach code reviews, and what specific practices do you follow to ensure code quality and maintainability?\",\n    \"Can you provide an example of a time when you had to troubleshoot a performance issue in an application? What steps did you take to identify and resolve the problem?\"\n]",
+                "content": "[\n    \"Can you describe your experience with building scalable web applications and the technologies you have used in your previous projects?\",\n    \"How do you approach code reviews, and what specific practices do you follow to ensure code quality and maintainability?\",\n    \"Can you provide an example of a time when you had to troubleshoot a performance issue in an application? What steps did you take to identify and resolve the problem?\"\n]",
                 "refusal": null
               },
               "logprobs": null,
