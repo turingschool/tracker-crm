@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_24_192134) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_26_230710) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -48,8 +48,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_24_192134) do
     t.string "question"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
-    t.index ["user_id"], name: "index_interview_questions_on_user_id"
+    t.bigint "job_application_id", null: false
+    t.index ["job_application_id"], name: "index_interview_questions_on_job_application_id"
   end
 
   create_table "job_applications", force: :cascade do |t|
@@ -97,7 +97,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_24_192134) do
   add_foreign_key "companies", "users"
   add_foreign_key "contacts", "companies"
   add_foreign_key "contacts", "users"
-  add_foreign_key "interview_questions", "users"
+  add_foreign_key "interview_questions", "job_applications"
   add_foreign_key "job_applications", "companies"
   add_foreign_key "job_applications", "contacts"
   add_foreign_key "job_applications", "users"

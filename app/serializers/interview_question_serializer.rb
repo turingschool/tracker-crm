@@ -1,6 +1,6 @@
 class InterviewQuestionSerializer
   include JSONAPI::Serializer
-  attributes :question, :user_id
+  attributes :question, :job_application_id
 
   def self.format_questions(questions, response_id)
     {
@@ -10,7 +10,7 @@ class InterviewQuestionSerializer
         type: "interview_question",
         attributes: {
           question: question[:question] || question["question"],
-          user_id: question[:user_id] || question["user_id"],
+          user_id: question[:job_application_id] || question["job_application_id"],
         }
       
       

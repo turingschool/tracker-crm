@@ -6,8 +6,19 @@ RSpec.describe 'InterviewQuestions API', type: :request do
       before do
 
         user = User.create!(name: "Test User", email: "testuser@example.com", password: "password")
-        @interview_question_1 = InterviewQuestion.create!(question: "What is your experience with Ruby?", user: user)
-        @interview_question_2 = InterviewQuestion.create!(question: "How do you handle version control?", user: user)
+        company = Company.create!(name: "Test Company", user: user)
+        job_application = JobApplication.create!(
+          position_title: "Software Engineer",
+          date_applied: Date.today,
+          status: 0,
+          job_description: "We are looking for a software engineer with Ruby experience.",
+          application_url: "http://example.com/job_application",
+          company: company,
+          user: user
+        )
+
+        @interview_question_1 = InterviewQuestion.create!(question: "What is your experience with Ruby?", job_application: job_application)
+        @interview_question_2 = InterviewQuestion.create!(question: "How do you handle version control?", job_application: job_application)
 
         post '/api/v1/sessions', params: { email: "testuser@example.com", password: "password" }
         @token = JSON.parse(response.body)["token"]

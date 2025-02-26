@@ -26,7 +26,7 @@ binding.pry
   private
 
   def interview_question_params
-    params.require(:interview_question).permit(:question, :user_id)
+    params.require(:interview_question).permit(:question, :job_application_id)
   rescue ActionController::ParameterMissing
     nil
   end
