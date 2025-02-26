@@ -16,7 +16,7 @@ RSpec.describe "DashboardsController", type: :request do
     city: "Mon View", state: "CO", 
     zip_code: "88888", notes: "Searchy engine")}
 
-  let(:job_application1) { JobApplication.create!(
+  let(:job_application1_params) { {
     position_title: "Jr. CTO",
     date_applied: "2024-10-31",
     status: 1,
@@ -24,9 +24,9 @@ RSpec.describe "DashboardsController", type: :request do
     job_description: "Looking for Turing grad/jr dev to be CTO",
     application_url: "www.example1.com",
     company_id: test_company.id,
-    user_id: user.id) }
+    user_id: user.id}}
 
-  let(:job_application2) {JobApplication.create!(
+  let(:job_application2_params) { {
     position_title: "Frontend Developer",
     date_applied: "2024-11-01",
     status: 0,
@@ -34,7 +34,7 @@ RSpec.describe "DashboardsController", type: :request do
     job_description: "Frontend Developer role with React expertise",
     application_url: "www.frontend.com",
     company_id: test_company.id,
-    user_id: user.id) }
+    user_id: user.id}}
 
   let(:contact_params) { Contact.create!(
     first_name: "Josnny",
@@ -52,9 +52,9 @@ RSpec.describe "DashboardsController", type: :request do
 
       post "/api/v1/users/#{user.id}/companies", params: :test_company,
         headers: { "Authorization" => "Bearer #{@token}" }, as: :json
-      post "/api/v1/users/#{user.id}/job_applications", params: job_application1,
+      post "/api/v1/users/#{user.id}/job_applications", params: { job_application: job_application1_params },
         headers: { "Authorization" => "Bearer #{@token}" }, as: :json
-      post "/api/v1/users/#{user.id}/job_applications", params: job_application2,
+      post "/api/v1/users/#{user.id}/job_applications", params: { job_application: job_application2_params },
         headers: { "Authorization" => "Bearer #{@token}" }, as: :json
       post "/api/v1/users/#{user.id}/contacts", params: contact_params,
         headers: { "Authorization" => "Bearer #{@token}" }, as: :json
@@ -74,7 +74,7 @@ RSpec.describe "DashboardsController", type: :request do
       expect(json[:attributes][:email]).to eq("testytim420@email.com")
 
       dashboard_summary = json[:attributes][:dashboard][:weekly_summary]
-      
+
       expect(dashboard_summary[:job_applications].count).to eq(2)
       expect(dashboard_summary[:job_applications].first[:position_title]).to eq("Jr. CTO")
       expect(dashboard_summary[:job_applications].last[:position_title]).to eq("Frontend Developer")

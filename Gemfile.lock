@@ -78,6 +78,8 @@ GEM
       mutex_m
       securerandom (>= 0.3)
       tzinfo (~> 2.0)
+    addressable (2.8.7)
+      public_suffix (>= 2.0.2, < 7.0)
     base64 (0.2.0)
     bcrypt (3.1.20)
     benchmark (0.3.0)
@@ -88,6 +90,9 @@ GEM
     coderay (1.1.3)
     concurrent-ruby (1.3.4)
     connection_pool (2.4.1)
+    crack (1.0.0)
+      bigdecimal
+      rexml
     crass (1.0.6)
     date (3.4.0)
     debug (1.9.2)
@@ -97,14 +102,22 @@ GEM
     docile (1.4.1)
     drb (2.2.1)
     erubi (1.13.0)
+    faraday (2.12.2)
+      faraday-net_http (>= 2.0, < 3.5)
+      json
+      logger
+    faraday-net_http (3.4.0)
+      net-http (>= 0.5.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    hashdiff (1.1.2)
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
     io-console (0.7.2)
     irb (1.14.1)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
+    json (2.10.1)
     jsonapi-serializer (2.2.0)
       activesupport (>= 4.2)
     jwt (2.9.3)
@@ -124,6 +137,8 @@ GEM
     minitest (5.25.1)
     msgpack (1.7.3)
     mutex_m (0.2.0)
+    net-http (0.6.0)
+      uri
     net-imap (0.5.0)
       date
       net-protocol
@@ -152,6 +167,7 @@ GEM
       method_source (~> 1.0)
     psych (5.2.0)
       stringio
+    public_suffix (6.0.1)
     puma (6.4.3)
       nio4r (~> 2.0)
     pundit (2.4.0)
@@ -205,6 +221,7 @@ GEM
       psych (>= 4.0.0)
     reline (0.5.10)
       io-console (~> 0.5)
+    rexml (3.4.1)
     rolify (6.0.1)
     rspec-core (3.13.2)
       rspec-support (~> 3.13.0)
@@ -237,6 +254,13 @@ GEM
     timeout (0.4.2)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    uri (1.0.2)
+    vcr (6.3.1)
+      base64
+    webmock (3.25.0)
+      addressable (>= 2.8.0)
+      crack (>= 0.3.2)
+      hashdiff (>= 0.4.0, < 2.0.0)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -254,6 +278,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootsnap
   debug
+  faraday
   jsonapi-serializer
   jwt
   pg (~> 1.1)
@@ -268,6 +293,8 @@ DEPENDENCIES
   shoulda-matchers
   simplecov
   tzinfo-data
+  vcr
+  webmock
 
 RUBY VERSION
    ruby 3.2.2p53
