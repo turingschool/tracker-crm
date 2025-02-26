@@ -629,28 +629,22 @@ Either the application doesn't exist or it doesn't belong to the current user. V
 Request:
 
 ```
-
 POST "/api/v1/users/:userid/companies"
 
-```
-
 Headers:
-
-```
-
 {
-"Authorization": "Bearer <your_token_here>"
+  "Authorization": "Bearer <your_token_here>"
 }
 
-raw json body:
+Body:
 {
-"name": "New Company",
-"website": "www.company.com",
-"street_address": "123 Main St",
-"city": "New York",
-"state": "NY",
-"zip_code": "10001",
-"notes": "This is a new company."
+  "name": "New Company",
+  "website": "www.company.com",
+  "street_address": "123 Main St",
+  "city": "New York",
+  "state": "NY",
+  "zip_code": "10001",
+  "notes": "This is a new company."
 }
 
 ```
@@ -662,17 +656,17 @@ Successful Response:
 Status: 201 created
 
 "data": {
-"id": "1",
-"type": "company",
-"attributes": {
-"name": "New Company",
-"website": "www.company.com",
-"street_address": "123 Main St",
-"city": "New York",
-"state": "NY",
-"zip_code": "10001",
-"notes": "This is a new company."
-}
+        "id": "1",
+        "type": "company",
+        "attributes": {
+            "name": "New Company",
+            "website": "www.company.com",
+            "street_address": "123 Main St",
+            "city": "New York",
+            "state": "NY",
+            "zip_code": "10001",
+            "notes": "This is a new company."
+    }
 }
 
 ```
@@ -684,13 +678,13 @@ Request:
 ```
 
 {
-"name": "",
-"website": "amazon.com",
-"street_address": "410 Terry Ave N",
-"city": "Seattle",
-"state": "WA",
-"zip_code": "98109",
-"notes": "E-commerce"
+  "name": "",
+  "website": "amazon.com",
+  "street_address": "410 Terry Ave N",
+  "city": "Seattle",
+  "state": "WA",
+  "zip_code": "98109",
+  "notes": "E-commerce"
 }
 
 ```
@@ -700,8 +694,8 @@ Response:
 ```
 
 {
-"message": "Name can't be blank",
-"status": 422
+  "message": "Name can't be blank",
+  "status": 422
 }
 
 ```
@@ -714,7 +708,10 @@ Request:
 
 GET /api/v1/users/userid/companies
 
-Authorization: Bearer Token - put in token for user
+Headers:
+{
+  "Authorization": "Bearer <your_token_here>"
+}
 
 ```
 
@@ -723,36 +720,36 @@ Successful Response:
 ```
 
 Body:{
-{
-"data": [
-{
-"id": "1",
-"type": "company",
-"attributes": {
-"name": "Google",
-"website": "google.com",
-"street_address": "1600 Amphitheatre Parkway",
-"city": "Mountain View",
-"state": "CA",
-"zip_code": "94043",
-"notes": "Search engine"
-}
-},
-{
-"id": "2",
-"type": "company",
-"attributes": {
-"name": "New Company122",
-"website": "www.company.com",
-"street_address": "122 Main St",
-"city": "New York11",
-"state": "NY11",
-"zip_code": "10001111",
-"notes": "This is a new company111."
-}
-}
-]
-}
+  {
+    "data": [
+        {
+            "id": "1",
+            "type": "company",
+            "attributes": {
+                "name": "Google",
+                "website": "google.com",
+                "street_address": "1600 Amphitheatre Parkway",
+                "city": "Mountain View",
+                "state": "CA",
+                "zip_code": "94043",
+                "notes": "Search engine"
+            }
+        },
+        {
+            "id": "2",
+            "type": "company",
+            "attributes": {
+                "name": "New Company122",
+                "website": "www.company.com",
+                "street_address": "122 Main St",
+                "city": "New York11",
+                "state": "NY11",
+                "zip_code": "10001111",
+                "notes": "This is a new company111."
+            }
+        }
+    ]
+  }
 }
 
 ```
@@ -761,24 +758,21 @@ Body:{
 
 Request:
 
+```
 DELETE /api/v1/users/:userid/companies/:id
 Headers:
-
-```
-
-json
 {
-"Authorization": "Bearer <your_token_here>",
-"Content-Type": "application/json"
+  "Authorization": "Bearer <your_token_here>"
 }
 
 ```
 
-```
+Successful Response:
 
+```
 Status: 200 OK
 {
-"message": "Company successfully deleted"
+  "message": "Company successfully deleted"
 }
 
 ```
@@ -794,7 +788,7 @@ Response:
 
 Status: 404 Not Found
 {
-"error": "Company not found"
+  "error": "Company not found"
 }
 
 ```
@@ -808,7 +802,7 @@ Response:
 
 Status: 401 Unauthorized
 {
-"error": "Not authenticated"
+  "error": "Not authenticated"
 }
 
 ```
@@ -821,8 +815,8 @@ Headers:
 ```
 
 {
-"Authorization": "Bearer invalid.token.here",
-"Content-Type": "application/json"
+  "Authorization": "Bearer invalid.token.here",
+  "Content-Type": "application/json"
 }
 
 ```
@@ -833,7 +827,7 @@ Status: 401 Unauthorized
 ```
 
 {
-"error": "Not authenticated"
+  "error": "Not authenticated"
 }
 
 ```
@@ -843,8 +837,8 @@ User with no companies:
 ```
 
 {
-"data": [],
-"message": "No companies found"
+  "data": [],
+  "message": "No companies found"
 }
 
 ```
@@ -854,7 +848,7 @@ No token or bad token response
 ```
 
 {
-"error": "Not authenticated"
+  "error": "Not authenticated"
 }
 
 ```
@@ -865,14 +859,16 @@ Request:
 
 ```
 
-PATCH /api/v1/users/user_id/companies/company_id
+PATCH /api/v1/users/:user_id/companies/:company_id
 
-Authorization Bearer -put user token here without dashes-
-
-Body - raw
-
+Headers:
 {
-"name": "New Name"
+  "Authorization": "Bearer <your_token_here>"
+}
+
+Body:
+{
+  "name": "New Name"
 }
 
 ```
@@ -882,23 +878,22 @@ Successful Response:
 ```
 
 {
-"data": [
-{
-"id": "2",
-"type": "company",
-"attributes": {
-"name": "New Name",
-"website": "https://futuredesigns.com",
-"street_address": "456 Future Blvd",
-"city": "Austin",
-"state": "Texas",
-"zip_code": "73301",
-"notes": "Submitted application for the UI Designer role."
+    "data": [
+        {
+            "id": "2",
+            "type": "company",
+            "attributes": {
+                "name": "New Name",
+                "website": "https://futuredesigns.com",
+                "street_address": "456 Future Blvd",
+                "city": "Austin",
+                "state": "Texas",
+                "zip_code": "73301",
+                "notes": "Submitted application for the UI Designer role."
+            }
+        }
+    ]
 }
-}
-]
-}
-
 ```
 
 Request with empty body:
@@ -906,8 +901,8 @@ Request with empty body:
 ```
 
 {
-"message": "No updates provided",
-"status": 400
+  "message": "No updates provided",
+  "status": 400
 }
 
 ```
@@ -917,8 +912,8 @@ Request with empty value:
 ```
 
 {
-"message": "Name can't be blank",
-"status": 422
+  "message": "Name can't be blank",
+  "status": 422
 }
 
 ```
@@ -937,45 +932,46 @@ Request:
 
 GET /api/v1/users/:user_id/contacts
 
-Authorization: Bearer Token - put in token for user
+Headers:
+{
+  "Authorization": "Bearer <your_token_here>"
+}
 
 ```
 
 Successful Response:
 
 ```
-
 {
-"data": [
-{
-"id": "1",
-"type": "contacts",
-"attributes": {
-"first_name": "John",
-"last_name": "Smith",
-"company": "Turing",
-"email": "123@example.com",
-"phone_number": "(123) 555-6789",
-"notes": "Type notes here...",
-"user_id": 4
+  "data": [
+    {
+      "id": "1",
+      "type": "contacts",
+      "attributes": {
+        "first_name": "John",
+        "last_name": "Smith",
+        "company": "Turing",
+        "email": "123@example.com",
+        "phone_number": "(123) 555-6789",
+        "notes": "Type notes here...",
+        "user_id": 4
+      }
+  },
+  {
+    "id": "2",
+    "type": "contacts",
+    "attributes": {
+      "first_name": "Jane",
+      "last_name": "Smith",
+      "company": "Turing",
+      "email": "123@example.com",
+      "phone_number": "(123) 555-6789",
+      "notes": "Type notes here...",
+      "user_id": 4
+      }
+    }
+  ]
 }
-},
-{
-"id": "2",
-"type": "contacts",
-"attributes": {
-"first_name": "Jane",
-"last_name": "Smith",
-"company": "Turing",
-"email": "123@example.com",
-"phone_number": "(123) 555-6789",
-"notes": "Type notes here...",
-"user_id": 4
-}
-}
-]
-}
-
 ```
 
 Successful response for users without saved contacts:
@@ -983,13 +979,13 @@ Successful response for users without saved contacts:
 ```
 
 {
-"data": [],
-"message": "No contacts found"
+  "data": [],
+  "message": "No contacts found"
 }
 
 ```
 
-#### Create a contact with required and optional fields.
+#### Create a Contact with required and optional fields.
 
 **_New contacts require a unique first and last name. All other fields are optional._**
 
@@ -998,20 +994,21 @@ Request:
 ```
 
 POST /api/v1/users/:user_id/contacts
-Authorization: Bearer Token - put in token for user
-
-raw json body with all fields:
-
+Headers:
 {
-"contact": {
-"first_name": "Jonny",
-"last_name": "Smith",
-"company_id": 1,
-"email": "jonny@gmail.com",
-"phone_number": "555-785-5555",
-"notes": "Good contact for XYZ",
-"user_id": 7
+  "Authorization": "Bearer <your_token_here>"
 }
+
+Body:{
+  "contact": {
+    "first_name": "Jonny",
+    "last_name": "Smith",
+    "company_id": 1,
+    "email": "jonny@gmail.com",
+    "phone_number": "555-785-5555",
+    "notes": "Good contact for XYZ",
+    "user_id": 7
+  }
 }
 
 ```
@@ -1023,19 +1020,19 @@ Successful Response:
 Status: 201 created
 
 {
-"data": {
-"id": "5",
-"type": "contacts",
-"attributes": {
-"first_name": "Jonny",
-"last_name": "Smith",
-"company_id": 1,
-"email": "jonny@gmail.com",
-"phone_number": "555-785-5555",
-"notes": "Good contact for XYZ",
-"user_id": 7
-}
-}
+    "data": {
+        "id": "5",
+        "type": "contacts",
+        "attributes": {
+            "first_name": "Jonny",
+            "last_name": "Smith",
+            "company_id": 1,
+            "email": "jonny@gmail.com",
+            "phone_number": "555-785-5555",
+            "notes": "Good contact for XYZ",
+            "user_id": 7
+        }
+    }
 }
 
 ```
@@ -1050,38 +1047,33 @@ Request:
 
 POST api/v1/users/:user_id/companies/:company_id/contacts
 
-Authorization: Bearer Token - put in token for user
-
-raw json body with all fields:
-
+Headers:
 {
-"data": [
-{
-"id": "1",
-"type": "contacts",
-"attributes": {
-"first_name": "Jane",
-"last_name": "Doe",
-"company_id": 2,
-"email": "",
-"phone_number": "",
-"notes": "",
-"user_id": 2,
-"company": {
-"id": 2,
-"name": "Future Designs LLC",
-"website": "https://futuredesigns.com",
-"street_address": "456 Future Blvd",
-"city": "Austin",
-"state": "TX",
-"zip_code": "73301",
-"notes": "Submitted application for the UI Designer role."
+  "Authorization": "Bearer <your_token_here>"
 }
-}
-}
-]
-},
 
+Body:
+{
+  "contact":{
+    "first_name": "Jane",
+    "last_name": "Doe",
+    "company_id": 2,
+    "email": "",
+    "phone_number": "",
+    "notes": "",
+    "user_id": 2,
+    "company": {
+        "id": 2,
+        "name": "Future Designs LLC",
+        "website": "https://futuredesigns.com",
+        "street_address": "456 Future Blvd",
+        "city": "Austin",
+        "state": "TX",
+        "zip_code": "73301",
+        "notes": "Submitted application for the UI Designer role."
+    }
+  }
+}
 ```
 
 #### Show a Contact that belongs to a User (not company contact)
@@ -1093,7 +1085,11 @@ Request:
 ```
 
 GET http://localhost:3001/api/v1/users/:user_id/contacts/:contact_id
-Authorization: Bearer Token - put in token for user
+
+Headers:
+{
+  "Authorization": "Bearer <your_token_here>"
+}
 
 ```
 
@@ -1102,31 +1098,30 @@ Successful Response:
 ```
 
 {
-"data": {
-"id": "1",
-"type": "contacts",
-"attributes": {
-"first_name": "Josnny",
-"last_name": "Smsith",
-"company_id": 1,
-"email": "jonny@gmail.com",
-"phone_number": "555-785-5555",
-"notes": "Good contact for XYZ",
-"user_id": 1,
-"company": {
-"id": 1,
-"name": "Tech Innovators",
-"website": "https://techinnovators.com",
-"street_address": "123 Innovation Way",
-"city": "San Francisco",
-"state": "CA",
-"zip_code": "94107",
-"notes": "Reached out on LinkedIn, awaiting response."
+    "data": {
+        "id": "1",
+        "type": "contacts",
+        "attributes": {
+            "first_name": "Josnny",
+            "last_name": "Smsith",
+            "company_id": 1,
+            "email": "jonny@gmail.com",
+            "phone_number": "555-785-5555",
+            "notes": "Good contact for XYZ",
+            "user_id": 1,
+            "company": {
+                "id": 1,
+                "name": "Tech Innovators",
+                "website": "https://techinnovators.com",
+                "street_address": "123 Innovation Way",
+                "city": "San Francisco",
+                "state": "CA",
+                "zip_code": "94107",
+                "notes": "Reached out on LinkedIn, awaiting response."
+            }
+        }
+    }
 }
-}
-}
-}
-
 ```
 
 #### Edit a Contact
@@ -1137,10 +1132,14 @@ Request:
 
 ```
 
-POST /api/v1/users/:user_id/contacts/:contact_id
-Authorization: Bearer Token - put in token for user
+PATCH /api/v1/users/:user_id/contacts/:contact_id
 
-raw json body with all fields:
+Headers:
+{
+  "Authorization": "Bearer <your_token_here>"
+}
+
+Body:
 
 {
 "contact": {
@@ -1164,48 +1163,48 @@ Contact without associated company:
 Status: 200 ok
 
 {
-"data": {
-"id": "5",
-"type": "contacts",
-"attributes": {
-"first_name": "Jonny",
-"last_name": "Smith",
-"company_id": 1,
-"email": "jonny@gmail.com",
-"phone_number": "555-785-5555",
-"notes": "Good contact for XYZ",
-"user_id": 7
-}
-}
+    "data": {
+        "id": "5",
+        "type": "contacts",
+        "attributes": {
+            "first_name": "Jonny",
+            "last_name": "Smith",
+            "company_id": 1,
+            "email": "jonny@gmail.com",
+            "phone_number": "555-785-5555",
+            "notes": "Good contact for XYZ",
+            "user_id": 7
+        }
+    }
 }
 
 Contact with associated company:
 Status: 200 ok
 
 {
-"data": {
-"id": "9",
-"type": "contacts",
-"attributes": {
-"first_name": "Jonny",
-"last_name": "Jonny",
-"company_id": 1,
-"email": "jj@gmail.com",
-"phone_number": "555-785-5555",
-"notes": "Good contact for XYZ",
-"user_id": 7,
-"company": {
-"id": 1,
-"name": "Tech Innovators",
-"website": "https://techinnovators.com",
-"street_address": "123 Innovation Way",
-"city": "San Francisco",
-"state": "CA",
-"zip_code": "94107",
-"notes": "Reached out on LinkedIn, awaiting response."
-}
-}
-}
+    "data": {
+        "id": "9",
+        "type": "contacts",
+        "attributes": {
+            "first_name": "Jonny",
+            "last_name": "Jonny",
+            "company_id": 1,
+            "email": "jj@gmail.com",
+            "phone_number": "555-785-5555",
+            "notes": "Good contact for XYZ",
+            "user_id": 7,
+            "company": {
+                "id": 1,
+                "name": "Tech Innovators",
+                "website": "https://techinnovators.com",
+                "street_address": "123 Innovation Way",
+                "city": "San Francisco",
+                "state": "CA",
+                "zip_code": "94107",
+                "notes": "Reached out on LinkedIn, awaiting response."
+            }
+        }
+    }
 }
 
 ```
@@ -1217,7 +1216,11 @@ Request:
 ```
 
 DELETE http://localhost:3001/api/v1/users/:user_id/contacts/:id
-Authorization: Bearer Token - put in token for user
+
+Headers:
+{
+  "Authorization": "Bearer <your_token_here>"
+}
 
 ```
 
@@ -1240,8 +1243,8 @@ Successful Response:
 Status: 401 Unauthorized
 
 Body: {
-"message": "Invalid login credentials",
-"status": 401
+  "message": "Invalid login credentials",
+  "status": 401
 }
 
 ```
@@ -1251,8 +1254,8 @@ Status: 404 Not Found:
 ```
 
 {
-"message": "Contact not found or unauthorized access",
-"status": 404
+  "message": "Contact not found or unauthorized access",
+  "status": 404
 }
 
 ```
@@ -1265,15 +1268,18 @@ Request:
 ```
 
 POST /api/v1/users/:user_id/contacts
-Authorization: Bearer Token - put in token for user
 
-raw json body:
-
+Headers:
 {
-"contact": {
-"first_name": "Jonny",
-"last_name": ""
+  "Authorization": "Bearer <your_token_here>"
 }
+
+Body:
+{
+  "contact": {
+  "first_name": "Jonny",
+  "last_name": ""
+  }
 }
 
 ```
@@ -1283,7 +1289,7 @@ Error response - 422 Unprocessable Entity
 ```
 
 {
-"error": "Last name can't be blank"
+  "error": "Last name can't be blank"
 }
 
 ```
@@ -1295,11 +1301,11 @@ Request:
 ```
 
 {
-"contact": {
-"first_name": "Johnny",
-"last_name": "Smith",
-"email": "invalid-email"
-}
+  "contact": {
+  "first_name": "Johnny",
+  "last_name": "Smith",
+  "email": "invalid-email"
+  }
 }
 
 ```
@@ -1309,7 +1315,7 @@ Response: 422 Unprocessable Entity
 ```
 
 {
-"error": "Email must be a valid email address"
+  "error": "Email must be a valid email address"
 }
 
 ```
@@ -1321,11 +1327,11 @@ Request:
 ```
 
 {
-"contact": {
-"first_name": "Johnny",
-"last_name": "Smith",
-"email": "invalid-email"
-}
+  "contact": {
+  "first_name": "Johnny",
+  "last_name": "Smith",
+  "email": "invalid-email"
+  }
 }
 
 ```
@@ -1335,7 +1341,7 @@ Response: 422 Unprocessable Entity
 ```
 
 {
-"error": "Phone number must be in the format '555-555-5555'"
+  "error": "Phone number must be in the format '555-555-5555'"
 }
 
 ```
