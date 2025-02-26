@@ -82,6 +82,8 @@ bundle exec rspec
 
 ## API Documentation
 
+Postman Collection can be found in Tracker-crm.postman_collection.json
+
 ### Users
 
 #### Create a User
