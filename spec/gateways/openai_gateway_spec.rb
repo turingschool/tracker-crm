@@ -18,10 +18,10 @@ RSpec.describe OpenaiGateway do
         gateway_response = @gateway.generate_interview_questions(@valid_description)
         expect(gateway_response[:success]).to eq(true)
         expect(gateway_response[:id]).to be_present
-        expect(gateway_response[:data].size).to eq(3)
-        expect(gateway_response[:data][0]).to eq("Can you describe your experience with building scalable web applications and the technologies you have used in your previous projects?")
-        expect(gateway_response[:data][1]).to eq("How do you approach code reviews, and what specific practices do you follow to ensure code quality and maintainability?")
-        expect(gateway_response[:data][2]).to eq("Can you provide an example of a time when you had to troubleshoot a performance issue in an application? What steps did you take to identify and resolve the problem?")
+        expect(gateway_response[:data].size).to eq(10)
+        expect(gateway_response[:data][0]).to eq("Can you describe your experience with building scalable web applications?")
+        expect(gateway_response[:data][1]).to eq("What programming languages and frameworks do you feel most comfortable working with, and why?")
+        expect(gateway_response[:data][2]).to eq("How do you approach writing clean and maintainable code?")
       end
     end
 

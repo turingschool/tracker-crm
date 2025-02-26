@@ -40,7 +40,7 @@ class OpenaiGateway
   private 
 
   def build_prompt(description)
-    "Please generate 3 practice interview questions based on the following job description: #{description}.
+    "Please generate 10 practice interview questions based on the following job description: #{description}.
     ONLY return a JSON array of strings containing the questions, with no additional formatting or object keys."
   end
 end
