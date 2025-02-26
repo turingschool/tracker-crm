@@ -480,30 +480,30 @@ Successful Response:
 ```
 
 {
-"data": {
-"id": "3",
-"type": "job_application",
-"attributes": {
-"position_title": "Backend Developer",
-"date_applied": "2024-08-20",
-"status": 2,
-"notes": "Had a technical interview, awaiting decision.",
-"job_description": "Developing RESTful APIs and optimizing server performance.",
-"application_url": "https://creativesolutions.com/careers/backend-developer",
-"company_id": 3,
-"company_name": "Creative Solutions Inc.",
-"contacts": [
-{
-"id": 3,
-"first_name": "Michael",
-"last_name": "Johnson",
-"email": "michael.johnson@example.com",
-"phone_number": "123-555-9012",
-"notes": "Hiring manager at Creative Solutions Inc."
-}
-]
-}
-}
+  "data": {
+    "id": "3",
+    "type": "job_application",
+    "attributes": {
+      "position_title": "Backend Developer",
+      "date_applied": "2024-08-20",
+      "status": 2,
+      "notes": "Had a technical interview, awaiting decision.",
+      "job_description": "Developing RESTful APIs and optimizing server performance.",
+      "application_url": "https://creativesolutions.com/careers/backend-developer",
+      "company_id": 3,
+      "company_name": "Creative Solutions Inc.",
+      "contacts": [
+        {
+          "id": 3,
+          "first_name": "Michael",
+          "last_name": "Johnson",
+          "email": "michael.johnson@example.com",
+          "phone_number": "123-555-9012",
+          "notes": "Hiring manager at Creative Solutions Inc."
+        }
+      ]
+    }
+  }
 }
 
 ```
@@ -552,35 +552,25 @@ Request:
 
 ```
 
-PATCH /api/v1/users/:user_id/job_applications
-
-```
+PATCH /api/v1/users/:user_id/job_applications/:job_application_id
 
 Headers:
-
-```
-
 {
-"Authorization": "Bearer <your_token_here>"
+  "Authorization": "Bearer <your_token_here>"
 }
 
-```
-
-Body
-
-```
 
 Body: {
-{
-position_title: "Jr. CTO",
-date_applied: "2024-10-31",
-status: 1,
-notes: "Fingers crossed!",
-job_description: "Looking for Turing grad/jr dev to be CTO",
-application_url: "www.example.com",
-contact_information: "boss@example.com",
-company_id: id_1
-}
+  {
+    position_title: "Jr. CTO",
+    date_applied: "2024-10-31",
+    status: 1,
+    notes: "Fingers crossed!",
+    job_description: "Looking for Turing grad/jr dev to be CTO",
+    application_url: "www.example.com",
+    contact_information: "boss@example.com",
+    company_id: id_1
+  }
 }
 
 ```
@@ -594,20 +584,20 @@ Successful Response:
 Status: 200
 
 {:data=>
-{:id=>"4",
-:type=>"job_application",
-:attributes=>
-{:position_title=>"Jr. CTO",
-:date_applied=>"2024-10-31",
-:status=>1,
-:notes=>"Fingers crossed!",
-:job_description=>"Looking for Turing grad/jr dev to be CTO",
-:application_url=>"www.example.com",
-:contact_information=>"boss@example.com",
-:company_id=>35,
-:updated_at=>"2025-01-07"
-}
-}
+  {:id=>"4",
+   :type=>"job_application",
+   :attributes=>
+    {:position_title=>"Jr. CTO",
+      :date_applied=>"2024-10-31",
+      :status=>1,
+      :notes=>"Fingers crossed!",
+      :job_description=>"Looking for Turing grad/jr dev to be CTO",
+      :application_url=>"www.example.com",
+      :contact_information=>"boss@example.com",
+      :company_id=>35,
+      :updated_at=>"2025-01-07"
+    }
+  }
 }
 
 ```
