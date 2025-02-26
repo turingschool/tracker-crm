@@ -12,10 +12,6 @@ class InterviewQuestionSerializer
           question: question[:question] || question["question"],
           user_id: question[:job_application_id] || question["job_application_id"],
         }
-      
-      
-      
-      
       }
       end
     }
