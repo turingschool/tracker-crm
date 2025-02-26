@@ -1643,13 +1643,13 @@ Successful Response:
 
 **O'Brien, Michael**
 
-- [Github](https://github.com/ROlearyPro)
-- [LinkedIn](https://www.linkedin.com/in/ryan-o-leary-6a963b211/)
+- [Github](https://github.com/MiTOBrien)
+- [LinkedIn](https://www.linkedin.com/in/michaelobrien67/)
 
 **O'Leary, Ryan**
 
-- [Github](https://github.com/MiTOBrien)
-- [LinkedIn](https://www.linkedin.com/in/michaelobrien67/)
+- [Github](https://github.com/ROlearyPro)
+- [LinkedIn](https://www.linkedin.com/in/ryan-o-leary-6a963b211/)
 
 **Pintozzi, Erin - (Project Manager)**
 
