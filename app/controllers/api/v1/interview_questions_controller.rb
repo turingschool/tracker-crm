@@ -13,7 +13,8 @@ class Api::V1::InterviewQuestionsController < ApplicationController
 
 
     api_response = OpenaiGateway.new.generate_interview_questions(params[:description])
-binding.pry
+    
+
     if api_response[:success]
       render json: InterviewQuestionSerializer.format_questions(api_response[:data], api_response[:id]), status: 200
     else

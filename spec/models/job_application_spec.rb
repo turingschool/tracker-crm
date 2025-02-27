@@ -83,5 +83,6 @@ RSpec.describe JobApplication, type: :model do
     it { should belong_to(:company) }
     it { should belong_to(:user) }
     it { should belong_to(:contact).optional }
+    it { should have_many(:interview_questions)}
   end
 end

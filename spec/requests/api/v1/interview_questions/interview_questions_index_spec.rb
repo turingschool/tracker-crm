@@ -17,9 +17,6 @@ RSpec.describe 'InterviewQuestions API', type: :request do
           user: user
         )
 
-        @interview_question_1 = InterviewQuestion.create!(question: "What is your experience with Ruby?", job_application: job_application)
-        @interview_question_2 = InterviewQuestion.create!(question: "How do you handle version control?", job_application: job_application)
-
         post '/api/v1/sessions', params: { email: "testuser@example.com", password: "password" }
         @token = JSON.parse(response.body)["token"]
       end
@@ -30,13 +27,15 @@ RSpec.describe 'InterviewQuestions API', type: :request do
           get "/api/v1/interview_questions", 
           params: { description: "Software Engineer position" }, 
           headers: { "Authorization" => "Bearer #{@token}" }
-          
+          binding.pry
           expect(response).to be_successful
           
           json = JSON.parse(response.body, symbolize_names: true)
+          
           expect(json.size).to eq(2)
-          expect(json[0][:question]).to eq(@interview_question_1.question)
-          expect(json[1][:question]).to eq(@interview_question_2.question)
+          # binding.pry
+          expect(json[:data][0][:attributes][:question]).to eq("Can you describe your experience with programming languages such as Java, Python, or C++?")
+          expect(json[:data][1][:attributes][:question]).to eq("How do you approach debugging a software application?")
         end
       end
     end
