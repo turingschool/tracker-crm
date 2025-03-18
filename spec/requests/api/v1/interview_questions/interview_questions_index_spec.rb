@@ -27,7 +27,7 @@ RSpec.describe 'InterviewQuestions API', type: :request do
           get "/api/v1/interview_questions", 
           params: { description: "Software Engineer position" }, 
           headers: { "Authorization" => "Bearer #{@token}" }
-          binding.pry
+
           expect(response).to be_successful
           
           json = JSON.parse(response.body, symbolize_names: true)
