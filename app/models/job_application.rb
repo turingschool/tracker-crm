@@ -2,6 +2,7 @@ class JobApplication < ApplicationRecord
   belongs_to :company
   belongs_to :user
   belongs_to :contact, optional: true
+  has_many :interview_questions
 
   validates :position_title, presence: true
   validates :date_applied, presence: true

@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       end
 
       resources :sessions, only: :create
+      resources :interview_questions, only: [:index]
     end
   end
 end
