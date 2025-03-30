@@ -33,7 +33,6 @@ RSpec.describe 'InterviewQuestions API', type: :request do
           json = JSON.parse(response.body, symbolize_names: true)
           
           expect(json.size).to eq(2)
-          # binding.pry
           expect(json[:data][0][:attributes][:question]).to eq("Can you describe your experience with programming languages such as Java, Python, or C++?")
           expect(json[:data][1][:attributes][:question]).to eq("How do you approach debugging a software application?")
         end
