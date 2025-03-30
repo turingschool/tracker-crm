@@ -22,6 +22,7 @@ Rails.application.routes.draw do
 
       resources :sessions, only: :create
       resources :interview_questions, only: [:index]
+      post 'interview_questions', to: 'interview_questions#index'
     end
   end
 end
