@@ -102,6 +102,11 @@ GEM
     docile (1.4.1)
     drb (2.2.1)
     erubi (1.13.0)
+    factory_bot (6.5.1)
+      activesupport (>= 6.1.0)
+    factory_bot_rails (6.4.4)
+      factory_bot (~> 6.5)
+      railties (>= 5.0.0)
     faraday (2.12.2)
       faraday-net_http (>= 2.0, < 3.5)
       json
@@ -278,6 +283,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootsnap
   debug
+  factory_bot_rails
   faraday
   jsonapi-serializer
   jwt
