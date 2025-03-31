@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :user do
-    name { "first_name last_name" }
+    name { Faker::Name.name }
     email { "#{name.gsub(' ', '.')}@gmail.com" }
     password { "password#{rand(100)}" }
 
