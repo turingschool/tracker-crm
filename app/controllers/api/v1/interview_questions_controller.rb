@@ -1,6 +1,6 @@
 class Api::V1::InterviewQuestionsController < ApplicationController
   before_action :authenticate_user
-  require_relative '../../../gateways/openai_gateway'
+  # require_relative '../../../gateways/openai_gateway'
 
   def index
     authorize InterviewQuestion
