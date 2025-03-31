@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :contact do
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
-    email { "#{first_name}.#{last_name}@gmail.com" }
+    email { "#{first_name}.#{last_name}@#{company.name.gsub(/\s+/, '')}.com" }
     phone_number { Faker::PhoneNumber.cell_phone.gsub(/\D/, '')[0, 10] }
     notes { "Random contact notes" }
 
