@@ -23,15 +23,17 @@ RSpec.describe "Job Application #create & #index", type: :request do
 
   context "#Happy path" do 
     it "Returns a list of 10 AI-Generated interview questions" do 
-      get "/api/v1/users/#{@user.id}/job_applications/#{@job_application1.id}/interview_questions",
-      headers: { "Authorization" => "Bearer #{@token}" }
+      VCR.use_cassette("generate_ai_questions") do
+        get "/api/v1/users/#{@user.id}/job_applications/#{@job_application1.id}/interview_questions",
+        headers: { "Authorization" => "Bearer #{@token}" }
 
-      expect(response).to be_successful
-      # expect(response.status).to eq(200)
+        # binding.pry
 
-      # job_application1_questions = JSON.parse(response.body, symbolize_names: true)
+        expect(response).to be_successful
+        # expect(response.status).to eq(200)
 
-      
+        # job_application1_questions = JSON.parse(response.body, symbolize_names: true)  
+      end      
     end
   end
 
