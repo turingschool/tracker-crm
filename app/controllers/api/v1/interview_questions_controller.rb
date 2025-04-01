@@ -6,7 +6,7 @@ class Api::V1::InterviewQuestionsController < ApplicationController
     user_id = params[:user_id]
     job_application_id = params[:job_application_id]
 
-    job_application = JobApplication.find_by(user_id: user_id, id: job_application_id)
+    job_application = JobApplication.find_by(id: job_application_id)
 
     unless job_application
       render json: { error: "Job application not found" }, status: :not_found
@@ -15,10 +15,22 @@ class Api::V1::InterviewQuestionsController < ApplicationController
 
     authorize job_application, :show?
     
-    existing_interview_questions = InterviewQuestion.find_by(job_application_id: job_application_id)
+    existing_interview_questions = InterviewQuestion.where(job_application_id: job_application_id)
 
     if existing_interview_questions.present?
-      return render json: existing_interview_questions, status: :ok 
+      formatted_questions = {
+        id: "existing-questions-for-#{job_application_id}",
+        data: existing_interview_questions.map.with_index(1) do | question, index |
+          {
+            index: index,
+            type: "interview_question",
+            attributes: {
+              question: question.question
+            }
+          }
+        end
+      }
+      return render json: formatted_questions, status: :ok 
     end
 
     job_description = job_application.job_description
