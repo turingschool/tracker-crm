@@ -12,6 +12,8 @@ class Api::V1::InterviewQuestionsController < ApplicationController
       render json: { error: "Job application not found" }, status: :not_found
       return
     end
+
+    authorize job_application, :show?
     
     existing_interview_questions = InterviewQuestion.find_by(job_application_id: job_application_id)
 
