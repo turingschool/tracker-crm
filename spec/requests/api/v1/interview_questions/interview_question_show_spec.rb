@@ -61,4 +61,28 @@ RSpec.describe "Job Application #create & #index", type: :request do
       expect(job_application1_question[:data][1][:attributes][:question]).to eq("This is question 2.")
     end
   end
+
+  context "#Edge Cases" do 
+    it "Returns 404 when job application doesn't exist" do
+      non_existent_id = 999999999999999999
+      get "/api/v1/users/#{@user.id}/job_application#{non_existent_id}/interview_questions",
+      headers: { "Authorization" => "Bearer #{@token}" }
+        
+      expect(response).to have_http_status(:not_found)
+    end
+
+    it "Handles OpenAI API failures gracefully" do
+      allow_any_instance_of(OpenaiGateway).to receive(:generate_interview_questions).and_return({
+      success: false,
+      error: "API error"
+    })
+
+    get "/api/v1/users/#{@user.id}/job_applications/#{@job_application1.id}/interview_questions",
+    headers: { "Authorization" => "Bearer #{@token}" }
+    
+    expect(response).to have_http_status(:bad_request)
+    json = JSON.parse(response.body, symbolize_names: true)
+    expect(json[:message]).to include("Failed to generate interview questions")
+    end
+  end
 end
