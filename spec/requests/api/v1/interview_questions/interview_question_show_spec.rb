@@ -54,9 +54,11 @@ RSpec.describe "Job Application #create & #index", type: :request do
       expect(response).to be_successful
       expect(response.status).to eq(200)
 
-      
+      job_application1_question = JSON.parse(response.body, symbolize_names: true)
+
+      expect(job_application1_question[:data].length).to eq(2)
+      expect(job_application1_question[:data][0][:attributes][:question]).to eq("This is question 1.")
+      expect(job_application1_question[:data][1][:attributes][:question]).to eq("This is question 2.")
     end
   end
-
-
 end
