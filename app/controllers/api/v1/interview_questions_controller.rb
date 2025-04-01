@@ -3,12 +3,12 @@ class Api::V1::InterviewQuestionsController < ApplicationController
   # require_relative '../../../gateways/openai_gateway'
 
   def show
-    user_id = params[:user_id]
     job_application_id = params[:job_application_id]
 
     job_application = JobApplication.find_by(id: job_application_id)
 
     unless job_application
+      skip_authorization
       render json: { error: "Job application not found" }, status: :not_found
       return
     end
