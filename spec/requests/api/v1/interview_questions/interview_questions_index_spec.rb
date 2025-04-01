@@ -4,7 +4,6 @@ RSpec.describe 'InterviewQuestions API', type: :request do
   describe 'GET /api/v1/interview_questions' do
     context 'happy path' do
       before do
-
         user = User.create!(name: "Test User", email: "testuser@example.com", password: "password")
         company = Company.create!(name: "Test Company", user: user)
         job_application = JobApplication.create!(

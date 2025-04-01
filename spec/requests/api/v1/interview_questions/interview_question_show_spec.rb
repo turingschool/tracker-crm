@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Job Application #create & #index", type: :request do
   before(:each) do
-    @user = User.create!(name: "Dolly Parton", email: "dollyP123@email.com", password: "Jolene123")
+    @user = User.create!(name: "Dolly Parton", email: "dollyP123@email.com", password: "9to5")
 
     @JoleneCopmany = Company.create!(user_id: @user.id, name: "JoleneCopmany", website: "jolenecopmany.com", street_address: "1100 Guitar Parkway", city: "MPittman Center", state: "TN", zip_code: "94043", notes: "Country Music")
 
