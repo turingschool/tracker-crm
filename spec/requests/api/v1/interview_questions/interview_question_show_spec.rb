@@ -27,13 +27,34 @@ RSpec.describe "Job Application #create & #index", type: :request do
         get "/api/v1/users/#{@user.id}/job_applications/#{@job_application1.id}/interview_questions",
         headers: { "Authorization" => "Bearer #{@token}" }
 
-        # binding.pry
-
         expect(response).to be_successful
-        # expect(response.status).to eq(200)
+        expect(response.status).to eq(200)
 
-        # job_application1_questions = JSON.parse(response.body, symbolize_names: true)  
+        job_application1_questions = JSON.parse(response.body, symbolize_names: true)
+
+        expect(job_application1_questions[:data].length).to eq(10)
+        expect(job_application1_questions[:data].first[:type]).to eq("interview_question")
+        expect(job_application1_questions[:data].first[:attributes]).to have_key(:question)
       end      
+    end
+
+    it "Returns existing interview questions without calling OpenAI again" do 
+      interview_question1 = InterviewQuestion.create!(
+        job_application_id: @job_application1.id,
+        question: "This is question 1."
+      )
+      interview_question2 = InterviewQuestion.create!(
+        job_application_id: @job_application1.id,
+        question: "This is question 2."
+      )
+     
+     get "/api/v1/users/#{@user.id}/job_applications/#{@job_application1.id}/interview_questions",
+      headers: { "Authorization" => "Bearer #{@token}" }
+
+      expect(response).to be_successful
+      expect(response.status).to eq(200)
+
+      
     end
   end
 
