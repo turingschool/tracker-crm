@@ -95,8 +95,8 @@ development:
 test:
   <<: *default
   database: users_api_test
-  # username: <%= ENV.fetch("PGUSER") { "postgres" } %>
-  # password: <%= ENV.fetch("PGPASSWORD") { "" } %>
+  username: <%= ENV.fetch("PGUSER") { "postgres" } %>
+  password: <%= ENV.fetch("PGPASSWORD") { "" } %>
   host: <%= ENV.fetch("PGHOST") { "localhost" } %>
 
 production:
