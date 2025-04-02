@@ -65,11 +65,56 @@ rails db:seed
 
 ## Testing
 
-This app uses RSpec for testing.
+#### This app uses RSpec for testing:
+`bundle exec rspec`
 
-```
-bundle exec rspec
-```
+###### Models:
+`bundle exec rspec /spec/models`
+
+###### Requests:
+`bundle exec rspec /spec/requests/api/v1`
+
+###### Gateways:
+`bundle exec rspec /spec/gateways`
+
+---
+
+## Testing with Factorybot
+ - This application utilizes FactoryBot to streamline the creation of test data for RSpec. 
+ - Factories allow us to generate consistent, reusable test objects without manually setting up database records.
+
+#### FactoryBot Commands w/ Test Files:
+
+`create(:user)` - Autogenerate a user with the "user" role that gets added to the test database and validates with ActiveRecord
+`build(:user)` - Autogenerate a user with the "user" role that will not get validated with ActiveRecord
+
+`create(:company)` - Autogenerate a company and user that gets added to the test database and validates with ActiveRecord
+`build(:company)` - Autogenerate a company and user that will not get validated with ActiveRecord
+
+`create(:contact)` - Autogenerate a contact, company, and user that gets added to the test database and validates with ActiveRecord.
+`build(:contact)` - Autogenerate a contact, company, and user that will not get validated with ActiveRecord
+
+`create(:job_application)` - Autogenerate a job application, company, and user that gets added to the test database and validates with ActiveRecord.
+`build(:job_application)` - Autogenerate a job application, company, and user that will not get validated with ActiveRecord
+
+#### FactoryBot Commands w/ Rails Console:
+- Launch Rails Console:
+`rails console`
+
+`FactoryBot.create(:user)` - Autogenerate a user with the "user" role that gets added to the development database and validates with ActiveRecord
+`FactoryBot.build(:user)` - Autogenerate a user with the "user" role that will not get validated with ActiveRecord
+
+`FactoryBot.create(:company)` - Autogenerate a company and user that gets added to the development database and validates with ActiveRecord
+`FactoryBot.build(:company)` - Autogenerate a company and user that will not get validated with ActiveRecord
+
+`FactoryBot.create(:contact)` - Autogenerate a contact, company, and user that gets added to the development database and validates with ActiveRecord.
+`FactoryBot.build(:contact)` - Autogenerate a contact, company, and user that will not get validated with ActiveRecord
+
+`FactoryBot.create(:job_application)` - Autogenerate a job application, company, and user that gets added to the development database and validates with ActiveRecord.
+`FactoryBot.build(:job_application)` - Autogenerate a job application, company, and user that will not get validated with ActiveRecord
+
+---
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

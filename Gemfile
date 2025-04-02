@@ -49,6 +49,8 @@ group :development, :test do
   gem 'pundit-matchers', '~> 3.1'
   gem 'webmock'
   gem "vcr"
+  gem 'factory_bot_rails'
+  gem 'faker'
 end
 
 group :test do
