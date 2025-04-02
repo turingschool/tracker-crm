@@ -20,6 +20,8 @@
     - [Create a Job Application](#create-a-job-application)
     - [Get a Job Application](#get-a-job-application)
     - [Update a Job Application](#update-a-job-application)
+  - [Interview Questions ](#interview-quesstions)
+    - [Create AI Generated Interview Questions ](#create-ai-generated-interview-question-for-a-job-application)
   - [Companies](#companies)
     - [Create a Company](#create-a-company)
     - [Get all Companies](#get-all-companies)
@@ -624,6 +626,102 @@ Either the application doesn't exist or it doesn't belong to the current user. V
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+#### Create AI Generated Interview Questions (or fetch if they already exist)
+
+Request:
+```
+POST "/api/v1/users/userid/job_applications/job_applicationid/interview_questions
+
+Headers:
+{
+  "Authorization": "Bearer <your_token_here>"
+}
+
+```
+
+Successful Response:
+
+```
+Status: 201 created
+
+{
+    "id": "existing-questions-for-userid",
+    "data": [
+        {
+            "index": 1,
+            "type": "interview_question",
+            "attributes": {
+                "question": "This is a question?"
+            }
+        },
+        {
+            "index": 2,
+            "type": "interview_question",
+            "attributes": {
+                "question": "This is a question?"
+            }
+        },
+        {
+            "index": 3,
+            "type": "interview_question",
+            "attributes": {
+                "question": "This is a question?"
+            }
+        },
+        {
+            "index": 4,
+            "type": "interview_question",
+            "attributes": {
+                "question": "This is a question?"
+            }
+        },
+        {
+            "index": 5,
+            "type": "interview_question",
+            "attributes": {
+                "question": "This is a question?"
+            }
+        },
+        {
+            "index": 6,
+            "type": "interview_question",
+            "attributes": {
+                "question": "This is a question?"
+            }
+        },
+        {
+            "index": 7,
+            "type": "interview_question",
+            "attributes": {
+                "question": "This is a question?"
+            }
+        },
+        {
+            "index": 8,
+            "type": "interview_question",
+            "attributes": {
+                "question": "This is a question?"
+            }
+        },
+        {
+            "index": 9,
+            "type": "interview_question",
+            "attributes": {
+                "question": "This is a question?"
+            }
+        },
+        {
+            "index": 10,
+            "type": "interview_question",
+            "attributes": {
+                "question": "This is a question?"
+            }
+        }
+    ]
+}
+        
+```
+
 ### Companies
 
 #### Create a company
@@ -652,6 +750,7 @@ Body:
 ```
 
 Successful Response:
+
 
 ```
 
