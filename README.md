@@ -20,7 +20,7 @@
     - [Create a Job Application](#create-a-job-application)
     - [Get a Job Application](#get-a-job-application)
     - [Update a Job Application](#update-a-job-application)
-  - [Interview Questions ](#interview-quesstions)
+  - [Interview Questions](#interview-quesstions)
     - [Create AI Generated Interview Questions ](#create-ai-generated-interview-question-for-a-job-application)
   - [Companies](#companies)
     - [Create a Company](#create-a-company)
