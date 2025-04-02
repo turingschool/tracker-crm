@@ -687,7 +687,7 @@ Headers:
 Successful Response:
 
 ```
-Status: 201 created
+Status: 200 ok
 
 {
     "id": "existing-questions-for-userid",

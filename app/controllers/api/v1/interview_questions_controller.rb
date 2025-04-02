@@ -8,7 +8,7 @@ class Api::V1::InterviewQuestionsController < ApplicationController
     result = InterviewQuestionGeneratorService.call(@job_application)
 
     if result[:success]
-      render json: result[:data], status: :created
+      render json: result[:data], status: :ok
     else
       render json: ErrorSerializer.format_error(result[:error]), status: :bad_request
     end
