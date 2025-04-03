@@ -3,6 +3,10 @@ class InterviewQuestionPolicy < ApplicationPolicy
     admin? || user.present?
   end
 
+  def show?
+    record.job_application.user_id == user.id
+  end
+
   class Scope < Scope
     def resolve
       if admin?
