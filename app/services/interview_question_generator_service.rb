@@ -11,7 +11,6 @@ class InterviewQuestionGeneratorService
 
     ai_response = OpenaiGateway.new.generate_interview_questions(job_application.job_description)
 
-    # binding.pry
 
     if ai_response[:success]
       created_questions = ai_response[:data].map do |question_text|
