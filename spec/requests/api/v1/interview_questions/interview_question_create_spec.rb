@@ -24,7 +24,7 @@ RSpec.describe "Job Application #create & #index", type: :request do
   context "#Happy path" do 
     it "Creates and returns a list of 10 AI-Generated interview questions if none already exist" do 
       VCR.use_cassette("generate_ai_questions") do
-        post "/api/v1/users/#{@user.id}/job_applications/#{@job_application1.id}/interview_questions",
+        get "/api/v1/users/#{@user.id}/job_applications/#{@job_application1.id}/interview_questions/fetch_or_create",
         headers: { "Authorization" => "Bearer #{@token}" }
 
         expect(response).to be_successful
@@ -48,7 +48,7 @@ RSpec.describe "Job Application #create & #index", type: :request do
         question: "This is question 2."
       )
      
-     post "/api/v1/users/#{@user.id}/job_applications/#{@job_application1.id}/interview_questions",
+     get "/api/v1/users/#{@user.id}/job_applications/#{@job_application1.id}/interview_questions/fetch_or_create",
       headers: { "Authorization" => "Bearer #{@token}" }
 
       expect(response).to be_successful
@@ -65,7 +65,7 @@ RSpec.describe "Job Application #create & #index", type: :request do
   context "#Edge Cases" do 
     it "Returns 404 when job application doesn't exist" do
       non_existent_id = 999999999999999999
-      post "/api/v1/users/#{@user.id}/job_applications/#{non_existent_id}/interview_questions",
+      get "/api/v1/users/#{@user.id}/job_applications/#{non_existent_id}/interview_questions/fetch_or_create",
       headers: { "Authorization" => "Bearer #{@token}" }
         
       expect(response).to have_http_status(:not_found)
@@ -81,7 +81,7 @@ RSpec.describe "Job Application #create & #index", type: :request do
       error: "API error"
       })
 
-      post "/api/v1/users/#{@user.id}/job_applications/#{@job_application1.id}/interview_questions",
+      get "/api/v1/users/#{@user.id}/job_applications/#{@job_application1.id}/interview_questions/fetch_or_create",
       headers: { "Authorization" => "Bearer #{@token}" }
       
       expect(response).to have_http_status(:bad_request)
