@@ -766,7 +766,22 @@ Status: 200 ok
 }
         
 ```
+Serializer: This serializer formats both the InterviewQuestion model instances (when fetching from database) and raw question strings (when newly generated from OpenAI). The map.with_index(1) starts indexing at 1 instead of 0, making the question numbers more human-readable (Question 1, 2, 3... instead of 0, 1, 2...).
 
+```
+{
+  id: response_id,
+  data: questions.map.with_index(1) do |question, index|
+    {
+      index: index, 
+      type: "interview_question",
+      attributes: {
+        question: question.respond_to?(:question) ? question.question : question
+      }
+    }
+  end
+}
+```
 ### Companies
 
 #### Create a company
