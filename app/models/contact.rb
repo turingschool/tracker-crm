@@ -9,12 +9,7 @@ class Contact < ApplicationRecord
 
   validates :first_name, presence: {message: "can't be blank"} 
   validates :last_name, presence: {message: "can't be blank"}
-  
-  validates :first_name, uniqueness: { 
-    scope: [:last_name, :user_id], 
-    case_sensitive: false,
-    message: "and Last name already exist for this user"
-}
+
   validates :phone_number, format: { with: VALID_PHONE_REGEX, message: "must be in the format '555-555-5555'" }, allow_blank: true
   validates :email, format: { with: VALID_EMAIL_REGEX, message: "must be a valid email address" }, allow_blank: true
 
