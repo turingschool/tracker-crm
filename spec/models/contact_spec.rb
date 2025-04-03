@@ -23,6 +23,13 @@ RSpec.describe Contact, type: :model do
         expect(same_contact).to be_valid
       end
 
+      it "allows duplicate names for same user" do
+        contact = Contact.create!(first_name: "Jack", last_name: "Frost", user: @user1)
+        duplicate_contact = Contact.new(first_name: "Jack", last_name: "Frost", user: @user1)
+
+        expect(duplicate_contact).to be_valid
+      end
+
       it "capitalizes names before saving" do
         contact = Contact.create!(first_name: " sandy ", last_name: "johnson", user: @user1)
         expect(contact.first_name).to eq("Sandy")
