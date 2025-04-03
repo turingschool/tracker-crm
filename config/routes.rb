@@ -12,12 +12,16 @@ Rails.application.routes.draw do
       resources :users, only: [:create, :index, :show, :update] do
 
         resources :job_applications, only: [:create, :index, :show, :update, :destroy] do
-          # get 'interview_questions', to: 'interview_questions#show'
-          resources :interview_questions, only: [:create, :index]
+          resources :interview_questions do
+            collection do
+              get :fetch_or_create
+            end
+          end
+
         end
 
-        resources :companies, only: [:create, :index, :update, :destroy] do
-          resources :contacts, only: [:create]
+        resources :companies, only: [:create, :index, :show, :update, :destroy] do
+          resources :contacts, only: [:create, :index]
         end
 
         resources :contacts, only: [:index, :create, :show, :destroy, :update]
@@ -25,8 +29,6 @@ Rails.application.routes.draw do
       end
 
       resources :sessions, only: :create
-      resources :interview_questions, only: [:index]
-      # post 'interview_questions', to: 'interview_questions#index'
     end
   end
 end
