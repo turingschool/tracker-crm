@@ -20,7 +20,7 @@
     - [Create a Job Application](#create-a-job-application)
     - [Get a Job Application](#get-a-job-application)
     - [Update a Job Application](#update-a-job-application)
-  - [Interview Questions](#interview-quesstions)
+  - [Interview Questions](#interview-quesstions/fetch_or_create)
     - [Create AI Generated Interview Questions ](#create-ai-generated-interview-question-for-a-job-application)
   - [Companies](#companies)
     - [Create a Company](#create-a-company)
@@ -675,7 +675,7 @@ Either the application doesn't exist or it doesn't belong to the current user. V
 
 Request:
 ```
-POST "/api/v1/users/userid/job_applications/job_applicationid/interview_questions
+GET "/api/v1/users/userid/job_applications/job_applicationid/interview_questions/fetch_or_create
 
 Headers:
 {
