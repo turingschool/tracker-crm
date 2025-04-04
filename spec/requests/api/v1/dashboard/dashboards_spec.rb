@@ -56,7 +56,7 @@ RSpec.describe "DashboardsController", type: :request do
         headers: { "Authorization" => "Bearer #{@token}" }, as: :json
       post "/api/v1/users/#{user.id}/job_applications", params: { job_application: job_application2_params },
         headers: { "Authorization" => "Bearer #{@token}" }, as: :json
-      post "/api/v1/users/#{user.id}/contacts", params: contact_params,
+      post "/api/v1/users/#{user.id}/contacts", params: { contact_params: contact_params },
         headers: { "Authorization" => "Bearer #{@token}" }, as: :json
       end
 

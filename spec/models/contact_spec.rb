@@ -16,21 +16,6 @@ RSpec.describe Contact, type: :model do
         @user2 = User.create!(name: "Mary", email: "jolly@gmail.com", password: "Password")
       end
 
-      it "is valid with a unique first_name and last_name for the same user" do
-        Contact.create!(first_name: "John", last_name: "Smith", user: @user1)
-        unique_contact = Contact.new(first_name: "Jane", last_name: "Smith", user: @user1)
-
-        expect(unique_contact).to be_valid
-      end
-
-      it "is not valid without a unique first_name and last_name for the same user" do
-        Contact.create!(first_name: "John", last_name: "Smith", user: @user1)
-        duplicate_contact = Contact.new(first_name: "John", last_name: "Smith", user: @user1)
-
-        expect(duplicate_contact).not_to be_valid
-        expect(duplicate_contact.errors[:first_name]).to include("and Last name already exist for this user")
-      end
-
       it "allows duplicate names for different users" do
         contact = Contact.create!(first_name: "John", last_name: "Smith", user: @user1)
         same_contact = Contact.new(first_name: "John", last_name: "Smith", user: @user2)
@@ -38,18 +23,17 @@ RSpec.describe Contact, type: :model do
         expect(same_contact).to be_valid
       end
 
+      it "allows duplicate names for same user" do
+        contact = Contact.create!(first_name: "Jack", last_name: "Frost", user: @user1)
+        duplicate_contact = Contact.new(first_name: "Jack", last_name: "Frost", user: @user1)
+
+        expect(duplicate_contact).to be_valid
+      end
+
       it "capitalizes names before saving" do
         contact = Contact.create!(first_name: " sandy ", last_name: "johnson", user: @user1)
         expect(contact.first_name).to eq("Sandy")
         expect(contact.last_name).to eq("Johnson")
-      end
-
-      it "does not allow duplicates with case or whitespace differences" do
-        Contact.create!(first_name: "Sandy", last_name: "Johnson", user: @user1)
-        duplicate_contact = Contact.new(first_name: "sandy", last_name: " johnson ", user: @user1)
-
-        expect(duplicate_contact).not_to be_valid
-        expect(duplicate_contact.errors.full_messages).to include("First name and Last name already exist for this user")
       end
 
       it "is valid with a company" do
