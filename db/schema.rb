@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_26_230710) do
+ActiveRecord::Schema[7.1].define(version: 2025_04_03_224322) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,7 +40,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_26_230710) do
     t.bigint "user_id", null: false
     t.bigint "company_id"
     t.index ["company_id"], name: "index_contacts_on_company_id"
-    t.index ["user_id", "first_name", "last_name"], name: "index_contacts_on_user_id_and_full_name", unique: true
+    t.index ["user_id", "first_name", "last_name"], name: "index_contacts_on_user_id_and_full_name"
     t.index ["user_id"], name: "index_contacts_on_user_id"
   end
 

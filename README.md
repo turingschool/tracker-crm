@@ -20,6 +20,8 @@
     - [Create a Job Application](#create-a-job-application)
     - [Get a Job Application](#get-a-job-application)
     - [Update a Job Application](#update-a-job-application)
+  - [Interview Questions](#interview-quesstions/fetch_or_create)
+    - [Create AI Generated Interview Questions ](#create-ai-generated-interview-question-for-a-job-application)
   - [Companies](#companies)
     - [Create a Company](#create-a-company)
     - [Get all Companies](#get-all-companies)
@@ -60,6 +62,40 @@ rails db:create
 rails db:migrate
 rails db:seed
 ```
+
+---
+## ATTENTION ALL CONTRIBUTORS
+### ⚠️ Security Scanning with Brakeman (REQUIRED)
+- To maintain a high level of security in this project, all contributors must run [Brakeman](https://brakemanscanner.org/) prior to submitting a pull request.
+
+#### ✅ How to Run Brakeman
+- Before pushing your code or submitting a PR, run the following command in the root of the Rails project:
+`brakeman -A -q -o bm-report.md`
+
+- This will generate a security report in a markdown file [bm-report.md](/bm-report.md).
+
+#### 📋 Include Brakeman Results in Your PR
+
+After creating your pull request, copy and paste the contents of the [bm-report.md](/bm-report.md) file into your PR description between the following comments:
+
+```
+### Brakeman Results (REQUIRED):
+<!--- Copy and paste your bm-report.md -->
+
+<!--- Between these two comments -->
+```
+
+## Security Warnings
+- If Brakeman includes any `security warnings` in the report, please notify the project manager and create a backlog card on the project board to review and research any possible security vulnerabilities.
+
+| Scanned/Reported  | Total |
+|-------------------|-------|
+| Controllers       | 8     |
+| Models            | 8     |
+| Templates         | 1     |
+| Errors            | 0     |
+| Security Warnings | 0 (0) |
+---
 
 ## Testing
 
@@ -112,7 +148,6 @@ rails db:seed
 `FactoryBot.build(:job_application)` - Autogenerate a job application, company, and user that will not get validated with ActiveRecord
 
 ---
-
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -669,6 +704,117 @@ Either the application doesn't exist or it doesn't belong to the current user. V
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+#### Create AI Generated Interview Questions (or fetch if they already exist)
+
+Request:
+```
+GET "/api/v1/users/userid/job_applications/job_applicationid/interview_questions/fetch_or_create
+
+Headers:
+{
+  "Authorization": "Bearer <your_token_here>"
+}
+
+```
+
+Successful Response:
+
+```
+Status: 200 ok
+
+{
+    "id": "existing-questions-for-userid",
+    "data": [
+        {
+            "index": 1,
+            "type": "interview_question",
+            "attributes": {
+                "question": "This is a question?"
+            }
+        },
+        {
+            "index": 2,
+            "type": "interview_question",
+            "attributes": {
+                "question": "This is a question?"
+            }
+        },
+        {
+            "index": 3,
+            "type": "interview_question",
+            "attributes": {
+                "question": "This is a question?"
+            }
+        },
+        {
+            "index": 4,
+            "type": "interview_question",
+            "attributes": {
+                "question": "This is a question?"
+            }
+        },
+        {
+            "index": 5,
+            "type": "interview_question",
+            "attributes": {
+                "question": "This is a question?"
+            }
+        },
+        {
+            "index": 6,
+            "type": "interview_question",
+            "attributes": {
+                "question": "This is a question?"
+            }
+        },
+        {
+            "index": 7,
+            "type": "interview_question",
+            "attributes": {
+                "question": "This is a question?"
+            }
+        },
+        {
+            "index": 8,
+            "type": "interview_question",
+            "attributes": {
+                "question": "This is a question?"
+            }
+        },
+        {
+            "index": 9,
+            "type": "interview_question",
+            "attributes": {
+                "question": "This is a question?"
+            }
+        },
+        {
+            "index": 10,
+            "type": "interview_question",
+            "attributes": {
+                "question": "This is a question?"
+            }
+        }
+    ]
+}
+        
+```
+Serializer: This serializer formats both the InterviewQuestion model instances (when fetching from database) and raw question strings (when newly generated from OpenAI). The map.with_index(1) starts indexing at 1 instead of 0, making the question numbers more human-readable (Question 1, 2, 3... instead of 0, 1, 2...).
+
+```
+{
+  id: response_id,
+  data: questions.map.with_index(1) do |question, index|
+    {
+      index: index, 
+      type: "interview_question",
+      attributes: {
+        question: question.respond_to?(:question) ? question.question : question
+      }
+    }
+  end
+}
+```
 ### Companies
 
 #### Create a company
@@ -697,6 +843,7 @@ Body:
 ```
 
 Successful Response:
+
 
 ```
 

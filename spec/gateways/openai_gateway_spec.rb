@@ -26,22 +26,26 @@ RSpec.describe OpenaiGateway do
     end
 
     it 'can handle openai returning an error' do
+      fake_resposne = instance_double(Faraday::Response, success?: false, status: 500, body: "")
 
-      VCR.use_cassette("openai_gateway_failure") do
-        gateway_response = @gateway.generate_interview_questions(@valid_description)
-        expect(gateway_response[:success]).to eq(false)
-        expect(gateway_response[:error]).to eq("Failed to fetch interview questions.")
-      end
+      allow(Faraday).to receive(:post).and_return(fake_resposne)
+
+      gateway_response = @gateway.generate_interview_questions(@valid_description)
+      
+      expect(gateway_response[:success]).to eq(false)
+      expect(gateway_response[:error]).to eq("Failed to fetch interview questions.")
     end
 
     it 'can handle openai returning an unexpected format' do
-    
-      VCR.use_cassette("openai_gateway_success_formatting_issue") do
-        gateway_response = @gateway.generate_interview_questions(@valid_description)
-        expect(gateway_response[:success]).to eq(false)
-        expect(gateway_response[:error]).to eq("Unexpected response format from OpenAI.")
+      unexpected_json = { unexpected_key: "oops" }.to_json
+      fake_response = instance_double(Faraday::Response, success?: true, status: 200, body: unexpected_json)
 
-      end
+      allow(Faraday).to receive(:post).and_return(fake_response)
+
+      gateway_response = @gateway.generate_interview_questions(@valid_description)
+      
+      expect(gateway_response[:success]).to eq(false)
+      expect(gateway_response[:error]).to eq("Unexpected response format from OpenAI.")
     end
 
     it 'can handle openai returning an unexpected error' do

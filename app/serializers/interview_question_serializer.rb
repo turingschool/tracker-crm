@@ -6,17 +6,14 @@ class InterviewQuestionSerializer
     {
       id: response_id,
       data: questions.map.with_index(1) do |question, index|
-        
-        {index: index,
-        type: "interview_question",
-        attributes: {
-          question: question,
-          # job_application_id: question["job_application_id"],
+        {
+          index: index, 
+          type: "interview_question",
+            attributes: {
+              question: question.respond_to?(:question) ? question.question : question
+            }
         }
-      
-      }
       end
     }
-
   end
 end

@@ -176,23 +176,6 @@ describe "Contacts Controller", type: :request do
 				user_id: @user1.id)
 		end
 
-		it "returns a 422 error when creating a duplicate contact" do
-      minimal_params =  { contact: {first_name: "John", last_name: "Smith" } }
-      post api_v1_user_contacts_path(@user1.id), params: minimal_params , headers: { "Authorization" => "Bearer #{@token}" }, as: :json
-
-      expect(response).to have_http_status(:created)
-			expect(response).to be_successful
-
-      post api_v1_user_contacts_path(@user1.id), params: minimal_params , headers: { "Authorization" => "Bearer #{@token}" }, as: :json
-			expect(response).to_not be_successful
-			expect(response).to have_http_status(:unprocessable_entity)
-
-      json = JSON.parse(response.body, symbolize_names: true)
-
-			expect(json[:message]).to include("First name and Last name already exist for this user")
-			expect(json[:status]).to eq(422)
-	end
-
 		it "returns a 422 error for missing first_name" do
 			missing_contact_params = { contact: { first_name: "", last_name: "Smith" } }
 
