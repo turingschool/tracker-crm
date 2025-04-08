@@ -63,6 +63,40 @@ rails db:migrate
 rails db:seed
 ```
 
+---
+## ATTENTION ALL CONTRIBUTORS
+### ⚠️ Security Scanning with Brakeman (REQUIRED)
+- To maintain a high level of security in this project, all contributors must run [Brakeman](https://brakemanscanner.org/) prior to submitting a pull request.
+
+#### ✅ How to Run Brakeman
+- Before pushing your code or submitting a PR, run the following command in the root of the Rails project:
+`brakeman -A -q -o bm-report.md`
+
+- This will generate a security report in a markdown file [bm-report.md](/bm-report.md).
+
+#### 📋 Include Brakeman Results in Your PR
+
+After creating your pull request, copy and paste the contents of the [bm-report.md](/bm-report.md) file into your PR description between the following comments:
+
+```
+### Brakeman Results (REQUIRED):
+<!--- Copy and paste your bm-report.md -->
+
+<!--- Between these two comments -->
+```
+
+## Security Warnings
+- If Brakeman includes any `security warnings` in the report, please notify the project manager and create a backlog card on the project board to review and research any possible security vulnerabilities.
+
+| Scanned/Reported  | Total |
+|-------------------|-------|
+| Controllers       | 8     |
+| Models            | 8     |
+| Templates         | 1     |
+| Errors            | 0     |
+| Security Warnings | 0 (0) |
+---
+
 ## Testing
 
 #### This app uses RSpec for testing:
@@ -114,7 +148,6 @@ rails db:seed
 `FactoryBot.build(:job_application)` - Autogenerate a job application, company, and user that will not get validated with ActiveRecord
 
 ---
-
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

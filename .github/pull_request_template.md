@@ -28,6 +28,10 @@
 
 <!--- Delete any above that do not apply to this PR -->
 
+### Brakeman Results (REQUIRED):
+<!--- Copy and paste your bm-report.md -->
+
+<!--- Between these two comments -->
 
 ### Checklist:
 <!--- Go over all the following points, and put an `x` in all the boxes that apply. -->
