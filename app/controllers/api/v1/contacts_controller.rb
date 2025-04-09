@@ -92,7 +92,7 @@ module Api
       private
 
       def contact_params
-        params.require(:contact).permit(:first_name, :last_name, :company_id, :email, :phone_number, :notes, :job_application_id)
+        params.require(:contact).permit(:first_name, :last_name, :company_id, :email, :phone_number, :notes)
       end
     end
   end
