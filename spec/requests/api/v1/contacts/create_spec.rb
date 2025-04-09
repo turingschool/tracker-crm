@@ -93,6 +93,70 @@ describe "Contacts Controller", type: :request do
 			expect(json[:attributes][:last_name]).to eq("Smith")
 			expect(json[:attributes][:company][:name]).to eq("Turing")
 		end
+
+		it 'creates contact and assigns it to a job application if jobApplicationId params is present ' do 
+			job_application = JobApplication.create!(
+				position_title: "Jr. CTO",
+				date_applied: "2024-10-31",
+				status: 1,
+				notes: "Fingers crossed!",
+				job_description: "Looking for Turing grad/jr dev to be CTO",
+				application_url: "www.example1.com",
+				company: @company,
+				user: @user1,
+    	)
+
+			contact_params = {
+				contact: {
+					first_name: "John",
+					last_name: "Smith",
+					company_id: @company.id,
+					email: "john@example.com",
+					phone_number: "123-555-6789",
+					notes: "Notes here...",
+				},
+				job_application_id: job_application.id
+			}
+
+			post api_v1_user_contacts_path(@user1.id), params: contact_params , headers: { "Authorization" => "Bearer #{@token}" }, as: :json
+
+			expect(response).to have_http_status(:created)
+			json = JSON.parse(response.body, symbolize_names: true)[:data]
+			updated_contact_id = json[:id].to_i
+
+			expect(job_application.reload.contact_id).to eq(updated_contact_id)
+		end
+
+		it 'will not assign a contact to a job application that belongs to another user' do
+		  job_application = JobApplication.create!(
+				position_title: "Jr. CTO",
+				date_applied: "2024-10-31",
+				status: 1,
+				notes: "Fingers crossed!",
+				job_description: "Looking for Turing grad/jr dev to be CTO",
+				application_url: "www.example1.com",
+				company: @company,
+				user: @user2,
+    	)
+
+			contact_params = {
+				contact: {
+					first_name: "John",
+					last_name: "Smith",
+					company_id: @company.id,
+					email: "john@example.com",
+					phone_number: "123-555-6789",
+					notes: "Notes here...",
+				},
+				job_application_id: job_application.id
+			}
+
+			post api_v1_user_contacts_path(@user1.id), params: contact_params , headers: { "Authorization" => "Bearer #{@token}" }, as: :json
+
+			expect(response).to have_http_status(:created)
+			
+			expect(job_application.reload.contact_id).to eq(nil)
+		end
 	end
 	
 	context "when the request is invalid - Sad Paths" do

@@ -27,6 +27,12 @@ module Api
         if (company = Company.find_company(@current_user, params[:company_id])) || params[:company_id].blank?
           contact = Contact.create_optional_company(contact_params, @current_user.id, company&.id)
           if contact.persisted?
+            if params[:job_application_id].present?
+              job_application = JobApplication.find_by(id: params[:job_application_id], user_id: @current_user.id)
+              if job_application
+                job_application.update(contact_id: contact.id)
+              end
+            end
             render json: ContactsSerializer.new(contact), status: :created
           else
             render json: ErrorSerializer.format_error(ErrorMessage.new(contact.errors.full_messages, 422)), status: :unprocessable_entity
