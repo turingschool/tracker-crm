@@ -59,17 +59,13 @@ RSpec.describe "Users Update", type: :request do
       end
 
       it "returns an error for missing field" do
-        invalid_params = { 
-          email: "",
-          password: "newpassword123",
-          password_confirmation: "newpassword123"
-        }
+        invalid_params = { email: "" }
 
         put api_v1_user_path(user.id), params: invalid_params, as: :json
         json = JSON.parse(response.body, symbolize_names: true)
 
         expect(response).to have_http_status(:bad_request)
-        expect(json[:message]).to eq("Email can't be blank")
+        expect(json[:message]).to eq("Email can't be blank and Password can't be blank")
         expect(json[:status]).to eq(400)
       end
     end
