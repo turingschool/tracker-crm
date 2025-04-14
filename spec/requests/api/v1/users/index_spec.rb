@@ -2,17 +2,16 @@ require "rails_helper"
 
 RSpec.describe "Users Index", type: :request do
   describe "Get All Users Endpoint" do
-    let(:admin) {User.create!(name: "admin", email: "test@test.com", password: "123")}
+    let(:admin) { create(:user, :admin) }
 
     before(:each) do
-      admin.set_role :admin
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
     end
 
     it "retrieves all users but does not share any sensitive data" do
-      User.create!(name: "Tom", email: "myspace_creator@email.com", password: "test123")
-      User.create!(name: "Oprah", email: "oprah@email.com", password: "abcqwerty")
-      User.create!(name: "Beyonce", email: "sasha_fierce@email.com", password: "blueivy")
+      create(:user)
+      create(:user)
+      create(:user)
 
       get api_v1_users_path
 
