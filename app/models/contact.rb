@@ -3,7 +3,7 @@ class Contact < ApplicationRecord
   belongs_to :company, optional: true
 
   VALID_PHONE_REGEX = /\A\d{3}\-\d{3}-\d{4}\z/
-  VALID_EMAIL_REGEX = /\A[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\z/
+  VALID_EMAIL_REGEX = URI::MailTo::EMAIL_REGEXP
 
 
 
