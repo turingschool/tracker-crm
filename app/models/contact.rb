@@ -5,7 +5,7 @@ class Contact < ApplicationRecord
   VALID_PHONE_REGEX = /\A\d{3}\-\d{3}-\d{4}\z/
   VALID_EMAIL_REGEX = /\A[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\z/
 
-  before_validation :normalize_names
+
 
   validates :first_name, presence: {message: "can't be blank"} 
   validates :last_name, presence: {message: "can't be blank"}
@@ -25,8 +25,5 @@ class Contact < ApplicationRecord
 
   private
 
-  def normalize_names
-    self.first_name = first_name.strip.capitalize if first_name.present?
-    self.last_name = last_name.strip.capitalize if last_name.present?
-  end
+
 end
