@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Users Show", type: :request do
   describe "Get One User Endpoint" do
-    let(:user) {User.create!(name: "Tom", email: "myspace_creator@email.com", password: "test123")}
+    let(:user) { create(:user) }
 
     before(:each) do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
@@ -14,8 +14,8 @@ RSpec.describe "Users Show", type: :request do
       expect(response).to be_successful
       json = JSON.parse(response.body, symbolize_names: true)
 
-      expect(json[:data][:attributes][:name]).to eq("Tom")
-      expect(json[:data][:attributes][:email]).to eq("myspace_creator@email.com")
+      expect(json[:data][:attributes][:name]).to eq(user.name)
+      expect(json[:data][:attributes][:email]).to eq(user.email)
     end
   end
 end
