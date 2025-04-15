@@ -1,6 +1,7 @@
 module Api
   module V1
     class UsersController < ApplicationController
+      rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
       def create
         user = User.new(user_params)
@@ -38,6 +39,11 @@ module Api
 
       def user_params
         params.permit(:name, :email, :password, :password_confirmation)
+      end
+
+      def user_not_authorized
+        render json: ErrorSerializer.format_error(ErrorMessage.new("You are not authorized to perform this action", 401)), 
+               status: :unauthorized
       end
     end
   end
