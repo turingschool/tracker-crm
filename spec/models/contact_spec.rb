@@ -173,6 +173,46 @@ RSpec.describe Contact, type: :model do
         expect(@contact.reload.last_name).to eq(@contact.last_name)
       end
     end
+    
+    describe ".create_optional_company" do
+      it "creates a contact with user and company" do
+        user = create(:user)
+        company = create(:company)
+        valid_params = {
+          first_name: "Sansa",
+          last_name: "Stark",
+          email: "sansa@winterfell.com",
+          phone_number: "555-123-4567",
+          notes: "Lady of Winterfell"
+        }
+    
+        contact = Contact.create_optional_company(valid_params, user.id, company.id)
+    
+        expect(contact).to be_persisted
+        expect(contact.first_name).to eq("Sansa")
+        expect(contact.last_name).to eq("Stark")
+        expect(contact.user_id).to eq(user.id)
+        expect(contact.company_id).to eq(company.id)
+      end
+    
+      it "creates a contact with user but without a company if none is provided" do
+        user = create(:user)
+        valid_params = {
+          first_name: "Sansa",
+          last_name: "Stark",
+          email: "sansa@winterfell.com",
+          phone_number: "555-123-4567",
+          notes: "Lady of Winterfell"
+        }
+    
+        contact = Contact.create_optional_company(valid_params, user.id, nil)
+    
+        expect(contact).to be_persisted
+        expect(contact.first_name).to eq("Sansa")
+        expect(contact.user_id).to eq(user.id)
+        expect(contact.company_id).to be_nil
+      end
+    end
   end
 end
 end
