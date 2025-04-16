@@ -17,15 +17,15 @@ RSpec.describe User, type: :model do
 
   describe "#after_create callback" do
     it "assigns a new user the ':user' role by default after creation" do
-      @new_user = User.create!(name: "Danny DeVito", email: "danny_de@email.com", password: "jerseyMikesRox7")
+      new_user = create(:user)
 
-      expect(@new_user.has_role?(:user)).to eq(true)
+      expect(new_user.has_role?(:user)).to eq(true)
     end
   end
 
   describe "role methods" do
-    let(:admin) {User.create!(name: "admin", email: "test@test.com", password: "123")}
-    let(:regular_user) {User.create!(name: "user", email: "test1@test.com", password: "234")}
+    let(:admin) { create(:user, :admin) }
+    let(:regular_user) { create(:user) }
 
     before(:each) do
       admin.set_role :admin
