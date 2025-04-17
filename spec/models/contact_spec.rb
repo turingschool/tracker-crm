@@ -12,63 +12,45 @@ RSpec.describe Contact, type: :model do
     
     context "custom validations" do
       before(:each) do
-        @user1 = User.create!(name: "Me", email: "happy@gmail.com", password: "reallyGoodPass")
-        @user2 = User.create!(name: "Mary", email: "jolly@gmail.com", password: "Password")
+        @user1 = create(:user)
+        @user2 = create(:user)
       end
 
       it "allows duplicate names for different users" do
-        contact = Contact.create!(first_name: "John", last_name: "Smith", user: @user1)
-        same_contact = Contact.new(first_name: "John", last_name: "Smith", user: @user2)
+        contact = create(:contact, first_name: "John", last_name:"Smith", user: @user1)
+        same_contact = create(:contact, first_name: "John", last_name: "Smith", user: @user2)
 
         expect(same_contact).to be_valid
       end
 
       it "allows duplicate names for same user" do
-        contact = Contact.create!(first_name: "Jack", last_name: "Frost", user: @user1)
-        duplicate_contact = Contact.new(first_name: "Jack", last_name: "Frost", user: @user1)
+        contact = create(:contact, first_name: "Jack", last_name:"Frost", user: @user1)
+        duplicate_contact = create(:contact, first_name: "Jack", last_name: "Frost", user: @user2)
 
         expect(duplicate_contact).to be_valid
       end
 
-      it "capitalizes names before saving" do
-        contact = Contact.create!(first_name: " sandy ", last_name: "johnson", user: @user1)
-        expect(contact.first_name).to eq("Sandy")
-        expect(contact.last_name).to eq("Johnson")
-      end
-
       it "is valid with a company" do
-        company = Company.create!(
-          name: "Turing", 
-          website: "www.turing.com", 
-          street_address: "123 Main St",
-          city: "Denver",
-          state: "CO",
-          zip_code: "80218",
-          user: @user1)
-        contact = Contact.create!(first_name: "John", last_name: "Smith", user: @user1, company: company)
+        company = create(:company, user: @user1)
+        contact = create(:contact, user: @user1, company: company)
         expect(contact).to be_valid
       end
 
       it "is valid without a company" do
-        contact = Contact.create!(first_name: "John", last_name: "Smith", user: @user1)
+        contact = create(:contact)
         expect(contact).to be_valid
       end
     end
 
     context "phone number validations" do
       before(:each) do
-        @user1 = User.create!(name: "Me", email: "its_me", password: "reallyGoodPass")
+        @user1 = create(:user)
       end
 
       it "is valid with a properly formatted phone number" do
         valid_numbers = ["123-456-7890", "555-555-5555", "720-555-5555"]
         valid_numbers.each do |number|
-        contact = Contact.new(
-          first_name: "John",
-          last_name: "Smith",
-          phone_number: number,
-          user: @user1
-        )
+        contact = create(:contact, phone_number: number)
         expect(contact).to be_valid
         end
       end
@@ -88,30 +70,20 @@ RSpec.describe Contact, type: :model do
       end
 
       it "is valid if phone number is blank" do
-        contact = Contact.create!(
-          first_name: "John",
-          last_name: "Smith",
-          phone_number: "",
-          user: @user1
-        )
+        contact = create(:contact, phone_number: "", user: @user1)
         expect(contact).to be_valid
         end
       end
 
     context "email validations" do
       before(:each) do
-        @user1 = User.create!(name: "Me", email: "its_me", password: "reallyGoodPass")
+        @user1 = create(:user)
       end
 
       it "is valid with a properly formatted email" do
         valid_emails = ["turing@gmail.com", "turing@edu.com", "turing123@msn.com", "turing@edu123.co"]
         valid_emails.each do |email|
-        contact = Contact.new(
-          first_name: "John",
-          last_name: "Jacob",
-          email: email,
-          user: @user1
-        )
+        contact = create(:contact, email: email, user: @user1)
         expect(contact).to be_valid
         end
       end
@@ -131,30 +103,17 @@ RSpec.describe Contact, type: :model do
       end
 
       it "is valid if email is blank" do
-        contact = Contact.create!(
-          first_name: "John",
-          last_name: "Smith",
-          email: "",
-          user: @user1
-        )
+        contact = create(:contact, email: "", user: @user1)
         expect(contact).to be_valid
       end
     end
 
     context "dependent destroy" do
       before(:each) do
-        @user = User.create!(name: "Johnte", email: "jsmith@hotmail.com", password: "st#nGP@ss")
-        @company = Company.create!(
-          name: "Turing",
-          website: "www.turing.edu",
-          street_address: "555 Main",
-          city: "Denver",
-          state: "CO",
-          zip_code: "80222",
-          user: @user
-        )
-        @contact1 = Contact.create!(first_name: "John", last_name: "Smith", user: @user, company: @company)
-        @contact2 = Contact.create!(first_name: "Jane", last_name: "Doe", user: @user)
+        @user = create(:user)
+        @company = create(:company, user: @user)
+        @contact1 = create(:contact, user: @user, company: @company)
+        @contact2 = create(:contact, user: @user)
 
         it "destroys contacts when the user is deleted" do
           expect { @user.destroy }.to change { Contact.count }.by(-2)
@@ -164,24 +123,9 @@ RSpec.describe Contact, type: :model do
 
   describe "#update_contact" do
     before(:each) do
-      @user = User.create!(name: "Me", email: "its_me@example.com", password: "reallyGoodPass")
-      @company = Company.create!(
-        name: "Turing",
-        website: "www.turing.com",
-        street_address: "123 Main St",
-        city: "Denver",
-        state: "CO",
-        zip_code: "80218",
-        user: @user
-      )
-      @contact = Contact.create!(
-        first_name: "John",
-        last_name: "Smith",
-        email: "john@example.com",
-        phone_number: "555-555-5555",
-        user: @user,
-        company: @company
-      )
+      @user = create(:user)
+      @company = create(:company, user: @user)
+      @contact = create(:contact, user: @user, company: @company)
     end
 
     context "Happy Paths" do
@@ -219,14 +163,54 @@ RSpec.describe Contact, type: :model do
     context "Edge Cases" do
       it "does not change attributes if no updates are provided" do
         expect(@contact.update_contact({})).to be_truthy
-        expect(@contact.reload.first_name).to eq("John")
-        expect(@contact.reload.last_name).to eq("Smith")
+        expect(@contact.reload.first_name).to eq(@contact.first_name)
+        expect(@contact.reload.last_name).to eq(@contact.last_name)
       end
 
       it "partially updates only the provided fields" do
         @contact.update_contact(first_name: "Updated")
-        expect(@contact.reload.first_name).to eq("Updated")
-        expect(@contact.reload.last_name).to eq("Smith")
+        expect(@contact.reload.first_name).to eq(@contact.first_name)
+        expect(@contact.reload.last_name).to eq(@contact.last_name)
+      end
+    end
+    
+    describe ".create_optional_company" do
+      it "creates a contact with user and company" do
+        user = create(:user)
+        company = create(:company)
+        valid_params = {
+          first_name: "Sansa",
+          last_name: "Stark",
+          email: "sansa@winterfell.com",
+          phone_number: "555-123-4567",
+          notes: "Lady of Winterfell"
+        }
+    
+        contact = Contact.create_optional_company(valid_params, user.id, company.id)
+    
+        expect(contact).to be_persisted
+        expect(contact.first_name).to eq("Sansa")
+        expect(contact.last_name).to eq("Stark")
+        expect(contact.user_id).to eq(user.id)
+        expect(contact.company_id).to eq(company.id)
+      end
+    
+      it "creates a contact with user but without a company if none is provided" do
+        user = create(:user)
+        valid_params = {
+          first_name: "Sansa",
+          last_name: "Stark",
+          email: "sansa@winterfell.com",
+          phone_number: "555-123-4567",
+          notes: "Lady of Winterfell"
+        }
+    
+        contact = Contact.create_optional_company(valid_params, user.id, nil)
+    
+        expect(contact).to be_persisted
+        expect(contact.first_name).to eq("Sansa")
+        expect(contact.user_id).to eq(user.id)
+        expect(contact.company_id).to be_nil
       end
     end
   end

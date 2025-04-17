@@ -2,8 +2,8 @@ FactoryBot.define do
   factory :contact do
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
-    email { "#{first_name}.#{last_name}@#{company.name.gsub(/\s+/, '')}.com" }
-    phone_number { Faker::PhoneNumber.cell_phone.gsub(/\D/, '')[0, 10] }
+    email { "#{first_name.upcase}.#{last_name.upcase}@#{company.name.gsub(/\s+/, '')}.com" }
+    phone_number { Faker::PhoneNumber.cell_phone.gsub(/\D/, '')[0, 10].insert(3, '-').insert(7, '-') }
     notes { "Random contact notes" }
 
     transient do

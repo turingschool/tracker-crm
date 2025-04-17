@@ -4,21 +4,15 @@ describe "Contacts Controller", type: :request do
   describe "#show action" do
     context "Happy Paths" do
       before(:each) do
-        @user = User.create!(name: "Me", email: "its_me", password: "reallyGoodPass")
-        @company = Company.create!(
-          name: "Turing", website: "www.turing.com", street_address: "123 Main St", 
-          city: "Denver", state: "CO", zip_code: "80218", user_id: @user.id
-        )
-        @contact = Contact.create!(first_name: "John", last_name: "Smith", 
-        company_id: @company.id, email: "123@example.com", phone_number: "123-555-6789", 
-        notes: "Notes here...", user_id: @user.id
-        )
-        user_params = { email: "its_me", password: "reallyGoodPass" }
+        @user = create(:user)
+        @company = create(:company, user: @user)
+        @contact = create(:contact, user: @user, company: @company)
+        user_params = { email: @user.email, password: @user.password }
         post api_v1_sessions_path, params: user_params, as: :json
         @token = JSON.parse(response.body)["token"]
         
-        @user2 = User.create!(name: "Jane", email: "email", password: "Password")
-        user_params2 = { email: "email", password: "Password" }
+        @user2 = create(:user)
+        user_params2 = { email: @user2.email, password: @user2.password }
         post api_v1_sessions_path, params: user_params2, as: :json
         @token2 = JSON.parse(response.body)["token"]
       end
@@ -30,11 +24,11 @@ describe "Contacts Controller", type: :request do
 
         json = JSON.parse(response.body, symbolize_names: true)[:data]
 
-        expect(json[:attributes][:first_name]).to eq("John")
-        expect(json[:attributes][:last_name]).to eq("Smith")
-        expect(json[:attributes][:email]).to eq("123@example.com")
-        expect(json[:attributes][:phone_number]).to eq("123-555-6789")
-        expect(json[:attributes][:notes]).to eq("Notes here...")
+        expect(json[:attributes][:first_name]).to eq(@contact.first_name)
+        expect(json[:attributes][:last_name]).to eq(@contact.last_name)
+        expect(json[:attributes][:email]).to eq(@contact.email)
+        expect(json[:attributes][:phone_number]).to eq(@contact.phone_number)
+        expect(json[:attributes][:notes]).to eq(@contact.notes)
         expect(json[:attributes][:company_id]).to eq(@company.id)
       end
 
