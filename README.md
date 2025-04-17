@@ -1763,10 +1763,20 @@ Successful Response:
 - [Github](https://github.com/DRIF7ER)
 - [LinkedIn](https://www.linkedin.com/in/charles-t-banks-jr-6b982b152//)
 
+**Bleggi, Jillian**
+
+- [Github]https://github.com/jbleggi
+- [LinkedIn]https://www.linkedin.com/in/jillianbleggi/
+
 **Bloom, Stefan**
 
 - [Github](https://github.com/stefanjbloom)
 - [LinkedIn](https://www.linkedin.com/in/stefanjbloom/)
+
+**Cardona, Danielle**
+
+- [Github](https://github.com/dcardona23)
+- [LinkedIn](https://www.linkedin.com/in/danielle-cardona-se/)
 
 **Chirchirillo, Joe**
 
@@ -1788,20 +1798,35 @@ Successful Response:
 - [Github](https://github.com/litobot)
 - [LinkedIn](https://www.linkedin.com/in/litocroy/)
 
-**De La Rosa, Melchor**
+**Davalos, Joel**
 
-- [Github](https://github.com/MDelarosa1993)
-- [LinkedIn](https://www.linkedin.com/in/melchordelarosa/)
+- [Github]https://github.com/jdavalos98
+- [LinkedIn]https://www.linkedin.com/in/joeldavalos/
 
 **Delaney, Kyle**
 
 - [Github](https://gist.github.com/kylomite)
 - [LinkedIn](https://www.linkedin.com/in/kylehamptondelaney/)
 
+**De La Rosa, Melchor**
+
+- [Github](https://github.com/MDelarosa1993)
+- [LinkedIn](https://www.linkedin.com/in/melchordelarosa/)
+
+**Fallenius, Karl Frederick**
+
+- [Github](https://github.com/SmilodonP)
+- [LinkedIn](https://www.linkedin.com/in/karlfallenius)
+
 **Galvin, Shane**
 
 - [Github](https://github.com/sgalvin36)
 - [LinkedIn](https://www.linkedin.com/in/shane-galvin36/)
+
+**Haefling, Matt**
+
+-[Github]https://github.com/mhaefling
+-[LinkedIn]www.linkedin.com/in/matthew-haefling
 
 **Hill, John**
 
@@ -1812,6 +1837,11 @@ Successful Response:
 
 - [Github](https://github.com/marshallhotaling)
 - [LinkedIn](https://www.linkedin.com/in/marshall-hotaling-7b52a8304/)
+
+**Knapp, Paul**
+
+- [Github]https://github.com/Paul-Knapp
+- [LinkedIn]www.linkedin.com/in/paul-m-knapp
 
 **Lynch, Devlin**
 
@@ -1825,13 +1855,18 @@ Successful Response:
 
 **Manning, Terra**
 
-- [Github](https://github.com/TDManning/)
+- [Github](https://github.com/TDManning)
 - [LinkedIn](https://www.linkedin.com/in/terra-manning/)
 
 **Messersmith, Renee**
 
 - [Github](https://github.com/reneemes)
 - [LinkedIn](https://www.linkedin.com/in/reneemessersmith/)
+
+**Newland, Kevin**
+
+- [Github]https://github.com/kevin-newland
+- [LinkedIn]https://www.linkedin.com/in/kevin-newland/
 
 **O'Brien, Michael**
 
@@ -1858,6 +1893,16 @@ Successful Response:
 - [Github](https://github.com/kaelinpsalazar)
 - [LinkedIn](https://www.linkedin.com/in/kaelin-salazar/)
 
+**Sommers, Jono**
+
+- [Github]https://github.com/JonoSommers
+- [LinkedIn]https://www.linkedin.com/in/jonosommers/
+
+**Vasques, Natasha**
+
+-[Github]https://github.com/nvnatasha
+-[LinkedIn]https://www.linkedin.com/in/natasha-vasquez/
+
 **Verrill, Seth**
 
 - [Github](https://github.com/sethverrill)
@@ -1866,7 +1911,17 @@ Successful Response:
 **Wallace, Wally**
 
 - [Github](https://github.com/wally-yawn)
-- [LinkedIn](https://www.linkedin.com/in/wally-wallace-719b0875/)
+- [LinkedIn](https://www.linkedin.com/in/wally--wallace/)
+
+**Ward, Elysa**
+
+- [Github]https://github.com/elysableu
+- [LinkedIn]https://www.linkedin.com/in/elysa-ward/
+
+**Weiland, Kristen**
+
+- [Github]https://github.com/KMPWeiland 
+- [LinkedIn]https://www.linkedin.com/in/kristinweiland/
 
 **Willett, Bryan**
 
