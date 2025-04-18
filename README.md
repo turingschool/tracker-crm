@@ -1765,8 +1765,8 @@ Successful Response:
 
 **Bleggi, Jillian**
 
-- [Github]https://github.com/jbleggi
-- [LinkedIn]https://www.linkedin.com/in/jillianbleggi/
+- [Github](https://github.com/jbleggi)
+- [LinkedIn](https://www.linkedin.com/in/jillianbleggi/)
 
 **Bloom, Stefan**
 
@@ -1800,8 +1800,8 @@ Successful Response:
 
 **Davalos, Joel**
 
-- [Github]https://github.com/jdavalos98
-- [LinkedIn]https://www.linkedin.com/in/joeldavalos/
+- [Github](https://github.com/jdavalos98)
+- [LinkedIn](https://www.linkedin.com/in/joeldavalos/)
 
 **Delaney, Kyle**
 
@@ -1825,8 +1825,8 @@ Successful Response:
 
 **Haefling, Matt**
 
--[Github]https://github.com/mhaefling
--[LinkedIn]www.linkedin.com/in/matthew-haefling
+-[Github](https://github.com/mhaefling)
+-[LinkedIn](www.linkedin.com/in/matthew-haefling)
 
 **Hill, John**
 
@@ -1840,8 +1840,8 @@ Successful Response:
 
 **Knapp, Paul**
 
-- [Github]https://github.com/Paul-Knapp
-- [LinkedIn]www.linkedin.com/in/paul-m-knapp
+- [Github](https://github.com/Paul-Knapp)
+- [LinkedIn](www.linkedin.com/in/paul-m-knapp)
 
 **Lynch, Devlin**
 
@@ -1865,8 +1865,8 @@ Successful Response:
 
 **Newland, Kevin**
 
-- [Github]https://github.com/kevin-newland
-- [LinkedIn]https://www.linkedin.com/in/kevin-newland/
+- [Github](https://github.com/kevin-newland)
+- [LinkedIn](https://www.linkedin.com/in/kevin-newland/)
 
 **O'Brien, Michael**
 
@@ -1895,13 +1895,13 @@ Successful Response:
 
 **Sommers, Jono**
 
-- [Github]https://github.com/JonoSommers
-- [LinkedIn]https://www.linkedin.com/in/jonosommers/
+- [Github](https://github.com/JonoSommers)
+- [LinkedIn](https://www.linkedin.com/in/jonosommers/)
 
 **Vasquez, Natasha**
 
--[Github]https://github.com/nvnatasha
--[LinkedIn]https://www.linkedin.com/in/natasha-vasquez/
+-[Github](https://github.com/nvnatasha)
+-[LinkedIn](https://www.linkedin.com/in/natasha-vasquez/)
 
 **Verrill, Seth**
 
@@ -1915,13 +1915,13 @@ Successful Response:
 
 **Ward, Elysa**
 
-- [Github]https://github.com/elysableu
-- [LinkedIn]https://www.linkedin.com/in/elysa-ward/
+- [Github](https://github.com/elysableu)
+- [LinkedIn](https://www.linkedin.com/in/elysa-ward/)
 
 **Weiland, Kristen**
 
-- [Github]https://github.com/KMPWeiland 
-- [LinkedIn]https://www.linkedin.com/in/kristinweiland/
+- [Github](https://github.com/KMPWeiland)
+- [LinkedIn](https://www.linkedin.com/in/kristinweiland/)
 
 **Willett, Bryan**
 
