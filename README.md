@@ -1898,7 +1898,7 @@ Successful Response:
 - [Github]https://github.com/JonoSommers
 - [LinkedIn]https://www.linkedin.com/in/jonosommers/
 
-**Vasques, Natasha**
+**Vasquez, Natasha**
 
 -[Github]https://github.com/nvnatasha
 -[LinkedIn]https://www.linkedin.com/in/natasha-vasquez/
