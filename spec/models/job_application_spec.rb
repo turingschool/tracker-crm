@@ -108,5 +108,27 @@ RSpec.describe JobApplication, type: :model do
         expect(job_application.errors[:date_applied]).to eq(["can't be blank"])
       end
     end
+
+    context 'when status is "not yet applied"' do 
+      it 'does not require date_applied' do
+        contact = Contact.create!(
+        first_name: "John",
+        last_name: "Doe",
+        email: "john.doe@example.com",
+        user_id: subject.user_id
+      )
+      job_application = JobApplication.new(
+        position_title: "Full Stack Engineer",
+        status: :not_yet_applied,
+        job_description: "Wears many hats",
+        application_url: "http://example.com",
+        company_id: subject.company_id,
+        user_id: subject.user_id,
+        contact_id: contact.id
+      )
+      
+      expect(job_application).to be_valid
+      end
+    end
   end
 end
