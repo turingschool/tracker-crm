@@ -9,7 +9,7 @@ RSpec.describe "Job Application #create & #index", type: :request do
     @job_application1 = JobApplication.create!(
       position_title: "Frontend Developer",
       date_applied: "2024-11-01",
-      status: 0,
+      status: :submitted,
       notes: "Excited about this opportunity!",
       job_description: "Frontend Developer role with React and Cypress expertise",
       application_url: "www.frontend.com",

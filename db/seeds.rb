@@ -130,7 +130,7 @@ job_applications = [
   {
     position_title: "Jr. CTO",
     date_applied: "2024-10-31",
-    status: 1,
+    status: :submitted,
     notes: "Fingers crossed!",
     job_description: "Lorem ipsum dolor sit amet. Sed exercitationem recusandae ut totam tempora ut quibusdam quis et provident voluptatem sit quas ipsa. Cum dolorem temporibus aut galisum ratione non veritatis perspiciatis ea consequatur galisum aut fugit ullam hic ratione itaque qui dicta officia. Qui quia quidem ad porro illum et facilis voluptas qui possimus impedit aut dolorem temporibus eum exercitationem nulla in laudantium ipsam. Ea ipsum tenetur non delectus autem aut ipsum reiciendis sed voluptatem officiis et earum blanditiis qui magni modi est voluptatum repellendus? Ab eveniet voluptates est enim quaerat quo ipsa atque. Est reiciendis expedita rem iusto temporibus aut magnam iure ut eius dolorem in voluptatem aperiam! Et accusantium error et placeat quasi aut aperiam dolor est sint similique? Et consequuntur similique vel asperiores galisum 33 sint perspiciatis vel cupiditate nihil ab distinctio consequatur est fugiat ullam. Aut minus quia est aperiam impedit id rerum totam vel dolorem distinctio ut repellat quos in perferendis enim 33 cupiditate accusantium. In dolorum dolorem et enim aspernatur ut vero nesciunt? Rem beatae sequi id odio corporis eum fugiat reprehenderit. Vel accusamus nobis non Quis quia et dolores omnis. Cum ipsa magni ut totam incidunt id repudiandae animi hic ipsum dignissimos. Et accusantium explicabo ad enim velit qui fuga autem At placeat galisum! At fuga consequatur sit amet rerum vel obcaecati voluptatem et beatae corrupti ut minus autem ea fuga ratione ut consequatur ipsum. Aut eius impedit aut dignissimos voluptatibus aut velit voluptatem et veritatis voluptatem aut tempora facilis et officia labore. Ea nesciunt molestias non ullam enim et delectus obcaecati quo quas ducimus qui quia maiores qui numquam iusto. Hic libero eligendi vel quisquam omnis id libero voluptatem eum natus eius a ratione ipsa. Eos repellat alias et culpa quod 33 delectus laboriosam id dolor inventore aut aspernatur ipsum.",
     application_url: "www.example.com",
@@ -140,7 +140,7 @@ job_applications = [
   {
     position_title: "UI Designer",
     date_applied: "2024-09-15",
-    status: 0,
+    status: :submitted,
     notes: "Submitted portfolio and waiting for feedback.",
     job_description: "Designing innovative and user-friendly interfaces.",
     application_url: "https://futuredesigns.com/jobs/ui-designer",
@@ -150,7 +150,7 @@ job_applications = [
   {
     position_title: "Backend Developer",
     date_applied: "2024-08-20",
-    status: 2,
+    status: :interviewing,
     notes: "Had a technical interview, awaiting decision.",
     job_description: "Developing RESTful APIs and optimizing server performance.",
     application_url: "https://creativesolutions.com/careers/backend-developer",
@@ -160,7 +160,7 @@ job_applications = [
   {
     position_title: "Data Analyst",
     date_applied: "2024-07-05",
-    status: 1,
+    status: :submitted,
     notes: "Excited to work with their data-driven team.",
     job_description: "Analyzing complex datasets to provide actionable insights.",
     application_url: "https://futuredesigns.com/jobs/data-analyst",
@@ -170,7 +170,7 @@ job_applications = [
   {
     position_title: "Full-Stack Engineer",
     date_applied: "2024-10-10",
-    status: 1,
+    status: :submitted,
     notes: "Great team, excited about the potential role!",
     job_description: "Developing and maintaining both client-side and server-side applications.",
     application_url: "https://techinnovators.com/careers/full-stack-engineer",

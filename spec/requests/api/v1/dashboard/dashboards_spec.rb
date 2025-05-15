@@ -19,7 +19,7 @@ RSpec.describe "DashboardsController", type: :request do
   let(:job_application1_params) { {
     position_title: "Jr. CTO",
     date_applied: "2024-10-31",
-    status: 1,
+    status: :submitted,
     notes: "Fingers crossed!",
     job_description: "Looking for Turing grad/jr dev to be CTO",
     application_url: "www.example1.com",
@@ -29,7 +29,7 @@ RSpec.describe "DashboardsController", type: :request do
   let(:job_application2_params) { {
     position_title: "Frontend Developer",
     date_applied: "2024-11-01",
-    status: 0,
+    status: :submitted,
     notes: "Excited about this opportunity!",
     job_description: "Frontend Developer role with React expertise",
     application_url: "www.frontend.com",

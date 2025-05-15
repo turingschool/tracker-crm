@@ -14,7 +14,7 @@ RSpec.describe "Job Application #show", type: :request do
       @google_application = JobApplication.create!(
         position_title: "Crank Operator",
         date_applied: "2024-10-31",
-        status: 1,
+        status: :submitted,
         notes: "Not sure im familiar with the tech-stack",
         job_description: "You turn the big crank that powers google",
         application_url: "www.example.com",
@@ -25,7 +25,7 @@ RSpec.describe "Job Application #show", type: :request do
       @facebook_application = JobApplication.create!(
         position_title: "Smiler",
         date_applied: "2024-10-31",
-        status: 1,
+        status: :submitted,
         notes: "Visit dentist before interview!!!",
         job_description: "Raise the facility smile rates.",
         application_url: "www.example.com/secret_param",
@@ -36,7 +36,7 @@ RSpec.describe "Job Application #show", type: :request do
       @google_application = JobApplication.create!(
         position_title: "Hallway Enrichment",
         date_applied: "2024-10-31",
-        status: 1,
+        status: :submitted,
         job_description: "Make our hallways look fresh and clean",
         application_url: "www.example.com/super_secret_param",
         company_id: @amazon.id,
@@ -118,7 +118,7 @@ RSpec.describe "Job Application #show", type: :request do
         user_2_application = JobApplication.create!(
           position_title: "Crank Operator",
           date_applied: "2024-10-31",
-          status: 1,
+          status: :submitted,
           notes: "Not sure im familiar with the tech-stack",
           job_description: "You turn the big crank that powers google",
           application_url: "www.example.com",
