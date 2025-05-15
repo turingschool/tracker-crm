@@ -41,7 +41,7 @@ RSpec.describe JobApplicationPolicy, type: :policy do
 
   let(:job_app_other_user) { JobApplication.create!(
     position_title: "Backend Developer", date_applied: "2024-08-20",
-    status: 2, notes: "Had a technical interview, awaiting decision.",
+    status: :interviewing, notes: "Had a technical interview, awaiting decision.",
     job_description: "Developing RESTful APIs and optimizing server performance.",
     application_url: "https://creativesolutions.com/careers/backend-developer",
     company_id: company_3.id, user_id: other_user.id) }
