@@ -81,7 +81,7 @@ RSpec.describe "Job Application #show", type: :request do
         expect(jobApp[:data][:id]).to eq(@facebook_application.id.to_s)
         expect(jobApp[:data][:attributes][:position_title]).to eq(@facebook_application[:position_title])
         expect(jobApp[:data][:attributes][:date_applied]).to eq(@facebook_application[:date_applied].to_s)
-        expect(jobApp[:data][:attributes][:status]).to eq(@facebook_application[:status])
+        expect(jobApp[:data][:attributes][:status]).to eq(JobApplication.statuses[@facebook_application.status])
         expect(jobApp[:data][:attributes][:notes]).to eq(@facebook_application[:notes])
         expect(jobApp[:data][:attributes][:job_description]).to eq(@facebook_application[:job_description])
         expect(jobApp[:data][:attributes][:application_url]).to eq(@facebook_application[:application_url])

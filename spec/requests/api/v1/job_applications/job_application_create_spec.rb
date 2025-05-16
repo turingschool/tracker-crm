@@ -68,7 +68,7 @@ RSpec.describe "Job Application #create & #index", type: :request do
       expect(jobApp[:data][:id]).to eq(JobApplication.last.id.to_s)
       expect(jobApp[:data][:attributes][:position_title]).to eq(job_application_params[:position_title])
       expect(jobApp[:data][:attributes][:date_applied]).to eq(job_application_params[:date_applied])
-      expect(jobApp[:data][:attributes][:status]).to eq(job_application_params[:status].to_s)
+      expect(jobApp[:data][:attributes][:status]).to eq(JobApplication.statuses[job_application_params[:status]])
       expect(jobApp[:data][:attributes][:notes]).to eq(job_application_params[:notes])
       expect(jobApp[:data][:attributes][:job_description]).to eq(job_application_params[:job_description])
       expect(jobApp[:data][:attributes][:application_url]).to eq(job_application_params[:application_url])
@@ -141,7 +141,7 @@ RSpec.describe "Job Application #create & #index", type: :request do
       first_application = job_applications[:data].first[:attributes]
       expect(first_application[:position_title]).to eq(@job_application1.position_title)
       expect(Date.parse(first_application[:date_applied])).to eq(@job_application1.date_applied) # Parse response to Date
-      expect(first_application[:status]).to eq(@job_application1.status)
+      expect(first_application[:status]).to eq(JobApplication.statuses[@job_application1.status])
       expect(first_application[:notes]).to eq(@job_application1.notes)
       expect(first_application[:job_description]).to eq(@job_application1.job_description)
       expect(first_application[:application_url]).to eq(@job_application1.application_url)
