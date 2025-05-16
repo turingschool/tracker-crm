@@ -67,7 +67,7 @@ describe "Contacts Controller", type: :request do
 
       it "returns a 401 and an error message if the user tries to delete another user's contact" do
         @user2 = User.create!(name: "Jane", email: "jane@example.com", password: "Password")
-        @contact2 = Contact.create!(first_name: "Jane", last_name: "Doe", user_id: @user2.id)
+        @contact2 = create(:contact, user_id: @user2.id)
 
         delete api_v1_user_contact_path(@user.id, @contact2.id), headers: { "Authorization" => "Bearer #{@token}" }, as: :json
 
