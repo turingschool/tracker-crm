@@ -4,6 +4,7 @@ class JobApplicationSerializer
   attributes :position_title,
              :date_applied,
              :status,
+             :status_text,
              :notes, 
              :job_description, 
              :application_url, 
@@ -22,6 +23,14 @@ class JobApplicationSerializer
 
   attribute :contacts do |job_application|
     contacts_for(job_application)
+  end
+
+  attribute :status do |job_application|
+    job_application.status_before_type_cast
+  end
+
+  attribute :status_text do |job_application|
+    job_application.status
   end
 
   def self.contacts_for(job_application)

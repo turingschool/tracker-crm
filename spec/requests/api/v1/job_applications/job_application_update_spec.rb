@@ -14,7 +14,7 @@ RSpec.describe "Job Application #update", type: :request do
     @job_application1 = JobApplication.create!(
       position_title: "Jr. CTO",
       date_applied: "2024-10-31",
-      status: 1,
+      status: :submitted,
       notes: "Fingers crossed!",
       job_description: "Looking for Turing grad/jr dev to be CTO",
       application_url: "www.example1.com",
@@ -25,7 +25,7 @@ RSpec.describe "Job Application #update", type: :request do
     @job_application2 = JobApplication.create!(
       position_title: "Frontend Developer",
       date_applied: "2024-11-01",
-      status: 0,
+      status: :submitted,
       notes: "Excited about this opportunity!",
       job_description: "Frontend Developer role with React expertise",
       application_url: "www.frontend.com",
@@ -41,7 +41,7 @@ RSpec.describe "Job Application #update", type: :request do
     {
       position_title: "Sr. CTO",
       date_applied: "2024-10-31",
-      status: 3,
+      status: :offer,
       notes: "Fingers crossed! With extra notes",
       job_description: "Looking for Turing grad/jr dev to be CTO, extended details",
       application_url: "www.example.com",
@@ -51,7 +51,7 @@ RSpec.describe "Job Application #update", type: :request do
 
   let(:basic_update) do
     {
-      status: 3
+      status: :offer
     }
   end
 
@@ -71,7 +71,7 @@ RSpec.describe "Job Application #update", type: :request do
       expect(job_app[:data][:id].to_i).to eq(@job_application1.id)
       expect(job_app[:data][:attributes][:position_title]).to eq(major_update[:position_title])
       expect(job_app[:data][:attributes][:date_applied]).to eq(major_update[:date_applied])
-      expect(job_app[:data][:attributes][:status]).to eq(major_update[:status])
+      expect(job_app[:data][:attributes][:status]).to eq(JobApplication.statuses[major_update[:status]])
       expect(job_app[:data][:attributes][:notes]).to eq(major_update[:notes])
       expect(job_app[:data][:attributes][:job_description]).to eq(major_update[:job_description])
       expect(job_app[:data][:attributes][:application_url]).to eq(major_update[:application_url])
@@ -97,7 +97,7 @@ RSpec.describe "Job Application #update", type: :request do
       expect(job_app[:data][:id].to_i).to eq(@job_application1.id)
       expect(job_app[:data][:attributes][:position_title]).to eq(@job_application1.position_title)
       expect(job_app[:data][:attributes][:date_applied]).to eq(@job_application1.date_applied.strftime('%Y-%m-%d'))
-      expect(job_app[:data][:attributes][:status]).to eq(basic_update[:status])
+      expect(job_app[:data][:attributes][:status]).to eq(JobApplication.statuses[basic_update[:status]])
       expect(job_app[:data][:attributes][:notes]).to eq(@job_application1.notes)
       expect(job_app[:data][:attributes][:job_description]).to eq(@job_application1.job_description)
       expect(job_app[:data][:attributes][:application_url]).to eq(@job_application1.application_url)

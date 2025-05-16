@@ -38,7 +38,7 @@ RSpec.describe Company, type: :model do
       @job_application = JobApplication.create!(
         position_title: "Jr. CTO",
         date_applied: "2024-10-31",
-        status: 1,
+        status: :submitted,
         notes: "Fingers crossed!",
         job_description: "Looking for Turing grad/jr dev to be CTO",
         application_url: "www.example.com",
