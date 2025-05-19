@@ -16,8 +16,11 @@ Rails.application.routes.draw do
             collection do
               get :fetch_or_create
             end
-          end
 
+            member do 
+              post :answer_feedback
+            end
+          end
         end
 
         resources :companies, only: [:create, :index, :show, :update, :destroy] do
