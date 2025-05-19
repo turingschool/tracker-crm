@@ -13,7 +13,7 @@ describe "Companies API", type: :request do
       @job_application = JobApplication.create!(
         position_title: "Software Engineer",
         date_applied: "2024-10-31",
-        status: 1,
+        status: :submitted,
         notes: "Excited about this opportunity",
         job_description: "Develop cutting-edge software solutions",
         application_url: "www.example.com/job",

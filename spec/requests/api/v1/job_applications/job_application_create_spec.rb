@@ -15,7 +15,7 @@ RSpec.describe "Job Application #create & #index", type: :request do
     @job_application1 = JobApplication.create!(
       position_title: "Jr. CTO",
       date_applied: "2024-10-31",
-      status: 1,
+      status: :submitted,
       notes: "Fingers crossed!",
       job_description: "Looking for Turing grad/jr dev to be CTO",
       application_url: "www.example1.com",
@@ -27,7 +27,7 @@ RSpec.describe "Job Application #create & #index", type: :request do
     @job_application2 = JobApplication.create!(
       position_title: "Frontend Developer",
       date_applied: "2024-11-01",
-      status: 0,
+      status: :submitted,
       notes: "Excited about this opportunity!",
       job_description: "Frontend Developer role with React expertise",
       application_url: "www.frontend.com",
@@ -43,7 +43,7 @@ RSpec.describe "Job Application #create & #index", type: :request do
     {
       position_title: "Jr. CTO",
       date_applied: "2024-10-31",
-      status: 1,
+      status: :submitted,
       notes: "Fingers crossed!",
       job_description: "Looking for Turing grad/jr dev to be CTO",
       application_url: "www.example.com",
@@ -68,7 +68,7 @@ RSpec.describe "Job Application #create & #index", type: :request do
       expect(jobApp[:data][:id]).to eq(JobApplication.last.id.to_s)
       expect(jobApp[:data][:attributes][:position_title]).to eq(job_application_params[:position_title])
       expect(jobApp[:data][:attributes][:date_applied]).to eq(job_application_params[:date_applied])
-      expect(jobApp[:data][:attributes][:status]).to eq(job_application_params[:status])
+      expect(jobApp[:data][:attributes][:status]).to eq(JobApplication.statuses[job_application_params[:status]])
       expect(jobApp[:data][:attributes][:notes]).to eq(job_application_params[:notes])
       expect(jobApp[:data][:attributes][:job_description]).to eq(job_application_params[:job_description])
       expect(jobApp[:data][:attributes][:application_url]).to eq(job_application_params[:application_url])
@@ -83,7 +83,7 @@ RSpec.describe "Job Application #create & #index", type: :request do
       post "/api/v1/users/#{@user.id}/job_applications",
         params: {
           date_applied: "2024-10-31",
-          status: 1,
+          status: :submitted,
           job_description: "Looking for Turing grad/jr dev to be CTO",
           application_url: "www.example.com",
           company_id: 1
@@ -105,7 +105,7 @@ RSpec.describe "Job Application #create & #index", type: :request do
         params: {
           position_title: "",
           date_applied: "2024-10-31",
-          status: 1,
+          status: :submitted,
           notes: "Fingers crossed!",
           job_description: "Looking for Turing grad/jr dev to be CTO",
           application_url: "www.example.com",
@@ -141,7 +141,7 @@ RSpec.describe "Job Application #create & #index", type: :request do
       first_application = job_applications[:data].first[:attributes]
       expect(first_application[:position_title]).to eq(@job_application1.position_title)
       expect(Date.parse(first_application[:date_applied])).to eq(@job_application1.date_applied) # Parse response to Date
-      expect(first_application[:status]).to eq(@job_application1.status)
+      expect(first_application[:status]).to eq(JobApplication.statuses[@job_application1.status])
       expect(first_application[:notes]).to eq(@job_application1.notes)
       expect(first_application[:job_description]).to eq(@job_application1.job_description)
       expect(first_application[:application_url]).to eq(@job_application1.application_url)

@@ -1,6 +1,13 @@
 require "rails_helper"
 
 RSpec.describe JobApplication, type: :model do
+  describe "associations" do
+    it { should belong_to(:company) }
+    it { should belong_to(:user) }
+    it { should belong_to(:contact).optional }
+    it { should have_many(:interview_questions)}
+  end
+
   describe "validations" do
     it { should validate_presence_of(:position_title) }
     it { should validate_presence_of(:date_applied) }
@@ -30,7 +37,7 @@ RSpec.describe JobApplication, type: :model do
       JobApplication.create!(
         position_title: "Jr. CTO",
         date_applied: "2024-10-31",
-        status: 1,
+        status: :submitted,
         notes: "Fingers crossed!",
         job_description: "Looking for Turing grad/jr dev to be CTO",
         application_url: "www.example.com",
@@ -43,7 +50,7 @@ RSpec.describe JobApplication, type: :model do
       job_application_without_contact = JobApplication.create!(
         position_title: "Jr. CTO",
         date_applied: "2024-10-31",
-        status: 1,
+        status: :submitted,
         notes: "Fingers crossed!",
         job_description: "Looking for Turing grad/jr dev to be CTO",
         application_url: "www.different-example.com",
@@ -66,7 +73,7 @@ RSpec.describe JobApplication, type: :model do
       job_application_with_contact = JobApplication.create!(
         position_title: "Jr. CTO",
         date_applied: "2024-10-31",
-        status: 1,
+        status: :submitted,
         notes: "Fingers crossed!",
         job_description: "Looking for Turing grad/jr dev to be CTO",
         application_url: "www.example-with-contact.com",
@@ -77,12 +84,51 @@ RSpec.describe JobApplication, type: :model do
 
       expect(job_application_with_contact).to be_valid
     end
-  end
 
-  describe "associations" do
-    it { should belong_to(:company) }
-    it { should belong_to(:user) }
-    it { should belong_to(:contact).optional }
-    it { should have_many(:interview_questions)}
+    context 'when status is NOT "not_yet_applied"' do
+      it 'requires date_applied' do
+        contact = Contact.create!(
+        first_name: "John",
+        last_name: "Doe",
+        email: "john.doe@example.com",
+        user_id: subject.user_id
+      )
+
+      job_application = JobApplication.new(
+        position_title: "Full Stack Engineer",
+        status: :submitted,
+        job_description: "Wears many hats",
+        application_url: "http://example.com",
+        company_id: subject.company_id,
+        user_id: subject.user_id,
+        contact_id: contact.id
+      )
+
+        expect(job_application).to be_invalid
+        expect(job_application.errors[:date_applied]).to eq(["can't be blank"])
+      end
+    end
+
+    context 'when status is "not yet applied"' do 
+      it 'does not require date_applied' do
+        contact = Contact.create!(
+        first_name: "John",
+        last_name: "Doe",
+        email: "john.doe@example.com",
+        user_id: subject.user_id
+      )
+      job_application = JobApplication.new(
+        position_title: "Full Stack Engineer",
+        status: :not_yet_applied,
+        job_description: "Wears many hats",
+        application_url: "http://example.com",
+        company_id: subject.company_id,
+        user_id: subject.user_id,
+        contact_id: contact.id
+      )
+      
+      expect(job_application).to be_valid
+      end
+    end
   end
 end
