@@ -1,7 +1,7 @@
 class Api::V1::AnswerFeedbackController < ApplicationController
   def create
     result = AnswerFeedbackService.call(
-      interview_question_id: params[:interview_question_id],
+      interview_question_id: params[:id],
       answer: params[:answer]
     )
 
