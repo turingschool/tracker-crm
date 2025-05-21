@@ -10,17 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_05_21_194923) do
+ActiveRecord::Schema[7.1].define(version: 2025_05_21_195817) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "answer_feedbacks", force: :cascade do |t|
-    t.bigint "interview_questions_id", null: false
+    t.bigint "interview_question_id", null: false
     t.string "answer"
     t.string "feedback"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["interview_questions_id"], name: "index_answer_feedbacks_on_interview_questions_id"
+    t.index ["interview_question_id"], name: "index_answer_feedbacks_on_interview_question_id"
   end
 
   create_table "companies", force: :cascade do |t|
@@ -103,7 +103,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_21_194923) do
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
-  add_foreign_key "answer_feedbacks", "interview_questions", column: "interview_questions_id"
+  add_foreign_key "answer_feedbacks", "interview_questions"
   add_foreign_key "companies", "users"
   add_foreign_key "contacts", "companies"
   add_foreign_key "contacts", "users"
