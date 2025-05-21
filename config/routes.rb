@@ -16,6 +16,7 @@ Rails.application.routes.draw do
             collection do
               get :fetch_or_create
             end
+            resources :answer_feedback, only: [:create, :index]
           end
 
         end
