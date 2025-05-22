@@ -18,7 +18,7 @@ Rails.application.routes.draw do
             end
 
             member do 
-              post :answer_feedback
+              post :answer_feedback, to: "answer_feedback#create"
             end
           end
         end
