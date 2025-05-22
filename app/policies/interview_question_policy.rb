@@ -7,6 +7,10 @@ class InterviewQuestionPolicy < ApplicationPolicy
     record.job_application.user_id == user.id
   end
 
+  def answer_feedback?
+    user.present? && record.job_application.user_id == user.id
+  end
+
   class Scope < Scope
     def resolve
       if admin?
