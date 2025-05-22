@@ -14,7 +14,7 @@ class AnswerFeedbackService
 
     return { success: false, error: "Interview question not found." } unless interview_question
 
-    prompt = build_feedback_prompt(@answer)
+    prompt = build_feedback_prompt(@answer, interview_question.question)
 
     openai_response = OpenaiGateway.new.chat_with_gpt(prompt)
 
@@ -35,11 +35,14 @@ class AnswerFeedbackService
 
   private
 
-  def build_feedback_prompt(answer)
+  def build_feedback_prompt(answer, question)
     <<~PROMPT
       You are a helpful and honest interview coach.
       Give clear, actionable feedback on this interview answer, focusing on strengths, weaknesses, and suggestions for improvement.
-
+    
+      Interview Question:
+      "#{question}"
+      
       Answer:
       "#{answer}"
 
