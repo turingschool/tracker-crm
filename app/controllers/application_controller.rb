@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::API
   include Pundit::Authorization
   after_action :verify_authorized
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   
   def current_user
@@ -8,6 +9,10 @@ class ApplicationController < ActionController::API
   end
 
   private
+
+  def user_not_authorized
+    render json: { error: "Not authorized" }, status: :forbidden
+  end
 
   def authenticate_user
     token = request.headers['Authorization']&.split(' ')&.last
