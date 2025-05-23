@@ -76,7 +76,7 @@ RSpec.describe "Job Application #create & #index", type: :request do
     end
 
     it "Handles OpenAI API failures gracefully" do
-      allow_any_instance_of(OpenaiGateway).to receive(:generate_interview_questions).and_return({
+      allow_any_instance_of(OpenaiGateway).to receive(:chat_with_gpt).and_return({
       success: false,
       error: "API error"
       })
