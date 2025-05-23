@@ -1,8 +1,9 @@
 class Api::V1::AnswerFeedbackController < ApplicationController
+  
   def create
     interview_question = InterviewQuestion.find(params[:id])
     authorize interview_question, :answer_feedback?
-    
+
     result = AnswerFeedbackService.call(
       interview_question_id: params[:id],
       answer: params[:answer]
