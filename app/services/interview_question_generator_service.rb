@@ -18,15 +18,17 @@ class InterviewQuestionGeneratorService
     if ai_response[:success]
       raw_content = ai_response[:data]
       cleaned_content = raw_content.match(/\[.*\]/m)&.to_s
-
+    
       if cleaned_content
         parsed_questions = JSON.parse(cleaned_content)
+
         created_questions = parsed_questions.map do |question_text|
           InterviewQuestion.create!(
             job_application_id: job_application.id, 
             question: question_text
           )
         end
+      
         {
           success: true, 
           data: InterviewQuestionSerializer.format_questions(created_questions, ai_response[:id])
