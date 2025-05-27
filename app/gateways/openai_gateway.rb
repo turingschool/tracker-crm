@@ -15,6 +15,10 @@ class OpenaiGateway
       api_response = JSON.parse(response.body, symbolize_names: true)
       raw_content = api_response.dig(:choices, 0, :message, :content)
 
+      if raw_content.nil?
+        return { success: false, error: "Unexpected response format from OpenAI." }
+      end
+      
       {
         success: true,
         id: api_response[:id],
