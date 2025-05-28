@@ -6,9 +6,9 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4o-mini","messages":[{"role":"user","content":"Please
-        generate 10 practice interview questions based on the following job description:\n\n\"We''re
-        hiring a backend dev skilled in Ruby on Rails and PostgreSQL.\"\n\nONLY return
-        a JSON array of strings with no extra formatting.\n"}],"max_tokens":300,"temperature":0.7}'
+        generate 10 practice interview questions based on the following job description:\n\n\"Frontend
+        Developer role with React and Cypress expertise\"\n\nONLY return a JSON array
+        of strings with no extra formatting.\n"}],"max_tokens":300,"temperature":0.7}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 28 May 2025 21:23:45 GMT
+      - Wed, 28 May 2025 21:48:49 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,11 +38,11 @@ http_interactions:
       Openai-Organization:
       - turing-school-hmcjza
       Openai-Processing-Ms:
-      - '2213'
+      - '2657'
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '2217'
+      - '2660'
       X-Ratelimit-Limit-Requests:
       - '10000'
       X-Ratelimit-Limit-Tokens:
@@ -50,34 +50,69 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '9999'
       X-Ratelimit-Remaining-Tokens:
-      - '199942'
+      - '199945'
       X-Ratelimit-Reset-Requests:
       - 8.64s
       X-Ratelimit-Reset-Tokens:
-      - 17ms
+      - 16ms
       X-Request-Id:
-      - req_69fc9fcd277d63c7a6435f0732715b65
+      - req_02dc5302d60ffb7a81ce402d6002c383
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - __cf_bm=ay.w_0fMo1JG624c8P68Dt6mC1zQ8l6QxlZpHiyzQUA-1748467425-1.0.1.1-ki_VTO5SEd_ybyozBtD7IMmMuEVosA_fBSKdlqkCfkEj8p0mRjZMQFoxj5OeOZ2Ndux3W81IY_L35t5K_zZmjwkWqGQdp_HaE3apQpt5PyE;
-        path=/; expires=Wed, 28-May-25 21:53:45 GMT; domain=.api.openai.com; HttpOnly;
+      - __cf_bm=IRT0g7BJ9oNtG9JuUy12cARysIJ2Rtpew5VS2v1EVsg-1748468929-1.0.1.1-2aUusq1SZRHxzUlsgGnjP5mODNJmxXWBX7F2yZcvwCc6sWlWYOZVX3JyGsNiy1xWCcelDS5o6gYqVKrAsnqgiRE7Zh4PJV66rr727JjpEbo;
+        path=/; expires=Wed, 28-May-25 22:18:49 GMT; domain=.api.openai.com; HttpOnly;
         Secure; SameSite=None
-      - _cfuvid=R027W4o4qSBEM9d4GPRC6wrlIlNFqzTBbVXItpj0ctY-1748467425906-0.0.1.1-604800000;
+      - _cfuvid=vKRuNNlgtJKw2S1rWfwEJ3PDB87XWjIp_FjY4JRtxzQ-1748468929934-0.0.1.1-604800000;
         path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
       X-Content-Type-Options:
       - nosniff
       Server:
       - cloudflare
       Cf-Ray:
-      - 9470d0959af3bfe2-ATL
+      - 9470f54a2baa129c-CLT
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1CY0lYUEVCbzNROER1WURUUXVEbEZ5N3J5dUZiYyIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc0ODQ2NzQyMywKICAibW9kZWwiOiAiZ3B0LTRvLW1pbmktMjAyNC0wNy0xOCIsCiAgImNob2ljZXMiOiBbCiAgICB7CiAgICAgICJpbmRleCI6IDAsCiAgICAgICJtZXNzYWdlIjogewogICAgICAgICJyb2xlIjogImFzc2lzdGFudCIsCiAgICAgICAgImNvbnRlbnQiOiAiW1xuICAgIFwiQ2FuIHlvdSBleHBsYWluIHRoZSBNVkMgYXJjaGl0ZWN0dXJlIGFuZCBob3cgaXQgaXMgaW1wbGVtZW50ZWQgaW4gUnVieSBvbiBSYWlscz9cIixcbiAgICBcIldoYXQgYXJlIHNvbWUgY29tbW9uIHBlcmZvcm1hbmNlIG9wdGltaXphdGlvbiB0ZWNobmlxdWVzIHlvdSB1c2Ugd2hlbiB3b3JraW5nIHdpdGggUG9zdGdyZVNRTD9cIixcbiAgICBcIkhvdyBkbyB5b3UgaGFuZGxlIGRhdGFiYXNlIG1pZ3JhdGlvbnMgaW4gYSBSdWJ5IG9uIFJhaWxzIGFwcGxpY2F0aW9uP1wiLFxuICAgIFwiQ2FuIHlvdSBkZXNjcmliZSB5b3VyIGV4cGVyaWVuY2Ugd2l0aCBBY3RpdmVSZWNvcmQgYW5kIGl0cyByb2xlIGluIFJ1Ynkgb24gUmFpbHM/XCIsXG4gICAgXCJXaGF0IGFyZSBzb21lIG1ldGhvZHMgeW91J3ZlIHVzZWQgdG8gZW5zdXJlIHRoZSBzZWN1cml0eSBvZiBhIFJhaWxzIGFwcGxpY2F0aW9uP1wiLFxuICAgIFwiSG93IGRvIHlvdSBtYW5hZ2UgZW52aXJvbm1lbnQgdmFyaWFibGVzIGFuZCBjb25maWd1cmF0aW9uIHNldHRpbmdzIGluIGEgUmFpbHMgYXBwP1wiLFxuICAgIFwiQ2FuIHlvdSBwcm92aWRlIGFuIGV4YW1wbGUgb2YgaG93IHlvdeKAmXZlIGltcGxlbWVudGVkIFJFU1RmdWwgQVBJcyBpbiBSdWJ5IG9uIFJhaWxzP1wiLFxuICAgIFwiV2hhdCB0b29scyBvciB0ZWNobmlxdWVzIGRvIHlvdSB1c2UgZm9yIGRlYnVnZ2luZyBhbmQgdHJvdWJsZXNob290aW5nIGluIGEgUnVieSBvbiBSYWlscyBhcHBsaWNhdGlvbj9cIixcbiAgICBcIkhvdyBkbyB5b3UgaGFuZGxlIGJhY2tncm91bmQgam9icyBpbiBhIFJ1Ynkgb24gUmFpbHMgYXBwbGljYXRpb24/XCIsXG4gICAgXCJXaGF0IHN0cmF0ZWdpZXMgZG8geW91IHVzZSBmb3IgdGVzdGluZyB5b3VyIFJ1Ynkgb24gUmFpbHMgYXBwbGljYXRpb25zLCBwYXJ0aWN1bGFybHkgZm9jdXNpbmcgb24gdGhlIGJhY2tlbmQ/XCJcbl0iLAogICAgICAgICJyZWZ1c2FsIjogbnVsbCwKICAgICAgICAiYW5ub3RhdGlvbnMiOiBbXQogICAgICB9LAogICAgICAibG9ncHJvYnMiOiBudWxsLAogICAgICAiZmluaXNoX3JlYXNvbiI6ICJzdG9wIgogICAgfQogIF0sCiAgInVzYWdlIjogewogICAgInByb21wdF90b2tlbnMiOiA0OCwKICAgICJjb21wbGV0aW9uX3Rva2VucyI6IDE3OSwKICAgICJ0b3RhbF90b2tlbnMiOiAyMjcsCiAgICAicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAiY2FjaGVkX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwCiAgICB9LAogICAgImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAsCiAgICAgICJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAsCiAgICAgICJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAKICAgIH0KICB9LAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN5c3RlbV9maW5nZXJwcmludCI6ICJmcF8zNGE1NGFlOTNjIgp9Cg==
-  recorded_at: Wed, 28 May 2025 21:23:45 GMT
+      string: |
+        {
+          "id": "chatcmpl-BcIvfWH7cyFA30rVYxANv43e7dY0u",
+          "object": "chat.completion",
+          "created": 1748468927,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "[\n    \"Can you explain the key features of React and how they improve the development of user interfaces?\",\n    \"What is JSX, and how does it relate to React components?\",\n    \"How do you manage state in a React application?\",\n    \"Can you describe the lifecycle methods of a React component?\",\n    \"What is the purpose of props in React, and how do you use them?\",\n    \"How do you handle forms in React, and what are the best practices for managing form state?\",\n    \"What is Cypress, and how does it differ from other testing frameworks?\",\n    \"Can you walk us through the process of writing a test in Cypress for a React component?\",\n    \"What are some strategies for organizing and structuring a React application?\",\n    \"How do you optimize the performance of a React application?\"\n]",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 43,
+            "completion_tokens": 165,
+            "total_tokens": 208,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_54eb4bd693"
+        }
+  recorded_at: Wed, 28 May 2025 21:48:49 GMT
 recorded_with: VCR 6.3.1
