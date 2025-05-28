@@ -26,7 +26,7 @@ Rails.application.routes.draw do
 
         resources :contacts, only: [:index, :create, :show, :destroy, :update] do
           collection do
-            post :import, to: 'import_contacts#import'
+            post :import, to: 'import_contacts#create'
           end
         end
         resource :dashboard, only: :show

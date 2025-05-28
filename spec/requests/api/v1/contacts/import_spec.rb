@@ -5,7 +5,7 @@ describe "ImportContactsController", type: :request do
     before(:each) do
       @user = create(:user)
       user_params = { email: @user.email, password: @user.password }
-      post apv_v1_sessions_path, params: user_params, as: :json
+      post api_v1_sessions_path, params: user_params, as: :json
       @token = JSON.parse(response.body)["token"]
     end
 
@@ -37,8 +37,15 @@ describe "ImportContactsController", type: :request do
       expect(response).to have_http_status(:created)
       json = JSON.parse(response.body, symbolize_names: true)
 
+      puts JSON.pretty_generate(json)
+
+      puts "JSON keys: #{json.keys}"
+
+      expect(json[:imported]).to be_a(Hash)
       expect(json[:imported_count]).to eq(2)
-      expect(Contact.last.first_name).to eq("Beverly")
+      expect(json[:failed_count]).to eq(0)
+      expect(json[:imported][:data].length).to eq(2)
+      expect(json[:imported][:data][0][:attributes][:first_name]).to eq("Jacob")
     end
 
     it "imports contacts successfully with only required fields, first name and last name, and returns a 201" do
