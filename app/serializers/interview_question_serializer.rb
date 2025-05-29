@@ -10,6 +10,7 @@ class InterviewQuestionSerializer
           index: index, 
           type: "interview_question",
             attributes: {
+              id: question.id,
               question: question.respond_to?(:question) ? question.question : question
             }
         }
