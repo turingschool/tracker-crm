@@ -2,7 +2,6 @@ class ApplicationController < ActionController::API
   include Pundit::Authorization
   after_action :verify_authorized
 
-  
   def current_user
     @current_user ||= self.authenticate_user
   end
@@ -20,11 +19,21 @@ class ApplicationController < ActionController::API
         @current_user = nil
       end
     end
-    render json: { error: 'Not authenticated' }, status: :unauthorized unless @current_user
-    return @current_user
+
+    unless @current_user
+      render json: { error: 'Not authenticated' }, status: :unauthorized
+      return nil
+    end
+
+    @current_user
   end
 
   def decoded_token(token)
-    JWT.decode(token, Rails.application.secret_key_base, true, { algorithm: 'HS256' })[0].symbolize_keys
+    JWT.decode(
+      token,
+      Rails.application.secret_key_base,
+      true,
+      { algorithm: 'HS256' }
+    )[0].symbolize_keys
   end
 end

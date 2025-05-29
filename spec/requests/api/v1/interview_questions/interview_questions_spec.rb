@@ -23,7 +23,7 @@ RSpec.describe "Job Application #create & #index", type: :request do
 
   context "#Happy path" do 
     it "Creates and returns a list of 10 AI-Generated interview questions if none already exist" do 
-      VCR.use_cassette("generate_ai_questions") do
+      VCR.use_cassette("interview_question_generator_success") do
         get "/api/v1/users/#{@user.id}/job_applications/#{@job_application1.id}/interview_questions/fetch_or_create",
         headers: { "Authorization" => "Bearer #{@token}" }
 
@@ -76,7 +76,7 @@ RSpec.describe "Job Application #create & #index", type: :request do
     end
 
     it "Handles OpenAI API failures gracefully" do
-      allow_any_instance_of(OpenaiGateway).to receive(:generate_interview_questions).and_return({
+      allow_any_instance_of(OpenaiGateway).to receive(:chat_with_gpt).and_return({
       success: false,
       error: "API error"
       })

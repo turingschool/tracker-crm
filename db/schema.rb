@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_05_21_195817) do
+ActiveRecord::Schema[7.1].define(version: 2025_05_19_210343) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "answer_feedbacks", force: :cascade do |t|
     t.bigint "interview_question_id", null: false
-    t.string "answer"
-    t.string "feedback"
+    t.text "answer"
+    t.text "feedback"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["interview_question_id"], name: "index_answer_feedbacks_on_interview_question_id"

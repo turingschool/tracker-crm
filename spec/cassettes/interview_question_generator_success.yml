@@ -6,9 +6,9 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4o-mini","messages":[{"role":"user","content":"Please
-        generate 10 practice interview questions based on the following job description:
-        Software Engineer position.\n    ONLY return a JSON array of strings containing
-        the questions, with no additional formatting or object keys."}],"max_tokens":300,"temperature":0.7}'
+        generate 10 practice interview questions based on the following job description:\n\n\"Frontend
+        Developer role with React and Cypress expertise\"\n\nONLY return a JSON array
+        of strings with no extra formatting.\n"}],"max_tokens":300,"temperature":0.7}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 26 Feb 2025 22:14:37 GMT
+      - Wed, 28 May 2025 21:48:49 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,9 +38,11 @@ http_interactions:
       Openai-Organization:
       - turing-school-hmcjza
       Openai-Processing-Ms:
-      - '1694'
+      - '2657'
       Openai-Version:
       - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '2660'
       X-Ratelimit-Limit-Requests:
       - '10000'
       X-Ratelimit-Limit-Tokens:
@@ -48,55 +50,56 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '9999'
       X-Ratelimit-Remaining-Tokens:
-      - '199642'
+      - '199945'
       X-Ratelimit-Reset-Requests:
       - 8.64s
       X-Ratelimit-Reset-Tokens:
-      - 107ms
+      - 16ms
       X-Request-Id:
-      - req_f6d65b3a7842453ff21946b4a9451cf4
+      - req_02dc5302d60ffb7a81ce402d6002c383
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - __cf_bm=cN5uFT1vxtpsKwo64HEVRQoa9a1r3j7oirSzS9i.oQ0-1740608077-1.0.1.1-cW444nkyZbKpQYM6eFzvxqwORz_dqPcqF7g0HBBc7o4YY8TZttjEhhoftpVfmEQ0m7n6.alpgZcHxU7aHPJwfA;
-        path=/; expires=Wed, 26-Feb-25 22:44:37 GMT; domain=.api.openai.com; HttpOnly;
+      - __cf_bm=IRT0g7BJ9oNtG9JuUy12cARysIJ2Rtpew5VS2v1EVsg-1748468929-1.0.1.1-2aUusq1SZRHxzUlsgGnjP5mODNJmxXWBX7F2yZcvwCc6sWlWYOZVX3JyGsNiy1xWCcelDS5o6gYqVKrAsnqgiRE7Zh4PJV66rr727JjpEbo;
+        path=/; expires=Wed, 28-May-25 22:18:49 GMT; domain=.api.openai.com; HttpOnly;
         Secure; SameSite=None
-      - _cfuvid=CN.i9.dDU00R5D.xbp7p6jWWM_.wr5rQ7656iFwCIV4-1740608077828-0.0.1.1-604800000;
+      - _cfuvid=vKRuNNlgtJKw2S1rWfwEJ3PDB87XWjIp_FjY4JRtxzQ-1748468929934-0.0.1.1-604800000;
         path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
       X-Content-Type-Options:
       - nosniff
       Server:
       - cloudflare
       Cf-Ray:
-      - 918349f7cb2be775-DEN
+      - 9470f54a2baa129c-CLT
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-B5Jxk7U1XZeU7wGh1NBazYUuT2riZ",
+          "id": "chatcmpl-BcIvfWH7cyFA30rVYxANv43e7dY0u",
           "object": "chat.completion",
-          "created": 1740608076,
+          "created": 1748468927,
           "model": "gpt-4o-mini-2024-07-18",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "[\n    \"Can you describe your experience with programming languages such as Java, Python, or C++?\",\n    \"How do you approach debugging a software application?\",\n    \"What software development methodologies are you familiar with, and which do you prefer?\",\n    \"Can you explain the concept of object-oriented programming and how you've applied it in your projects?\",\n    \"Describe a challenging technical problem you faced in a previous project and how you resolved it.\",\n    \"What tools do you use for version control, and why are they important in software development?\",\n    \"How do you ensure the quality and reliability of your code?\",\n    \"Can you discuss your experience with databases and data management in your applications?\",\n    \"What is your process for collaborating with other team members on a software project?\",\n    \"How do you keep up with the latest trends and technologies in software engineering?\"\n]",
-                "refusal": null
+                "content": "[\n    \"Can you explain the key features of React and how they improve the development of user interfaces?\",\n    \"What is JSX, and how does it relate to React components?\",\n    \"How do you manage state in a React application?\",\n    \"Can you describe the lifecycle methods of a React component?\",\n    \"What is the purpose of props in React, and how do you use them?\",\n    \"How do you handle forms in React, and what are the best practices for managing form state?\",\n    \"What is Cypress, and how does it differ from other testing frameworks?\",\n    \"Can you walk us through the process of writing a test in Cypress for a React component?\",\n    \"What are some strategies for organizing and structuring a React application?\",\n    \"How do you optimize the performance of a React application?\"\n]",
+                "refusal": null,
+                "annotations": []
               },
               "logprobs": null,
               "finish_reason": "stop"
             }
           ],
           "usage": {
-            "prompt_tokens": 45,
-            "completion_tokens": 174,
-            "total_tokens": 219,
+            "prompt_tokens": 43,
+            "completion_tokens": 165,
+            "total_tokens": 208,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -109,7 +112,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_06737a9306"
+          "system_fingerprint": "fp_54eb4bd693"
         }
-  recorded_at: Wed, 26 Feb 2025 22:14:37 GMT
+  recorded_at: Wed, 28 May 2025 21:48:49 GMT
 recorded_with: VCR 6.3.1
