@@ -52,4 +52,25 @@ RSpec.describe OpenaiGateway do
       expect(result[:error]).to eq("Unexpected response format from OpenAI.")
     end
   end
+
+  describe '#transcribe' do
+    it 'should return an audio transcription and a successful response code' do
+      file = StringIO.new
+      response = instance_double(
+        Faraday::Response,
+        status: 200,
+        body: {
+          "text": "demo transcription response"
+        }.to_json
+      )
+
+      allow(Faraday).to receive(:post).and_return(response)
+
+      gateway = OpenaiGateway.new 
+      result = gateway.transcribe(file, temperature: 0.2)
+
+      expect(result[:success]).to eq(true)
+      expect(result[:data]).to eq({text: "demo transcription response"})
+    end
+  end
 end

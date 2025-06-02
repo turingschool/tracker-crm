@@ -30,6 +30,27 @@ class OpenaiGateway
   rescue => error
     { success: false, error: "An error occurred: #{error.message}" }
   end
+
+  def transcribe(file, temperature)
+    response = Faraday.post("https://api.openai.com/v1/audio/transcriptions") do |req|
+      req.headers['Content-Type'] = 'application/json'
+      req.headers['Authorization'] = "Bearer #{Rails.application.credentials.dig(:open_ai, :key)}"
+      req.body = {
+        model: "gpt-4o-mini-transcribe",
+        temperature: temperature,
+        file: file
+      }.to_json
+    end
+
+    if response.status == 200
+      api_response = JSON.parse(response.body, symbolize_names: true)
+
+      {
+        success: true,
+        data: api_response
+      }
+    end
+  end
 end
 
   
