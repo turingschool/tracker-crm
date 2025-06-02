@@ -18,11 +18,6 @@ Rails.application.routes.draw do
             end
             resources :answer_feedback, only: [:create, :index]
           end
-
-            member do 
-              post :answer_feedback, to: "answer_feedback#create"
-            end
-          end
         end
 
         resources :companies, only: [:create, :index, :show, :update, :destroy] do
