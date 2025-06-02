@@ -49,6 +49,11 @@ class OpenaiGateway
         success: true,
         data: api_response
       }
+    else
+      {
+        success: false,
+        error: "Failed to fetch response from OpenAI"
+      }
     end
   end
 end

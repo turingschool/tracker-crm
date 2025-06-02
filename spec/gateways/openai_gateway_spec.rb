@@ -72,5 +72,16 @@ RSpec.describe OpenaiGateway do
       expect(result[:success]).to eq(true)
       expect(result[:data]).to eq({text: "demo transcription response"})
     end
+
+    it 'returns a failure hash when OpenAI returns a 500 error' do
+      response = instance_double(Faraday::Response, status: 500, body:"")
+      allow(Faraday).to receive(:post).and_return(response)
+
+      gateway = OpenaiGateway.new
+      result = gateway.transcribe("file", 0.2)
+
+      expect(result[:success]).to eq(false)
+      expect(result[:error]).to eq("Failed to fetch response from OpenAI")
+    end
   end
 end
