@@ -46,7 +46,7 @@ module Api
             failed_count: failed_imports.size
           }, status: :created
         else
-          render json: ErrorSerializer.format_error(ErrorMessage.new("No contacts imported", 422), details: failed_imports), status: :unprocessable_entity
+          render json: ErrorSerializer.format_error(ErrorMessage.new("No contacts imported", 422)), status: :unprocessable_entity
         end
       end
     end

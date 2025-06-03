@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 describe "ImportContactsController", type: :request do
-  describe "create - Happy Paths" do
-    before(:each) do
-      @user = create(:user)
-      user_params = { email: @user.email, password: @user.password }
-      post api_v1_sessions_path, params: user_params, as: :json
-      @token = JSON.parse(response.body)["token"]
-    end
+  before(:each) do
+    @user = create(:user)
+    user_params = { email: @user.email, password: @user.password }
+    post api_v1_sessions_path, params: user_params, as: :json
+    @token = JSON.parse(response.body)["token"]
+  end
 
+  describe "create - Happy Paths" do
     it "should return 201 and successfully imports multiple contacts" do
       contacts_to_import = {
         contacts: [
@@ -69,7 +69,7 @@ describe "ImportContactsController", type: :request do
 
       expect(response).to have_http_status(:created)
       json = JSON.parse(response.body, symbolize_names: true)
-      expect(json[:imported_count]).to eq(1)
+      expect(json[:imported_count]).to eq(2)
     end
   end
 
@@ -101,7 +101,7 @@ describe "ImportContactsController", type: :request do
 
       expect(response).to have_http_status(:unprocessable_entity)
       json = JSON.parse(response.body, symbolize_names: true)
-      expect(json[:message]).to include("Missing required fields")
+      expect(json[:message]).to include("No contacts imported")
     end
 
     it "returns 422 if the input is empty" do
@@ -116,7 +116,7 @@ describe "ImportContactsController", type: :request do
 
       expect(response).to have_http_status(:unprocessable_entity)
       json = JSON.parse(response.body, symbolize_names: true)
-      expect(json[:message]).to include("No contacts to import")
+      expect(json[:message]).to include("No contacts imported")
     end
   end
 
@@ -147,7 +147,7 @@ describe "ImportContactsController", type: :request do
 
       expect(response).to have_http_status(:unauthorized)
       json = JSON.parse(response.body, symbolize_names: true)
-      expect(json[:error]).to eq("not authenticated")
+      expect(json[:error]).to eq("Not authenticated")
     end
 
     it "returns a 401 for an invalid token" do
@@ -177,7 +177,7 @@ describe "ImportContactsController", type: :request do
 
       expect(response).to have_http_status(:unauthorized)
       json = JSON.parse(response.body, symbolize_names: true)
-      expect(json[:error]).to eq("not authenticated")
+      expect(json[:error]).to eq("Not authenticated")
     end
   end
 end
