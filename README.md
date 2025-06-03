@@ -36,7 +36,9 @@
 
 ## Overview
 
-This app is a Rails backend API for a job tracking CRM tool.
+This app is a Rails backend API for a job tracking CRM tool that allows users to save lists of job applications, companies, and professional contacts under a personal account. The frontend repo that consumes this API lives here: https://github.com/turingschool/tracker-crm-fe. 
+
+This project is the product of the efforts of 35+ Turing students working collaboratively across several graduating classes. A full list of contributors can be found at the bottom of this README, along with a list of licenses. 
 
 ## Setup
 
@@ -1818,15 +1820,30 @@ Successful Response:
 - [Github](https://github.com/SmilodonP)
 - [LinkedIn](https://www.linkedin.com/in/karlfallenius)
 
+**Fox, Will**
+
+- [Github](https://github.com/willfox0409)
+- [LinkedIn](https://www.linkedin.com/in/williammacdonaldfox)
+
+**Freyr, Rig**
+
+- [Github](https://github.com/ontruster74)
+- [LinkedIn](https://www.linkedin.com/in/rigfreyr)
+
 **Galvin, Shane**
 
 - [Github](https://github.com/sgalvin36)
 - [LinkedIn](https://www.linkedin.com/in/shane-galvin36/)
 
+**Green, Beverly**
+
+- [Github](https://github.com/bevgreen)
+- [LinkedIn](https://www.linkedin.com/in/beverlylouisegreen/)
+
 **Haefling, Matt**
 
--[Github](https://github.com/mhaefling)
--[LinkedIn](www.linkedin.com/in/matthew-haefling)
+- [Github](https://github.com/mhaefling)
+- [LinkedIn](www.linkedin.com/in/matthew-haefling)
 
 **Hill, John**
 
@@ -1837,6 +1854,16 @@ Successful Response:
 
 - [Github](https://github.com/marshallhotaling)
 - [LinkedIn](https://www.linkedin.com/in/marshall-hotaling-7b52a8304/)
+
+**Inman, Jacob**
+
+- [Github](https://github.com/jinman14)
+- [LinkedIn](https://www.linkedin.com/in/jacobinman/)
+
+**Kendall, Mark**
+
+- [Github](https://github.com/mkendall42)
+- [LinkedIn](https://www.linkedin.com/in/markkendall496/)
 
 **Knapp, Paul**
 
@@ -1857,6 +1884,11 @@ Successful Response:
 
 - [Github](https://github.com/TDManning)
 - [LinkedIn](https://www.linkedin.com/in/terra-manning/)
+
+**McKee, Sebastian**
+
+- [Github](https://github.com/0nehundr3d)
+- [LinkedIn](https://www.linkedin.com/in/sebastianmckee/)
 
 **Messersmith, Renee**
 
@@ -1900,8 +1932,8 @@ Successful Response:
 
 **Vasquez, Natasha**
 
--[Github](https://github.com/nvnatasha)
--[LinkedIn](https://www.linkedin.com/in/natasha-vasquez/)
+- [Github](https://github.com/nvnatasha)
+- [LinkedIn](https://www.linkedin.com/in/natasha-vasquez/)
 
 **Verrill, Seth**
 
@@ -1918,7 +1950,7 @@ Successful Response:
 - [Github](https://github.com/elysableu)
 - [LinkedIn](https://www.linkedin.com/in/elysa-ward/)
 
-**Weiland, Kristen**
+**Weiland, Kristin**
 
 - [Github](https://github.com/KMPWeiland)
 - [LinkedIn](https://www.linkedin.com/in/kristinweiland/)
