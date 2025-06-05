@@ -24,7 +24,11 @@ Rails.application.routes.draw do
           resources :contacts, only: [:create, :index]
         end
 
-        resources :contacts, only: [:index, :create, :show, :destroy, :update]
+        resources :contacts, only: [:index, :create, :show, :destroy, :update] do
+          collection do
+            post :import, to: 'import_contacts#create'
+          end
+        end
         resource :dashboard, only: :show
       end
 
